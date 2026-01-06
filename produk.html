@@ -1,0 +1,2116 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <meta name="description" content="Produk Digital Solvara Nusantara - Sistem Profit Harian Bertingkat">
+    <meta name="theme-color" content="#0f1a2e">
+    <title>Produk | Solvara Nusantara</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* RESET & BASE STYLES */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --navy-blue: #0f1a2e;
+            --charcoal-gray: #1e293b;
+            --pure-white: #ffffff;
+            --jet-black: #020617;
+            --steel-blue: #4a5f8a;
+            --light-steel: #64748b;
+            --accent-blue: #3b82f6;
+            --success-green: #10b981;
+            --warning-amber: #f59e0b;
+            --premium-purple: #8b5cf6;
+            --elite-gold: #fbbf24;
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --transition: all 0.3s ease;
+            --shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.15);
+            --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.2);
+            --glow-blue: 0 0 20px rgba(59, 130, 246, 0.3);
+            --glow-premium: 0 0 25px rgba(139, 92, 246, 0.4);
+            --glow-elite: 0 0 30px rgba(251, 191, 36, 0.3);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--charcoal-gray);
+            color: var(--pure-white);
+            min-height: 100vh;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* ANIMATED BACKGROUND - SAMA DENGAN INDEX.HTML */
+        .bg-lines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            overflow: hidden;
+            opacity: 0.15;
+        }
+
+        .line {
+            position: absolute;
+            background: linear-gradient(90deg, transparent, var(--steel-blue), transparent);
+            animation: floatLine 20s infinite linear;
+        }
+
+        @keyframes floatLine {
+            0% {
+                transform: translateX(-100%) translateY(0) rotate(45deg);
+            }
+            100% {
+                transform: translateX(100vw) translateY(-100vh) rotate(45deg);
+            }
+        }
+
+        /* PAGE LOAD ANIMATION */
+        .page-content {
+            animation: pageFadeIn 0.8s ease-out forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        @keyframes pageFadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* HEADER - SAMA DENGAN INDEX.HTML */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(2, 6, 23, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(74, 95, 138, 0.2);
+            padding: 16px;
+            z-index: 1000;
+            transition: var(--transition);
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: var(--pure-white);
+            font-weight: 700;
+            font-size: 20px;
+        }
+
+        .logo-icon {
+            font-size: 24px;
+            color: var(--accent-blue);
+        }
+
+        .icon-wing {
+            color: var(--accent-blue);
+            text-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+        }
+
+        /* BUTTONS - SAMA DENGAN INDEX.HTML */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 14px 24px;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            outline: none;
+            min-height: 44px;
+            text-align: center;
+            gap: 8px;
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn:active {
+            transform: scale(0.98);
+        }
+
+        .btn-primary {
+            background: var(--accent-blue);
+            color: var(--pure-white);
+            box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+        }
+
+        .btn-primary:hover {
+            background: #2563eb;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+            transform: translateY(-1px);
+        }
+
+        .btn-success {
+            background: var(--success-green);
+            color: var(--pure-white);
+            box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+        }
+
+        .btn-success:hover {
+            background: #0da271;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--pure-white);
+            border: 1px solid var(--steel-blue);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(74, 95, 138, 0.1);
+            border-color: var(--accent-blue);
+            transform: translateY(-1px);
+        }
+
+        .btn-disabled {
+            background: var(--light-steel);
+            color: var(--pure-white);
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        .btn-disabled:hover {
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* MAIN CONTENT */
+        .main-content {
+            padding-top: 80px;
+            min-height: 100vh;
+            padding-bottom: 80px;
+        }
+
+        .section {
+            padding: 40px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 40px;
+            animation: fadeIn 0.6s ease-out 0.2s forwards;
+            opacity: 0;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        .page-title {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--pure-white);
+            background: linear-gradient(135deg, var(--accent-blue), var(--premium-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .page-subtitle {
+            font-size: 16px;
+            color: var(--light-steel);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* TABS NAVIGATION */
+        .tabs-container {
+            background: rgba(2, 6, 23, 0.5);
+            border-radius: var(--radius-lg);
+            margin-bottom: 30px;
+            overflow: hidden;
+            border: 1px solid rgba(74, 95, 138, 0.2);
+        }
+
+        .tabs-header {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            width: 100%;
+        }
+
+        .tab-btn {
+            padding: 20px;
+            background: none;
+            border: none;
+            font-family: 'Inter', sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--light-steel);
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+            outline: none;
+        }
+
+        .tab-btn.active {
+            color: var(--pure-white);
+            background: rgba(59, 130, 246, 0.1);
+        }
+
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-blue), var(--premium-purple));
+        }
+
+        .tab-content {
+            padding: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .tab-content {
+                padding: 20px;
+            }
+        }
+
+        .tab-pane {
+            display: none;
+        }
+
+        .tab-pane.active {
+            display: block;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        /* PRODUCT CARDS - DESIGN PREMIUM BERTINGKAT */
+        .products-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 24px;
+            width: 100%;
+        }
+
+        /* BASE CARD STYLES */
+        .product-card {
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            transition: var(--transition);
+            position: relative;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: cardSlideUp 0.6s ease forwards;
+            box-shadow: var(--shadow-md);
+            border: 1px solid transparent;
+        }
+
+        @keyframes cardSlideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* CARD LEVEL 1 - BASIC (Rp 17.000 - Rp 30.000) */
+        .card-basic {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.9) 0%, rgba(15, 23, 42, 0.9) 100%);
+            border-color: rgba(100, 116, 139, 0.3);
+        }
+
+        .card-basic::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 80%, rgba(59, 130, 246, 0.05) 0%, transparent 40%);
+            pointer-events: none;
+        }
+
+        /* CARD LEVEL 2 - STANDARD (Rp 50.000) */
+        .card-standard {
+            background: linear-gradient(135deg, rgba(30, 64, 175, 0.1) 0%, rgba(30, 41, 59, 0.9) 100%);
+            border-color: rgba(59, 130, 246, 0.3);
+            box-shadow: var(--shadow-md), var(--glow-blue);
+        }
+
+        .card-standard::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(59, 130, 246, 0.1) 0%, transparent 40%),
+                radial-gradient(circle at 80% 20%, rgba(16, 185, 129, 0.05) 0%, transparent 40%);
+            pointer-events: none;
+        }
+
+        /* CARD LEVEL 3 - PREMIUM (Rp 100.000 - Rp 200.000) */
+        .card-premium {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, rgba(30, 41, 59, 0.9) 100%);
+            border-color: rgba(139, 92, 246, 0.3);
+            box-shadow: var(--shadow-lg), var(--glow-premium);
+        }
+
+        .card-premium::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(139, 92, 246, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 80% 20%, rgba(59, 130, 246, 0.1) 0%, transparent 40%),
+                repeating-linear-gradient(45deg, transparent, transparent 2px, rgba(255, 255, 255, 0.02) 2px, rgba(255, 255, 255, 0.02) 4px);
+            pointer-events: none;
+            animation: textureFloat 15s ease-in-out infinite;
+        }
+
+        /* CARD LEVEL 4 - ELITE (Rp 2.000.000) */
+        .card-elite {
+            background: linear-gradient(135deg, rgba(251, 191, 36, 0.1) 0%, rgba(30, 41, 59, 0.9) 100%);
+            border-color: rgba(251, 191, 36, 0.3);
+            box-shadow: var(--shadow-lg), var(--glow-elite);
+        }
+
+        .card-elite::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 50% 50%, rgba(251, 191, 36, 0.2) 0%, transparent 60%),
+                radial-gradient(circle at 20% 80%, rgba(139, 92, 246, 0.15) 0%, transparent 40%),
+                repeating-linear-gradient(45deg, transparent, transparent 1px, rgba(255, 255, 255, 0.03) 1px, rgba(255, 255, 255, 0.03) 3px);
+            pointer-events: none;
+            animation: textureFloat 10s ease-in-out infinite, textureRotate 20s linear infinite;
+        }
+
+        @keyframes textureFloat {
+            0%, 100% {
+                transform: translateY(0) scale(1);
+                opacity: 0.3;
+            }
+            50% {
+                transform: translateY(-10px) scale(1.01);
+                opacity: 0.4;
+            }
+        }
+
+        @keyframes textureRotate {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* CARD CONTENT STYLES */
+        .card-content {
+            padding: 24px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .product-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .product-icon {
+            width: 60px;
+            height: 60px;
+            min-width: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: var(--pure-white);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* ICON GRADIENTS BERDASARKAN LEVEL */
+        .card-basic .product-icon {
+            background: linear-gradient(135deg, var(--steel-blue), var(--accent-blue));
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        }
+
+        .card-standard .product-icon {
+            background: linear-gradient(135deg, var(--accent-blue), #8b5cf6);
+            box-shadow: 0 4px 16px rgba(59, 130, 246, 0.4);
+        }
+
+        .card-premium .product-icon {
+            background: linear-gradient(135deg, #8b5cf6, var(--accent-blue));
+            box-shadow: 0 4px 20px rgba(139, 92, 246, 0.5);
+            animation: rotatePlanet 10s linear infinite;
+        }
+
+        .card-elite .product-icon {
+            background: linear-gradient(135deg, var(--elite-gold), #f59e0b);
+            box-shadow: 0 4px 24px rgba(251, 191, 36, 0.6);
+            animation: rotatePlanet 8s linear infinite;
+        }
+
+        @keyframes rotatePlanet {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .product-icon::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% {
+                transform: translateX(-100%) translateY(-100%) rotate(0deg);
+            }
+            100% {
+                transform: translateX(100%) translateY(100%) rotate(360deg);
+            }
+        }
+
+        .product-info {
+            flex: 1;
+        }
+
+        .product-name {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--pure-white);
+            margin-bottom: 4px;
+        }
+
+        .product-tier {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 4px 12px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-bottom: 8px;
+        }
+
+        .card-basic .product-tier {
+            background: rgba(100, 116, 139, 0.2);
+            color: var(--light-steel);
+            border: 1px solid rgba(100, 116, 139, 0.3);
+        }
+
+        .card-standard .product-tier {
+            background: rgba(59, 130, 246, 0.2);
+            color: var(--accent-blue);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+
+        .card-premium .product-tier {
+            background: rgba(139, 92, 246, 0.2);
+            color: var(--premium-purple);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+        }
+
+        .card-elite .product-tier {
+            background: rgba(251, 191, 36, 0.2);
+            color: var(--elite-gold);
+            border: 1px solid rgba(251, 191, 36, 0.3);
+        }
+
+        .product-price {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card-basic .product-price {
+            color: var(--light-steel);
+        }
+
+        .card-standard .product-price {
+            color: var(--accent-blue);
+        }
+
+        .card-premium .product-price {
+            color: var(--premium-purple);
+        }
+
+        .card-elite .product-price {
+            color: var(--elite-gold);
+        }
+
+        .product-price span {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--light-steel);
+        }
+
+        /* PRODUCT DETAILS GRID */
+        .product-details {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-bottom: 24px;
+            padding: 20px;
+            background: rgba(2, 6, 23, 0.3);
+            border-radius: var(--radius-md);
+            border: 1px solid rgba(74, 95, 138, 0.1);
+        }
+
+        .detail-item {
+            text-align: center;
+        }
+
+        .detail-label {
+            font-size: 12px;
+            color: var(--light-steel);
+            margin-bottom: 4px;
+            display: block;
+        }
+
+        .detail-value {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--pure-white);
+        }
+
+        .detail-value.highlight {
+            color: var(--success-green);
+        }
+
+        /* PROGRESS SECTION */
+        .progress-section {
+            margin-bottom: 20px;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .progress-label {
+            font-size: 14px;
+            color: var(--light-steel);
+        }
+
+        .progress-text {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--pure-white);
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: rgba(74, 95, 138, 0.2);
+            border-radius: 4px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.6s ease-out;
+        }
+
+        .card-basic .progress-fill {
+            background: linear-gradient(90deg, var(--steel-blue), var(--accent-blue));
+        }
+
+        .card-standard .progress-fill {
+            background: linear-gradient(90deg, var(--accent-blue), #8b5cf6);
+        }
+
+        .card-premium .progress-fill {
+            background: linear-gradient(90deg, #8b5cf6, var(--accent-blue));
+        }
+
+        .card-elite .progress-fill {
+            background: linear-gradient(90deg, var(--elite-gold), #f59e0b);
+        }
+
+        /* ACTION BUTTONS */
+        .product-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .buy-btn {
+            flex: 1;
+        }
+
+        .claim-btn {
+            flex: 1;
+            background: var(--success-green);
+            color: var(--pure-white);
+            box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+        }
+
+        .claim-btn:hover:not(:disabled) {
+            background: #0da271;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+            transform: translateY(-1px);
+        }
+
+        .claim-btn:disabled {
+            background: var(--light-steel);
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        .pulse {
+            position: absolute;
+            top: 50%;
+            left: 16px;
+            width: 8px;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+            transform: translateY(-50%);
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: translateY(-50%) scale(1);
+                opacity: 0.8;
+            }
+            50% {
+                transform: translateY(-50%) scale(1.5);
+                opacity: 0.4;
+            }
+            100% {
+                transform: translateY(-50%) scale(1);
+                opacity: 0.8;
+            }
+        }
+
+        /* MY PRODUCTS - ACTIVE STATE */
+        .product-card.my-product {
+            border-left: 4px solid var(--success-green);
+        }
+
+        .product-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 8px;
+        }
+
+        .status-active {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success-green);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .status-selesai {
+            background: rgba(100, 116, 139, 0.1);
+            color: var(--light-steel);
+            border: 1px solid rgba(100, 116, 139, 0.3);
+        }
+
+        /* REWARD INFO SECTION - REVISI UNTUK PRODUK SAYA */
+        .reward-info {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            padding: 20px;
+            background: rgba(16, 185, 129, 0.1);
+            border-radius: var(--radius-md);
+            margin-top: 20px;
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+
+        .reward-item {
+            text-align: center;
+        }
+
+        .reward-label {
+            font-size: 12px;
+            color: var(--success-green);
+            margin-bottom: 6px;
+            font-weight: 500;
+        }
+
+        .reward-value {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--success-green);
+        }
+
+        /* EMPTY STATE */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--light-steel);
+        }
+
+        .empty-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+            color: var(--steel-blue);
+            opacity: 0.5;
+        }
+
+        .empty-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--pure-white);
+        }
+
+        .empty-description {
+            font-size: 14px;
+            max-width: 300px;
+            margin: 0 auto;
+            line-height: 1.5;
+        }
+
+        /* BOTTOM NAVIGATION - TERKUNCI */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(2, 6, 23, 0.95);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid var(--glass-border);
+            z-index: 1000;
+            padding: 12px 0;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            animation: navSlideUp 0.6s ease-out 1s forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        @keyframes navSlideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: var(--light-steel);
+            transition: var(--transition);
+            padding: 4px 0;
+            position: relative;
+        }
+
+        .nav-item.active {
+            color: var(--accent-blue);
+        }
+
+        .nav-icon {
+            font-size: 20px;
+            margin-bottom: 4px;
+            transition: var(--transition);
+        }
+
+        .nav-label {
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+        }
+
+        .nav-item.active .nav-icon {
+            transform: translateY(-2px);
+        }
+
+        .nav-item.active::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30px;
+            height: 3px;
+            background: var(--accent-blue);
+            border-radius: 0 0 2px 2px;
+            box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+        }
+
+        /* MODAL */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            padding: 20px;
+        }
+
+        .modal.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: var(--jet-black);
+            border-radius: var(--radius-lg);
+            width: 100%;
+            max-width: 400px;
+            max-height: 90vh;
+            overflow-y: auto;
+            transform: translateY(30px);
+            transition: transform 0.3s ease;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid rgba(74, 95, 138, 0.3);
+        }
+
+        .modal.show .modal-content {
+            transform: translateY(0);
+        }
+
+        .modal-header {
+            padding: 24px 24px 16px;
+            border-bottom: 1px solid rgba(74, 95, 138, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            background: var(--jet-black);
+            z-index: 10;
+        }
+
+        .modal-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--pure-white);
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 20px;
+            color: var(--light-steel);
+            cursor: pointer;
+            padding: 4px;
+            transition: var(--transition);
+        }
+
+        .modal-close:hover {
+            color: var(--pure-white);
+        }
+
+        .modal-body {
+            padding: 24px;
+        }
+
+        .modal-footer {
+            padding: 16px 24px;
+            border-top: 1px solid rgba(74, 95, 138, 0.2);
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+            position: sticky;
+            bottom: 0;
+            background: var(--jet-black);
+            z-index: 10;
+        }
+
+        .modal-btn {
+            padding: 12px 20px;
+            border-radius: var(--radius-md);
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            outline: none;
+            min-width: 100px;
+        }
+
+        .modal-btn.confirm {
+            background: var(--accent-blue);
+            color: var(--pure-white);
+        }
+
+        .modal-btn.confirm:hover {
+            background: #2563eb;
+        }
+
+        .modal-btn.cancel {
+            background: transparent;
+            color: var(--light-steel);
+            border: 1px solid var(--steel-blue);
+        }
+
+        .modal-btn.cancel:hover {
+            background: rgba(74, 95, 138, 0.1);
+            border-color: var(--accent-blue);
+        }
+
+        /* TOAST NOTIFICATION */
+        .toast {
+            position: fixed;
+            bottom: 100px;
+            left: 20px;
+            right: 20px;
+            transform: translateY(30px);
+            background: var(--jet-black);
+            color: var(--pure-white);
+            padding: 16px 20px;
+            border-radius: var(--radius-md);
+            font-size: 14px;
+            font-weight: 500;
+            z-index: 2000;
+            opacity: 0;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: var(--shadow-lg);
+            text-align: center;
+            border: 1px solid rgba(74, 95, 138, 0.3);
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* FOOTER - SAMA DENGAN INDEX.HTML */
+        .footer {
+            background: var(--jet-bck);
+            padding: 40px 20px 30px;
+            border-top: 1px solid rgba(74, 95, 138, 0.3);
+            margin-top: 40px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--pure-white);
+            margin-bottom: 24px;
+            justify-content: center;
+        }
+
+        .footer-logo-icon {
+            color: var(--accent-blue);
+            font-size: 24px;
+        }
+
+        .footer-legal {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(74, 95, 138, 0.2);
+            color: var(--light-steel);
+            font-size: 14px;
+        }
+
+        .footer-legal a {
+            color: var(--light-steel);
+            text-decoration: none;
+            margin: 0 10px;
+            transition: var(--transition);
+        }
+
+        .footer-legal a:hover {
+            color: var(--accent-blue);
+            text-decoration: underline;
+        }
+
+        /* RESPONSIVE */
+        @media (min-width: 768px) {
+            .main-content {
+                padding-bottom: 0;
+            }
+            
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 30px;
+            }
+            
+            .product-details {
+                grid-template-columns: repeat(4, 1fr);
+                padding: 24px;
+            }
+            
+            .reward-info {
+                grid-template-columns: repeat(4, 1fr);
+            }
+            
+            .bottom-nav {
+                display: none;
+            }
+            
+            .footer {
+                margin-top: 60px;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .products-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            .section {
+                padding: 60px 40px;
+            }
+            
+            .page-title {
+                font-size: 36px;
+            }
+            
+            .page-subtitle {
+                font-size: 18px;
+            }
+        }
+
+        /* UTILITY CLASSES */
+        .hidden {
+            display: none !important;
+        }
+
+        .no-scroll {
+            overflow: hidden !important;
+            position: fixed;
+            width: 100%;
+            height: 100%;
+        }
+
+        .skeleton {
+            background: linear-gradient(90deg, rgba(74, 95, 138, 0.1) 25%, rgba(100, 116, 139, 0.2) 50%, rgba(74, 95, 138, 0.1) 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+            border-radius: var(--radius-md);
+        }
+
+        @keyframes loading {
+            0% {
+                background-position: 200% 0;
+            }
+            100% {
+                background-position: -200% 0;
+            }
+        }
+
+        .skeleton-card {
+            height: 300px;
+            width: 100%;
+            border-radius: var(--radius-lg);
+            margin-bottom: 24px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background Lines -->
+    <div class="bg-lines" id="bgLines"></div>
+    
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-feather-alt logo-icon icon-wing"></i>
+                <span>Solvara Nusantara</span>
+            </a>
+        </div>
+    </header>
+    
+    <!-- Main Content -->
+    <main class="main-content page-content">
+        <!-- Page Header -->
+        <section class="section">
+            <div class="page-header">
+                <h1 class="page-title">Produk Digital</h1>
+                <p class="page-subtitle">Pilih produk dengan sistem profit harian yang transparan</p>
+            </div>
+            
+            <!-- Tabs -->
+            <div class="tabs-container">
+                <div class="tabs-header">
+                    <button class="tab-btn active" id="tabProduk">
+                        Produk Tersedia
+                    </button>
+                    <button class="tab-btn" id="tabProdukSaya">
+                        Produk Saya
+                    </button>
+                </div>
+                
+                <div class="tab-content">
+                    <!-- Tab 1: Produk Tersedia -->
+                    <div class="tab-pane active" id="produkPane">
+                        <div class="products-grid" id="produkList">
+                            <!-- Products will be loaded here -->
+                            <div class="skeleton-card skeleton"></div>
+                            <div class="skeleton-card skeleton"></div>
+                            <div class="skeleton-card skeleton"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Tab 2: Produk Saya -->
+                    <div class="tab-pane" id="produkSayaPane">
+                        <div class="products-grid" id="myProductsList">
+                            <!-- User's products will be loaded here -->
+                            <div class="skeleton-card skeleton"></div>
+                            <div class="skeleton-card skeleton"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal Konfirmasi Pembelian -->
+    <div class="modal" id="confirmModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="modalTitle">Konfirmasi Pembelian</h3>
+                <button class="modal-close" id="modalClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="modalProductInfo">
+                    <!-- Product info will be inserted here -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-btn cancel" id="modalCancel">Batal</button>
+                <button class="modal-btn confirm" id="modalConfirm">Beli Sekarang</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation - Terkunci -->
+    <nav class="bottom-nav">
+        <a href="dashboard.html" class="nav-item">
+            <i class="fas fa-home nav-icon"></i>
+            <span class="nav-label">Dashboard</span>
+        </a>
+        <a href="produk.html" class="nav-item active">
+            <i class="fas fa-cubes nav-icon"></i>
+            <span class="nav-label">Produk</span>
+        </a>
+        <a href="referral.html" class="nav-item">
+            <i class="fas fa-user-group nav-icon"></i>
+            <span class="nav-label">Referral</span>
+        </a>
+        <a href="profil.html" class="nav-item">
+            <i class="fas fa-id-card nav-icon"></i>
+            <span class="nav-label">Profil</span>
+        </a>
+    </nav>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-logo">
+                <i class="fas fa-feather-alt footer-logo-icon icon-wing"></i>
+                <span>Solvara Nusantara</span>
+            </div>
+            
+            <div class="footer-legal">
+                <p>&copy; 2023 Solvara Nusantara. Semua hak dilindungi.</p>
+                <p>
+                    <a href="legal.html#terms">Aturan & Ketentuan</a> | 
+                    <a href="legal.html#privacy">Kebijakan Privasi</a>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast"></div>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        // Import Firebase modules
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { 
+            getAuth, 
+            onAuthStateChanged 
+        } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { 
+            getFirestore, 
+            doc, 
+            getDoc, 
+            collection, 
+            getDocs, 
+            query, 
+            where, 
+            addDoc, 
+            updateDoc,
+            serverTimestamp,
+            onSnapshot,
+            setDoc
+        } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyAXzEqxkuqbV9XJE9_CUGcDD9zO3fSdqB4",
+            authDomain: "sulvaranusantara.firebaseapp.com",
+            projectId: "sulvaranusantara",
+            storageBucket: "sulvaranusantara.firebasestorage.app",
+            messagingSenderId: "591964491640",
+            appId: "1:591964491640:web:34221ae11c2d810b9a028d"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        // DOM Elements
+        const tabProduk = document.getElementById('tabProduk');
+        const tabProdukSaya = document.getElementById('tabProdukSaya');
+        const produkPane = document.getElementById('produkPane');
+        const produkSayaPane = document.getElementById('produkSayaPane');
+        const produkList = document.getElementById('produkList');
+        const myProductsList = document.getElementById('myProductsList');
+        const confirmModal = document.getElementById('confirmModal');
+        const modalClose = document.getElementById('modalClose');
+        const modalCancel = document.getElementById('modalCancel');
+        const modalConfirm = document.getElementById('modalConfirm');
+        const modalProductInfo = document.getElementById('modalProductInfo');
+        const modalTitle = document.getElementById('modalTitle');
+        const toastEl = document.getElementById('toast');
+        const body = document.body;
+
+        // Global Variables
+        let currentUser = null;
+        let userData = null;
+        let productsData = [];
+        let userProducts = [];
+        let selectedProduct = null;
+
+        // Data Produk (DIPERBARUI sesuai revisi Anda)
+        const PRODUCTS = [
+            {
+                id: "PD1",
+                name: "Merkurius",
+                icon: "fa-meteor",
+                description: "Produk entry-level dengan profit harian stabil. Cocok untuk pemula yang ingin memulai investasi digital dengan modal terjangkau.",
+                duration: 5,
+                price: 17000,
+                totalProfit: 35000,
+                dailyReward: 7000, // 35.000 / 5 hari
+                image: "PD1.jpg"
+            },
+            {
+                id: "PD2",
+                name: "Venus",
+                icon: "fa-star",
+                description: "Paket menengah dengan return harian yang lebih baik. Ideal untuk pengguna yang ingin meningkatkan portofolio investasi digital mereka.",
+                duration: 10,
+                price: 30000,
+                totalProfit: 60000,
+                dailyReward: 6000, // 60.000 / 10 hari
+                image: "PD2.jpg"
+            },
+            {
+                id: "PD3",
+                name: "Mars",
+                icon: "fa-fire",
+                description: "Produk dengan performa tinggi dan profitabilitas yang meningkat. Dirancang untuk pengalaman investasi yang lebih optimal.",
+                duration: 15,
+                price: 50000,
+                totalProfit: 97000,
+                dailyReward: 6467, // 97.000 / 15 hari (dibulatkan)
+                image: "PD3.jpg"
+            },
+            {
+                id: "PD4",
+                name: "Jupiter",
+                icon: "fa-globe",
+                description: "Paket premium dengan sistem profit harian yang konsisten. Memberikan pengalaman investasi digital yang lebih matang.",
+                duration: 20,
+                price: 100000,
+                totalProfit: 350000,
+                dailyReward: 17500, // 350.000 / 20 hari
+                image: "PD4.jpg"
+            },
+            {
+                id: "PD5",
+                name: "Saturnus",
+                icon: "fa-ring",
+                description: "Solusi investasi digital tingkat lanjut dengan profit harian maksimal. Untuk pengguna yang serius mengembangkan aset digital.",
+                duration: 25,
+                price: 200000,
+                totalProfit: 670000,
+                dailyReward: 26800, // 670.000 / 25 hari
+                image: "PD5.jpg"
+            },
+            {
+                id: "PD6",
+                name: "Uranus",
+                icon: "fa-atom",
+                description: "Produk elite dengan sistem profit terbaik. Pengalaman investasi digital premium dengan return harian luar biasa.",
+                duration: 30,
+                price: 2000000,
+                totalProfit: 5777777,
+                dailyReward: 192593, // 5.777.777 / 30 hari (dibulatkan)
+                image: "PD6.jpg"
+            }
+        ];
+
+        // Get Card Class based on price (Tier System)
+        function getCardClass(price) {
+            if (price >= 2000000) return 'card-elite';       // Uranus - LEVEL 4: ELITE
+            if (price >= 200000) return 'card-premium';      // Saturnus - LEVEL 3: PREMIUM
+            if (price >= 100000) return 'card-premium';      // Jupiter - LEVEL 3: PREMIUM
+            if (price >= 50000) return 'card-standard';      // Mars - LEVEL 2: STANDARD
+            if (price >= 30000) return 'card-standard';      // Venus - LEVEL 2: STANDARD
+            return 'card-basic';                             // Merkurius - LEVEL 1: BASIC
+        }
+
+        // Get Tier Name based on price
+        function getTierName(price) {
+            if (price >= 2000000) return 'Elite';
+            if (price >= 200000) return 'Premium';
+            if (price >= 100000) return 'Premium';
+            if (price >= 50000) return 'Standard';
+            if (price >= 30000) return 'Standard';
+            return 'Basic';
+        }
+
+        // Generate Background Lines
+        function createBackgroundLines() {
+            const bgLines = document.getElementById('bgLines');
+            const lineCount = 15;
+            
+            for (let i = 0; i < lineCount; i++) {
+                const line = document.createElement('div');
+                line.className = 'line';
+                
+                const width = Math.random() * 2 + 1;
+                const height = Math.random() * 150 + 50;
+                const left = Math.random() * 100;
+                const top = Math.random() * 100;
+                const delay = Math.random() * 20;
+                const duration = Math.random() * 10 + 15;
+                
+                line.style.width = `${width}px`;
+                line.style.height = `${height}px`;
+                line.style.left = `${left}%`;
+                line.style.top = `${top}%`;
+                line.style.animationDelay = `${delay}s`;
+                line.style.animationDuration = `${duration}s`;
+                
+                bgLines.appendChild(line);
+            }
+        }
+
+        // Toast Notification Function
+        function showToast(message, duration = 3000) {
+            toastEl.textContent = message;
+            toastEl.classList.add('show');
+            
+            setTimeout(() => {
+                toastEl.classList.remove('show');
+            }, duration);
+        }
+
+        // Format Currency
+        function formatCurrency(amount) {
+            return new Intl.NumberFormat('id-ID', {
+                style: 'currency',
+                currency: 'IDR',
+                minimumFractionDigits: 0
+            }).format(amount);
+        }
+
+        // Format Number (tanpa Rp)
+        function formatNumber(amount) {
+            return new Intl.NumberFormat('id-ID').format(amount);
+        }
+
+        // Calculate Progress Percentage
+        function calculateProgress(startDate, duration) {
+            const now = new Date();
+            const start = startDate.toDate();
+            const end = new Date(start);
+            end.setDate(start.getDate() + duration);
+            
+            if (now >= end) return 100;
+            
+            const totalTime = end - start;
+            const elapsedTime = now - start;
+            
+            return Math.min(Math.floor((elapsedTime / totalTime) * 100), 100);
+        }
+
+        // Calculate Current Day
+        function calculateCurrentDay(startDate) {
+            const now = new Date();
+            const start = startDate.toDate();
+            const diffTime = Math.abs(now - start);
+            return Math.floor(diffTime / (1000 * 60 * 60 * 24)) + 1;
+        }
+
+        // Check if reward can be claimed today
+        function canClaimRewardToday(userProduct) {
+            if (!userProduct.lastClaimDate) return true;
+            
+            const lastClaim = userProduct.lastClaimDate.toDate();
+            const today = new Date();
+            
+            lastClaim.setHours(0, 0, 0, 0);
+            today.setHours(0, 0, 0, 0);
+            
+            return lastClaim.getTime() !== today.getTime();
+        }
+
+        // Load Products - FIXED EVENT LISTENER
+        function loadProducts() {
+            produkList.innerHTML = '';
+            
+            PRODUCTS.forEach((product, index) => {
+                // Check if user already has this product active
+                const hasActiveProduct = userProducts.some(p => 
+                    p.productId === product.id && p.status === 'active'
+                );
+                
+                const cardClass = getCardClass(product.price);
+                const tierName = getTierName(product.price);
+                
+                const productCard = document.createElement('div');
+                productCard.className = `product-card ${cardClass}`;
+                productCard.style.animationDelay = `${index * 0.1}s`;
+                
+                productCard.innerHTML = `
+                    <div class="card-content">
+                        <div class="product-header">
+                            <div class="product-icon">
+                                <i class="fas ${product.icon}"></i>
+                            </div>
+                            <div class="product-info">
+                                <h3 class="product-name">${product.name}</h3>
+                                <span class="product-tier">${tierName}</span>
+                            </div>
+                        </div>
+                        
+                        <div class="product-price">
+                            ${formatCurrency(product.price)}
+                            <span>Investasi</span>
+                        </div>
+                        
+                        <div class="product-details">
+                            <div class="detail-item">
+                                <span class="detail-label">Durasi</span>
+                                <span class="detail-value">${product.duration} Hari</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Profit Harian</span>
+                                <span class="detail-value highlight">${formatCurrency(product.dailyReward)}</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Total Profit</span>
+                                <span class="detail-value highlight">${formatCurrency(product.totalProfit)}</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">ROI</span>
+                                <span class="detail-value highlight">${Math.round((product.totalProfit / product.price) * 100)}%</span>
+                            </div>
+                        </div>
+                        
+                        <div class="product-actions">
+                            <button class="btn ${hasActiveProduct ? 'btn-disabled' : 'btn-primary'} buy-btn" 
+                                    ${hasActiveProduct ? 'disabled' : ''} 
+                                    data-product-id="${product.id}">
+                                <i class="fas fa-shopping-cart"></i>
+                                ${hasActiveProduct ? 'Sudah Dimiliki' : 'Beli Sekarang'}
+                            </button>
+                        </div>
+                    </div>
+                `;
+                
+                produkList.appendChild(productCard);
+            });
+            
+            // Add event listeners to all buy buttons AFTER cards are created
+            setTimeout(() => {
+                document.querySelectorAll('.buy-btn:not(:disabled)').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const productId = this.getAttribute('data-product-id');
+                        const product = PRODUCTS.find(p => p.id === productId);
+                        if (product) {
+                            selectedProduct = product;
+                            showConfirmModal(product);
+                        }
+                    });
+                });
+            }, 100);
+        }
+
+        // Load User's Products - IMPROVED DESIGN
+        function loadMyProducts() {
+            myProductsList.innerHTML = '';
+            
+            if (userProducts.length === 0) {
+                myProductsList.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-icon">
+                            <i class="fas fa-box-open"></i>
+                        </div>
+                        <h3 class="empty-title">Belum Ada Produk</h3>
+                        <p class="empty-description">Anda belum memiliki produk aktif. Pilih produk di tab "Produk Tersedia" untuk mulai mendapatkan profit harian.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            userProducts.forEach((userProduct, index) => {
+                const product = PRODUCTS.find(p => p.id === userProduct.productId);
+                if (!product) return;
+                
+                const currentDay = calculateCurrentDay(userProduct.startDate);
+                const progress = calculateProgress(userProduct.startDate, product.duration);
+                const totalRewardEarned = userProduct.totalRewardEarned || 0;
+                const canClaim = userProduct.status === 'active' && canClaimRewardToday(userProduct);
+                const cardClass = getCardClass(product.price);
+                const tierName = getTierName(product.price);
+                const remainingDays = Math.max(product.duration - currentDay + 1, 0);
+                const profitToday = product.dailyReward;
+                
+                const productCard = document.createElement('div');
+                productCard.className = `product-card my-product ${cardClass}`;
+                productCard.style.animationDelay = `${index * 0.1}s`;
+                
+                if (userProduct.status === 'active') {
+                    // DESIGN PREMIUM UNTUK PRODUK AKTIF
+                    productCard.innerHTML = `
+                        <div class="card-content">
+                            <div class="product-header">
+                                <div class="product-icon">
+                                    <i class="fas ${product.icon}"></i>
+                                </div>
+                                <div class="product-info">
+                                    <h3 class="product-name">${product.name}</h3>
+                                    <span class="product-tier">${tierName}</span>
+                                    <div class="product-status status-active">
+                                        <i class="fas fa-play-circle"></i>
+                                        AKTIF
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="progress-section">
+                                <div class="progress-header">
+                                    <span class="progress-label">Progress Investasi</span>
+                                    <span class="progress-text">${currentDay} / ${product.duration} hari</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: ${progress}%"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="product-details">
+                                <div class="detail-item">
+                                    <span class="detail-label">Investasi</span>
+                                    <span class="detail-value">${formatCurrency(product.price)}</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Profit Harian</span>
+                                    <span class="detail-value highlight">${formatCurrency(profitToday)}</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Total Diperoleh</span>
+                                    <span class="detail-value highlight">${formatCurrency(totalRewardEarned)}</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Sisa Hari</span>
+                                    <span class="detail-value">${remainingDays}</span>
+                                </div>
+                            </div>
+                            
+                            <div class="reward-info">
+                                <div class="reward-item">
+                                    <div class="reward-label">Profit Hari Ini</div>
+                                    <div class="reward-value">${formatCurrency(profitToday)}</div>
+                                </div>
+                                <div class="reward-item">
+                                    <div class="reward-label">Total Profit</div>
+                                    <div class="reward-value">${formatCurrency(product.totalProfit)}</div>
+                                </div>
+                                <div class="reward-item">
+                                    <div class="reward-label">Sudah Diperoleh</div>
+                                    <div class="reward-value">${formatCurrency(totalRewardEarned)}</div>
+                                </div>
+                                <div class="reward-item">
+                                    <div class="reward-label">Sisa Profit</div>
+                                    <div class="reward-value">${formatCurrency(product.totalProfit - totalRewardEarned)}</div>
+                                </div>
+                            </div>
+                            
+                            <div class="product-actions">
+                                <button class="btn ${canClaim ? 'btn-success' : 'btn-disabled'} claim-btn" 
+                                        ${canClaim ? '' : 'disabled'} 
+                                        data-product-id="${userProduct.id}">
+                                    ${canClaim ? '<span class="pulse"></span>' : ''}
+                                    <i class="fas fa-coins"></i>
+                                    ${canClaim ? 'Ambil Profit Hari Ini' : 'Profit Sudah Diambil'}
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    // DESIGN UNTUK PRODUK SELESAI
+                    productCard.innerHTML = `
+                        <div class="card-content">
+                            <div class="product-header">
+                                <div class="product-icon">
+                                    <i class="fas ${product.icon}"></i>
+                                </div>
+                                <div class="product-info">
+                                    <h3 class="product-name">${product.name}</h3>
+                                    <span class="product-tier">${tierName}</span>
+                                    <div class="product-status status-selesai">
+                                        <i class="fas fa-check-circle"></i>
+                                        SELESAI
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="product-details">
+                                <div class="detail-item">
+                                    <span class="detail-label">Investasi</span>
+                                    <span class="detail-value">${formatCurrency(product.price)}</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Durasi</span>
+                                    <span class="detail-value">${product.duration} Hari</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Total Diperoleh</span>
+                                    <span class="detail-value highlight">${formatCurrency(totalRewardEarned)}</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Status</span>
+                                    <span class="detail-value">Selesai</span>
+                                </div>
+                            </div>
+                            
+                            <div style="text-align: center; margin-top: 20px; padding: 15px; background: rgba(16, 185, 129, 0.1); border-radius: var(--radius-md);">
+                                <i class="fas fa-trophy" style="color: var(--success-green); font-size: 24px; margin-bottom: 10px;"></i>
+                                <p style="color: var(--success-green); font-weight: 600;">Produk telah selesai! Total profit: ${formatCurrency(totalRewardEarned)}</p>
+                            </div>
+                        </div>
+                    `;
+                }
+                
+                myProductsList.appendChild(productCard);
+                
+                // Add event listener for claim button
+                if (userProduct.status === 'active' && canClaim) {
+                    setTimeout(() => {
+                        const claimBtn = productCard.querySelector('.claim-btn');
+                        if (claimBtn) {
+                            claimBtn.addEventListener('click', () => {
+                                claimDailyReward(userProduct.id, product.dailyReward);
+                            });
+                        }
+                    }, 100);
+                }
+            });
+        }
+
+        // Claim Daily Reward Function
+        async function claimDailyReward(userProductId, dailyReward) {
+            try {
+                const userProductRef = doc(db, 'user_products', userProductId);
+                const userRef = doc(db, 'users', currentUser.uid);
+                
+                // Get current data
+                const userProductDoc = await getDoc(userProductRef);
+                const userDoc = await getDoc(userRef);
+                
+                if (!userProductDoc.exists() || !userDoc.exists()) {
+                    showToast('Data tidak ditemukan', 3000);
+                    return;
+                }
+                
+                const userProductData = userProductDoc.data();
+                const userData = userDoc.data();
+                
+                // Check if already claimed today
+                if (!canClaimRewardToday(userProductData)) {
+                    showToast('Profit hari ini sudah diklaim', 3000);
+                    return;
+                }
+                
+                // Calculate new totals
+                const newTotalReward = (userProductData.totalRewardEarned || 0) + dailyReward;
+                const newUserSaldo = (userData.saldo || 0) + dailyReward;
+                
+                // Update user_products
+                await updateDoc(userProductRef, {
+                    lastClaimDate: serverTimestamp(),
+                    totalRewardEarned: newTotalReward
+                });
+                
+                // Update user saldo
+                await updateDoc(userRef, {
+                    saldo: newUserSaldo
+                });
+                
+                // Record transaction
+                await addDoc(collection(db, 'transactions'), {
+                    uid: currentUser.uid,
+                    type: 'profit',
+                    amount: dailyReward,
+                    description: `Profit harian produk ${userProductData.productName}`,
+                    createdAt: serverTimestamp()
+                });
+                
+                showToast(`Profit ${formatCurrency(dailyReward)} berhasil diklaim!`, 3000);
+                
+                // Reload user products
+                loadUserProducts();
+                
+            } catch (error) {
+                console.error('Error claiming profit:', error);
+                showToast('Gagal mengklaim profit', 3000);
+            }
+        }
+
+        // Show Confirm Modal
+        function showConfirmModal(product) {
+            selectedProduct = product;
+            
+            // Prevent body scroll
+            body.classList.add('no-scroll');
+            
+            modalTitle.textContent = `Beli ${product.name}`;
+            
+            const tierName = getTierName(product.price);
+            const roi = Math.round((product.totalProfit / product.price) * 100);
+            
+            modalProductInfo.innerHTML = `
+                <div style="text-align: center; margin-bottom: 24px;">
+                    <div class="product-icon" style="margin: 0 auto 16px; width: 80px; height: 80px; font-size: 32px; background: linear-gradient(135deg, var(--accent-blue), var(--premium-purple));">
+                        <i class="fas ${product.icon}"></i>
+                    </div>
+                    <h4 style="margin-bottom: 8px; color: var(--pure-white); font-size: 20px; font-weight: 600;">${product.name}</h4>
+                    <p style="color: var(--light-steel); font-size: 14px; line-height: 1.5;">${product.description}</p>
+                </div>
+                
+                <div style="background: rgba(2, 6, 23, 0.5); border-radius: var(--radius-md); padding: 20px; margin-bottom: 20px; border: 1px solid rgba(74, 95, 138, 0.2);">
+                    <div style="display: flex; flex-direction: column; gap: 12px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid rgba(74, 95, 138, 0.1);">
+                            <span style="font-size: 14px; color: var(--light-steel); font-weight: 500;">Tier</span>
+                            <span style="font-weight: 600; color: var(--accent-blue); font-size: 14px;">${tierName}</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid rgba(74, 95, 138, 0.1);">
+                            <span style="font-size: 14px; color: var(--light-steel); font-weight: 500;">Durasi</span>
+                            <span style="font-weight: 600; color: var(--pure-white); font-size: 14px;">${product.duration} Hari</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid rgba(74, 95, 138, 0.1);">
+                            <span style="font-size: 14px; color: var(--light-steel); font-weight: 500;">Investasi</span>
+                            <span style="font-weight: 700; color: var(--accent-blue); font-size: 18px;">${formatCurrency(product.price)}</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0;">
+                            <span style="font-size: 14px; color: var(--light-steel); font-weight: 500;">ROI</span>
+                            <span style="font-weight: 700; color: var(--success-green); font-size: 18px;">${roi}%</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="background: rgba(16, 185, 129, 0.1); border-radius: var(--radius-md); padding: 16px; margin-bottom: 20px; border: 1px solid rgba(16, 185, 129, 0.2);">
+                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
+                        <i class="fas fa-chart-line" style="color: var(--success-green); font-size: 18px;"></i>
+                        <span style="font-weight: 700; color: var(--success-green);">Estimasi Profit</span>
+                    </div>
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;">
+                        <div style="text-align: center;">
+                            <div style="font-size: 12px; color: var(--light-steel); margin-bottom: 4px;">Harian</div>
+                            <div style="font-weight: 700; color: var(--success-green); font-size: 16px;">${formatCurrency(product.dailyReward)}</div>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="font-size: 12px; color: var(--light-steel); margin-bottom: 4px;">Total</div>
+                            <div style="font-weight: 700; color: var(--success-green); font-size: 16px;">${formatCurrency(product.totalProfit)}</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="background: rgba(59, 130, 246, 0.1); border-radius: var(--radius-md); padding: 16px; border: 1px solid rgba(59, 130, 246, 0.2);">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <i class="fas fa-info-circle" style="color: var(--accent-blue); font-size: 18px;"></i>
+                        <span style="font-weight: 600; color: var(--accent-blue);">Sistem Profit Harian</span>
+                    </div>
+                    <p style="font-size: 13px; color: var(--light-steel); margin-top: 8px; line-height: 1.5;">
+                        Profit akan dikreditkan ke saldo Anda setiap hari selama ${product.duration} hari. Anda dapat menarik profit kapan saja dengan minimum Rp 50.000.
+                    </p>
+                </div>
+            `;
+            
+            confirmModal.classList.add('show');
+        }
+
+        // Close Modal
+        function closeModal() {
+            confirmModal.classList.remove('show');
+            selectedProduct = null;
+            
+            // Restore body scroll
+            body.classList.remove('no-scroll');
+        }
+
+        // Process Product Purchase - FIXED
+        async function processPurchase() {
+            if (!selectedProduct || !currentUser) {
+                console.error('selectedProduct atau currentUser null:', {selectedProduct, currentUser});
+                showToast('Produk tidak valid', 3000);
+                return;
+            }
+            
+            try {
+                // Check user saldo
+                const userDoc = await getDoc(doc(db, 'users', currentUser.uid));
+                if (!userDoc.exists()) {
+                    showToast('Data pengguna tidak ditemukan', 3000);
+                    return;
+                }
+                
+                const userData = userDoc.data();
+                if (userData.saldo < selectedProduct.price) {
+                    showToast('Saldo tidak mencukupi', 3000);
+                    closeModal();
+                    return;
+                }
+                
+                // Check if user already has active product of same type
+                const userProductsQuery = query(
+                    collection(db, 'user_products'),
+                    where('uid', '==', currentUser.uid),
+                    where('productId', '==', selectedProduct.id),
+                    where('status', '==', 'active')
+                );
+                
+                const userProductsSnapshot = await getDocs(userProductsQuery);
+                if (!userProductsSnapshot.empty) {
+                    showToast('Anda sudah memiliki produk ini yang masih aktif', 3000);
+                    closeModal();
+                    return;
+                }
+                
+                // Update user saldo
+                const newSaldo = userData.saldo - selectedProduct.price;
+                await updateDoc(doc(db, 'users', currentUser.uid), {
+                    saldo: newSaldo
+                });
+                
+                // Add user product
+                const userProductData = {
+                    uid: currentUser.uid,
+                    productId: selectedProduct.id,
+                    productName: selectedProduct.name,
+                    productPrice: selectedProduct.price,
+                    dailyReward: selectedProduct.dailyReward,
+                    durationDays: selectedProduct.duration,
+                    startDate: serverTimestamp(),
+                    currentDay: 0,
+                    totalRewardEarned: 0,
+                    lastClaimDate: null,
+                    status: 'active',
+                    createdAt: serverTimestamp()
+                };
+                
+                await addDoc(collection(db, 'user_products'), userProductData);
+                
+                // Record transaction
+                const transactionData = {
+                    uid: currentUser.uid,
+                    type: 'produk',
+                    amount: -selectedProduct.price,
+                    description: `Beli produk ${selectedProduct.name}`,
+                    createdAt: serverTimestamp()
+                };
+                
+                await addDoc(collection(db, 'transactions'), transactionData);
+                
+                showToast('Produk berhasil dibeli! Profit harian akan mulai masuk besok.', 3000);
+                closeModal();
+                
+                // Reload products
+                loadUserProducts();
+                
+            } catch (error) {
+                console.error('Error processing purchase:', error);
+                showToast('Gagal memproses pembelian: ' + error.message, 3000);
+            }
+        }
+
+        // Load User Products from Firestore
+        async function loadUserProducts() {
+            if (!currentUser) return;
+            
+            try {
+                const userProductsQuery = query(
+                    collection(db, 'user_products'),
+                    where('uid', '==', currentUser.uid)
+                );
+                
+                onSnapshot(userProductsQuery, (snapshot) => {
+                    userProducts = [];
+                    snapshot.forEach(doc => {
+                        userProducts.push({
+                            id: doc.id,
+                            ...doc.data()
+                        });
+                    });
+                    
+                    // Update UI
+                    loadProducts();
+                    loadMyProducts();
+                });
+                
+            } catch (error) {
+                console.error('Error loading user products:', error);
+            }
+        }
+
+        // Event Listeners
+        tabProduk.addEventListener('click', () => {
+            tabProduk.classList.add('active');
+            tabProdukSaya.classList.remove('active');
+            produkPane.classList.add('active');
+            produkSayaPane.classList.remove('active');
+        });
+
+        tabProdukSaya.addEventListener('click', () => {
+            tabProdukSaya.classList.add('active');
+            tabProduk.classList.remove('active');
+            produkSayaPane.classList.add('active');
+            produkPane.classList.remove('active');
+        });
+
+        modalClose.addEventListener('click', closeModal);
+        modalCancel.addEventListener('click', closeModal);
+        modalConfirm.addEventListener('click', processPurchase);
+
+        // Close modal on outside click
+        confirmModal.addEventListener('click', (e) => {
+            if (e.target === confirmModal) {
+                closeModal();
+            }
+        });
+
+        // Prevent modal content click from closing modal
+        document.querySelector('.modal-content').addEventListener('click', (e) => {
+            e.stopPropagation();
+        });
+
+        // Auth State Listener
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                currentUser = user;
+                loadUserProducts();
+            } else {
+                // User not logged in, redirect to login
+                window.location.href = 'login.html';
+            }
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            createBackgroundLines();
+        });
+
+        // Prevent horizontal scroll
+        window.addEventListener('scroll', () => {
+            if (window.scrollX !== 0) {
+                window.scrollTo(0, window.scrollY);
+            }
+        });
+
+    </script>
+</body>
+</html>

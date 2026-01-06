@@ -1,0 +1,1318 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Solvara Nusantara - Dashboard Penghasilan Referral">
+    <meta name="theme-color" content="#0f1a2e">
+    <title>Referral & Bonus | Solvara Nusantara</title>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* RESET & BASE STYLES */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        :root {
+            --navy-blue: #0f1a2e;
+            --charcoal-gray: #1e293b;
+            --pure-white: #ffffff;
+            --jet-black: #020617;
+            --steel-blue: #4a5f8a;
+            --light-steel: #64748b;
+            --accent-blue: #3b82f6;
+            --success-green: #10b981;
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --transition: all 0.3s ease;
+            --shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.15);
+            --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.2);
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 14px;
+        }
+
+        @media (min-width: 768px) {
+            html {
+                font-size: 16px;
+            }
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--charcoal-gray);
+            color: var(--pure-white);
+            min-height: 100vh;
+            line-height: 1.5;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* BACKGROUND LINES - Simplified */
+        .bg-lines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+            opacity: 0.1;
+        }
+
+        .line {
+            position: absolute;
+            background: linear-gradient(90deg, transparent, var(--steel-blue), transparent);
+            width: 2px;
+            height: 100px;
+            animation: floatLine 20s infinite linear;
+        }
+
+        @keyframes floatLine {
+            0% {
+                transform: translateX(-100%) translateY(-100px) rotate(45deg);
+            }
+            100% {
+                transform: translateX(100vw) translateY(100vh) rotate(45deg);
+            }
+        }
+
+        /* MAIN CONTAINER */
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 0 16px;
+        }
+
+        @media (min-width: 640px) {
+            .container {
+                padding: 0 24px;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .container {
+                max-width: 1200px;
+                padding: 0 32px;
+            }
+        }
+
+        /* HEADER - Simplified */
+        .header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(2, 6, 23, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(74, 95, 138, 0.2);
+            padding: 16px 0;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: var(--pure-white);
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .logo-icon {
+            font-size: 1.3rem;
+            color: var(--accent-blue);
+        }
+
+        .back-btn {
+            background: transparent;
+            border: 1px solid var(--steel-blue);
+            color: var(--pure-white);
+            width: 36px;
+            height: 36px;
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .back-btn:hover {
+            border-color: var(--accent-blue);
+            background: rgba(59, 130, 246, 0.1);
+        }
+
+        /* MAIN CONTENT */
+        .main-content {
+            padding-top: 24px;
+            padding-bottom: 100px;
+            min-height: calc(100vh - 120px);
+        }
+
+        /* PAGE HEADER */
+        .page-header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .page-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--pure-white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .page-subtitle {
+            font-size: 0.95rem;
+            color: var(--light-steel);
+            max-width: 500px;
+            margin: 0 auto;
+            line-height: 1.4;
+        }
+
+        /* BONUS SECTION */
+        .bonus-section {
+            margin-bottom: 32px;
+        }
+
+        .section-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--pure-white);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .bonus-cards {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+        }
+
+        @media (min-width: 640px) {
+            .bonus-cards {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .bonus-card {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(139, 92, 246, 0.1));
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            border: 1px solid rgba(74, 95, 138, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .bonus-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-blue), #8b5cf6);
+        }
+
+        .bonus-amount {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--success-green);
+            margin-bottom: 12px;
+            line-height: 1;
+        }
+
+        .bonus-label {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--pure-white);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .bonus-description {
+            font-size: 0.9rem;
+            color: var(--light-steel);
+            line-height: 1.4;
+        }
+
+        /* REFERRAL CODE SECTION */
+        .referral-section {
+            margin-bottom: 32px;
+        }
+
+        .referral-card {
+            background: rgba(2, 6, 23, 0.6);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            border: 1px solid rgba(74, 95, 138, 0.2);
+        }
+
+        .code-display {
+            background: var(--jet-black);
+            border: 1px solid var(--steel-blue);
+            border-radius: var(--radius-md);
+            padding: 16px;
+            font-family: 'Courier New', monospace;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--accent-blue);
+            text-align: center;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+            word-break: break-all;
+        }
+
+        .link-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        @media (min-width: 480px) {
+            .link-container {
+                flex-direction: row;
+            }
+        }
+
+        .link-input {
+            flex: 1;
+            background: var(--jet-black);
+            border: 1px solid var(--steel-blue);
+            border-radius: var(--radius-md);
+            padding: 12px 16px;
+            color: var(--light-steel);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            outline: none;
+            transition: var(--transition);
+            min-width: 0;
+        }
+
+        .link-input:focus {
+            border-color: var(--accent-blue);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 20px;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            outline: none;
+            text-align: center;
+            gap: 8px;
+            text-decoration: none;
+            min-height: 44px;
+            white-space: nowrap;
+        }
+
+        .btn-primary {
+            background: var(--accent-blue);
+            color: var(--pure-white);
+        }
+
+        .btn-primary:hover {
+            background: #2563eb;
+            transform: translateY(-1px);
+        }
+
+        .btn-success {
+            background: var(--success-green);
+            color: var(--pure-white);
+        }
+
+        .btn-success:hover {
+            background: #0da271;
+            transform: translateY(-1px);
+        }
+
+        .copy-instruction {
+            font-size: 0.85rem;
+            color: var(--light-steel);
+            text-align: center;
+            margin-top: 8px;
+        }
+
+        /* STATISTICS SECTION */
+        .stats-section {
+            margin-bottom: 32px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+
+        @media (min-width: 768px) {
+            .stats-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .stat-card {
+            background: rgba(2, 6, 23, 0.6);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            text-align: center;
+            border: 1px solid rgba(74, 95, 138, 0.2);
+            transition: var(--transition);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-2px);
+            border-color: var(--accent-blue);
+        }
+
+        .stat-icon {
+            font-size: 1.5rem;
+            color: var(--accent-blue);
+            margin-bottom: 12px;
+        }
+
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--pure-white);
+            margin-bottom: 4px;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--light-steel);
+        }
+
+        /* ACTIVITY SECTION */
+        .activity-section {
+            margin-bottom: 32px;
+        }
+
+        .activity-card {
+            background: rgba(2, 6, 23, 0.6);
+            border-radius: var(--radius-lg);
+            border: 1px solid rgba(74, 95, 138, 0.2);
+            overflow: hidden;
+            max-height: 400px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .activity-header {
+            padding: 20px;
+            background: rgba(2, 6, 23, 0.8);
+            border-bottom: 1px solid rgba(74, 95, 138, 0.2);
+            flex-shrink: 0;
+        }
+
+        .activity-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 0;
+            margin: 0;
+            list-style: none;
+        }
+
+        .activity-list::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .activity-list::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .activity-list::-webkit-scrollbar-thumb {
+            background: var(--steel-blue);
+            border-radius: 3px;
+        }
+
+        .activity-item {
+            padding: 16px 20px;
+            border-bottom: 1px solid rgba(74, 95, 138, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+
+        .activity-avatar {
+            width: 36px;
+            height: 36px;
+            min-width: 36px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--steel-blue), var(--accent-blue));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--pure-white);
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .activity-details {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .activity-user {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--pure-white);
+            margin-bottom: 4px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .activity-info {
+            font-size: 0.8rem;
+            color: var(--light-steel);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .activity-bonus {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--success-green);
+            white-space: nowrap;
+        }
+
+        .empty-activity {
+            padding: 40px 20px;
+            text-align: center;
+            color: var(--light-steel);
+        }
+
+        .empty-activity i {
+            font-size: 2.5rem;
+            margin-bottom: 16px;
+            color: var(--steel-blue);
+        }
+
+        /* CTA SECTION */
+        .cta-section {
+            margin-bottom: 32px;
+        }
+
+        .cta-card {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(16, 185, 129, 0.1));
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            text-align: center;
+            border: 1px solid rgba(74, 95, 138, 0.3);
+        }
+
+        /* BOTTOM NAVIGATION - TERKUNCI */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(2, 6, 23, 0.95);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid var(--glass-border);
+            z-index: 1000;
+            padding: 12px 0;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            animation: navSlideUp 0.6s ease-out 1s forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        @keyframes navSlideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: var(--light-steel);
+            transition: var(--transition);
+            padding: 4px 0;
+            position: relative;
+        }
+
+        .nav-item.active {
+            color: var(--accent-blue);
+        }
+
+        .nav-icon {
+            font-size: 20px;
+            margin-bottom: 4px;
+            transition: var(--transition);
+        }
+
+        .nav-label {
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+        }
+
+        .nav-item.active .nav-icon {
+            transform: translateY(-2px);
+        }
+
+        .nav-item.active::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30px;
+            height: 3px;
+            background: var(--accent-blue);
+            border-radius: 0 0 2px 2px;
+            box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+        }
+
+        /* TOAST NOTIFICATION */
+        .toast {
+            position: fixed;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%) translateY(30px);
+            background: var(--jet-black);
+            color: var(--pure-white);
+            padding: 12px 24px;
+            border-radius: var(--radius-md);
+            font-size: 0.9rem;
+            font-weight: 500;
+            z-index: 1000;
+            opacity: 0;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-lg);
+            max-width: 90%;
+            text-align: center;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            border: 1px solid var(--steel-blue);
+            pointer-events: none;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* LOADING STATES */
+        .skeleton {
+            background: linear-gradient(90deg, 
+                rgba(74, 95, 138, 0.1) 25%, 
+                rgba(74, 95, 138, 0.2) 50%, 
+                rgba(74, 95, 138, 0.1) 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+            border-radius: var(--radius-md);
+        }
+
+        @keyframes loading {
+            0% {
+                background-position: 200% 0;
+            }
+            100% {
+                background-position: -200% 0;
+            }
+        }
+
+        .skeleton-card {
+            height: 120px;
+            margin-bottom: 16px;
+        }
+
+        .skeleton-stat {
+            height: 100px;
+        }
+
+        .skeleton-item {
+            height: 60px;
+            margin: 8px 0;
+        }
+
+        /* UTILITY CLASSES */
+        .hidden {
+            display: none !important;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .text-truncate {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        /* ANIMATIONS */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        /* RESPONSIVE ADJUSTMENTS */
+        @media (max-width: 480px) {
+            .page-title {
+                font-size: 1.5rem;
+                flex-direction: column;
+                gap: 8px;
+            }
+            
+            .bonus-amount {
+                font-size: 1.8rem;
+            }
+            
+            .stat-value {
+                font-size: 1.5rem;
+            }
+            
+            .code-display {
+                font-size: 1rem;
+                padding: 12px;
+            }
+            
+            .btn {
+                padding: 10px 16px;
+                font-size: 0.85rem;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .main-content {
+                padding-top: 32px;
+                padding-bottom: 120px;
+            }
+            
+            .page-title {
+                font-size: 2rem;
+            }
+            
+            .section-title {
+                font-size: 1.4rem;
+            }
+            
+            .bonus-amount {
+                font-size: 2.2rem;
+            }
+            
+            .stat-value {
+                font-size: 2rem;
+            }
+            
+            .bottom-nav {
+                padding: 16px 0;
+            }
+            
+            .nav-icon {
+                font-size: 1.4rem;
+            }
+            
+            .nav-label {
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Lines -->
+    <div class="bg-lines" id="bgLines"></div>
+    
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="dashboard.html" class="logo">
+                    <i class="fas fa-feather-alt logo-icon"></i>
+                    <span>Solvara Nusantara</span>
+                </a>
+                 </div>
+        </div>
+    </header>
+    
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Page Header -->
+            <section class="page-header fade-in">
+                <h1 class="page-title">
+                    <i class="fas fa-user-group"></i>
+                    Referral & Bonus
+                </h1>
+                <p class="page-subtitle">
+                    Dashboard Penghasilan Referral - Ajak teman dan dapatkan reward tambahan
+                </p>
+            </section>
+            
+            <!-- Bonus Section -->
+            <section class="bonus-section fade-in" style="animation-delay: 0.1s">
+                <h2 class="section-title">
+                    <i class="fas fa-gift"></i>
+                    Bonus & Hadiah
+                </h2>
+                <div class="bonus-cards">
+                    <div class="bonus-card">
+                        <div class="bonus-amount" id="bonusDaftar">Rp 17.777</div>
+                        <div class="bonus-label">
+                            <i class="fas fa-user-plus"></i>
+                            Bonus Pendaftaran
+                        </div>
+                        <p class="bonus-description">
+                            Dapatkan bonus langsung saat user berhasil mendaftar dan akun tersimpan di sistem.
+                        </p>
+                    </div>
+                    
+                    <div class="bonus-card">
+                        <div class="bonus-amount" id="bonusReferral">Rp 2.500</div>
+                        <div class="bonus-label">
+                            <i class="fas fa-users"></i>
+                            Hadiah Referral
+                        </div>
+                        <p class="bonus-description">
+                            Dapatkan hadiah untuk setiap teman yang berhasil Anda ajak bergabung melalui link referral.
+                        </p>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Referral Code Section -->
+            <section class="referral-section fade-in" style="animation-delay: 0.2s">
+                <h2 class="section-title">
+                    <i class="fas fa-link"></i>
+                    Kode & Link Referral
+                </h2>
+                <div class="referral-card">
+                    <div class="code-display" id="referralCodeDisplay">Loading...</div>
+                    <div class="link-container">
+                        <input type="text" class="link-input" id="referralLink" readonly value="Loading...">
+                        <button class="btn btn-success" id="copyLinkBtn">
+                            <i class="fas fa-copy"></i>
+                            Salin Link
+                        </button>
+                    </div>
+                    <p class="copy-instruction">Bagikan link di atas untuk mengajak teman bergabung</p>
+                    <div style="margin-top: 16px; display: flex; gap: 12px;">
+                        <button class="btn btn-primary" id="copyCodeBtn" style="flex: 1;">
+                            <i class="fas fa-copy"></i>
+                            Salin Kode
+                        </button>
+                        <button class="btn btn-primary" onclick="shareReferral()" style="flex: 1;">
+                            <i class="fas fa-share"></i>
+                            Bagikan
+                        </button>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Statistics Section -->
+            <section class="stats-section fade-in" style="animation-delay: 0.3s">
+                <h2 class="section-title">
+                    <i class="fas fa-chart-line"></i>
+                    Statistik Referral
+                </h2>
+                <div class="stats-grid">
+                    <div class="stat-card" id="statTotalReferrals">
+                        <div class="stat-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-value">0</div>
+                        <div class="stat-label">Total Referral</div>
+                    </div>
+                    
+                    <div class="stat-card" id="statActiveReferrals">
+                        <div class="stat-icon">
+                            <i class="fas fa-user-check"></i>
+                        </div>
+                        <div class="stat-value">0</div>
+                        <div class="stat-label">Referral Aktif</div>
+                    </div>
+                    
+                    <div class="stat-card" id="statTotalBonus">
+                        <div class="stat-icon">
+                            <i class="fas fa-money-bill-wave"></i>
+                        </div>
+                        <div class="stat-value">Rp 0</div>
+                        <div class="stat-label">Total Bonus</div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Activity Section -->
+            <section class="activity-section fade-in" style="animation-delay: 0.4s">
+                <h2 class="section-title">
+                    <i class="fas fa-history"></i>
+                    Aktivitas Terbaru
+                </h2>
+                <div class="activity-card" id="activityCard">
+                    <div class="activity-header">
+                        <h3 style="font-size: 1rem; font-weight: 600; color: var(--pure-white);">
+                            Daftar Referral
+                        </h3>
+                    </div>
+                    <div id="activityList">
+                        <!-- Loading skeleton -->
+                        <div class="activity-list">
+                            <div class="skeleton skeleton-item"></div>
+                            <div class="skeleton skeleton-item"></div>
+                            <div class="skeleton skeleton-item"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- CTA Section -->
+            <section class="cta-section fade-in" style="animation-delay: 0.5s">
+                <div class="cta-card">
+                    <h3 style="font-size: 1.2rem; font-weight: 600; margin-bottom: 12px; color: var(--pure-white);">
+                        Mulai Bagikan Sekarang
+                    </h3>
+                    <p style="color: var(--light-steel); margin-bottom: 20px; font-size: 0.95rem;">
+                        Semakin banyak teman yang bergabung, semakin besar penghasilan bonus Anda.
+                    </p>
+                    <button class="btn btn-primary" onclick="shareReferral()" style="min-width: 200px;">
+                        <i class="fas fa-share-alt"></i>
+                        Bagikan Referral
+                    </button>
+                </div>
+            </section>
+        </div>
+    </main>
+    
+    <!-- Bottom Navigation - Terkunci -->
+    <nav class="bottom-nav">
+        <a href="dashboard.html" class="nav-item">
+            <i class="fas fa-home nav-icon"></i>
+            <span class="nav-label">Dashboard</span>
+        </a>
+        <a href="produk.html" class="nav-item">
+            <i class="fas fa-cubes nav-icon"></i>
+            <span class="nav-label">Produk</span>
+        </a>
+        <a href="referral.html" class="nav-item active">
+            <i class="fas fa-user-group nav-icon"></i>
+            <span class="nav-label">Referral</span>
+        </a>
+        <a href="profil.html" class="nav-item">
+            <i class="fas fa-id-card nav-icon"></i>
+            <span class="nav-label">Profil</span>
+        </a>
+    </nav>
+    
+    <!-- Toast Notification -->
+    <div class="toast" id="toast"></div>
+    
+    <!-- Firebase SDK -->
+    <script type="module">
+        // Import Firebase modules
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-app.js";
+        import { 
+            getAuth, 
+            onAuthStateChanged
+        } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-auth.js";
+        import { 
+            getFirestore, 
+            doc, 
+            getDoc, 
+            collection, 
+            query, 
+            where, 
+            orderBy, 
+            onSnapshot 
+        } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-firestore.js";
+
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyAXzEqxkuqbV9XJE9_CUGcDD9zO3fSdqB4",
+            authDomain: "sulvaranusantara.firebaseapp.com",
+            projectId: "sulvaranusantara",
+            storageBucket: "sulvaranusantara.firebasestorage.app",
+            messagingSenderId: "591964491640",
+            appId: "1:591964491640:web:34221ae11c2d810b9a028d"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        // DOM Elements
+        const referralCodeDisplay = document.getElementById('referralCodeDisplay');
+        const referralLink = document.getElementById('referralLink');
+        const copyCodeBtn = document.getElementById('copyCodeBtn');
+        const copyLinkBtn = document.getElementById('copyLinkBtn');
+        const statTotalReferrals = document.getElementById('statTotalReferrals').querySelector('.stat-value');
+        const statActiveReferrals = document.getElementById('statActiveReferrals').querySelector('.stat-value');
+        const statTotalBonus = document.getElementById('statTotalBonus').querySelector('.stat-value');
+        const activityList = document.getElementById('activityList');
+        const toastEl = document.getElementById('toast');
+
+        // Global Variables
+        let currentUser = null;
+        let userData = null;
+        let referralCode = '';
+
+        // Generate Background Lines
+        function createBackgroundLines() {
+            const bgLines = document.getElementById('bgLines');
+            const lineCount = 8; // Reduced for better performance
+            
+            for (let i = 0; i < lineCount; i++) {
+                const line = document.createElement('div');
+                line.className = 'line';
+                
+                const width = Math.random() * 2 + 1;
+                const left = Math.random() * 100;
+                const delay = Math.random() * 10;
+                const duration = Math.random() * 15 + 10;
+                
+                line.style.width = `${width}px`;
+                line.style.left = `${left}%`;
+                line.style.animationDelay = `${delay}s`;
+                line.style.animationDuration = `${duration}s`;
+                
+                bgLines.appendChild(line);
+            }
+        }
+
+        // Toast Notification Function
+        function showToast(message, duration = 3000) {
+            toastEl.textContent = message;
+            toastEl.classList.add('show');
+            
+            setTimeout(() => {
+                toastEl.classList.remove('show');
+            }, duration);
+        }
+
+        // Format Currency
+        function formatCurrency(amount) {
+            if (amount >= 1000000) {
+                return 'Rp' + (amount / 1000000).toFixed(1).replace('.', ',') + 'Jt';
+            } else if (amount >= 1000) {
+                return 'Rp' + (amount / 1000).toFixed(0) + 'rb';
+            }
+            return 'Rp' + amount.toLocaleString('id-ID');
+        }
+
+        // Format Date
+        function formatDate(date) {
+            const d = date.toDate();
+            const now = new Date();
+            const diffTime = Math.abs(now - d);
+            const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+            
+            if (diffDays === 0) {
+                return 'Hari ini';
+            } else if (diffDays === 1) {
+                return 'Kemarin';
+            } else if (diffDays < 7) {
+                return diffDays + ' hari lalu';
+            } else {
+                return d.toLocaleDateString('id-ID', {
+                    day: '2-digit',
+                    month: 'short',
+                    year: 'numeric'
+                });
+            }
+        }
+
+        // Animate Counter
+        function animateCounter(element, targetValue, isCurrency = false, duration = 800) {
+            const startText = element.textContent;
+            const startValue = isCurrency ? 
+                parseInt(startText.replace(/[^\d]/g, '') || 0) : 
+                parseInt(startText.replace(/\D/g, '') || 0);
+            
+            const startTime = performance.now();
+            
+            function updateCounter(currentTime) {
+                const elapsedTime = currentTime - startTime;
+                const progress = Math.min(elapsedTime / duration, 1);
+                
+                // Easing function
+                const easeOut = 1 - Math.pow(1 - progress, 2);
+                const currentValue = Math.floor(startValue + (targetValue - startValue) * easeOut);
+                
+                element.textContent = isCurrency ? formatCurrency(currentValue) : currentValue.toLocaleString();
+                
+                if (progress < 1) {
+                    requestAnimationFrame(updateCounter);
+                } else {
+                    element.textContent = isCurrency ? formatCurrency(targetValue) : targetValue.toLocaleString();
+                }
+            }
+            
+            requestAnimationFrame(updateCounter);
+        }
+
+        // Load User Data
+        async function loadUserData(uid) {
+            try {
+                const userDoc = await getDoc(doc(db, 'users', uid));
+                
+                if (userDoc.exists()) {
+                    userData = userDoc.data();
+                    referralCode = userData.kodeReffUser || 'SN0000';
+                    
+                    // Update UI with user data
+                    referralCodeDisplay.textContent = referralCode;
+                    
+                    const link = `${window.location.origin}/daftar.html?ref=${referralCode}`;
+                    referralLink.value = link;
+                    
+                    // Load statistics
+                    loadStatistics(uid);
+                    
+                    // Load activity feed
+                    loadActivityFeed(uid);
+                } else {
+                    console.error('User document not found');
+                    showToast('Data pengguna tidak ditemukan', 3000);
+                }
+            } catch (error) {
+                console.error('Error loading user data:', error);
+                showToast('Gagal memuat data pengguna', 3000);
+            }
+        }
+
+        // Load Statistics
+        function loadStatistics(uid) {
+            try {
+                // Real-time listener for user data
+                const userDocRef = doc(db, 'users', uid);
+                
+                onSnapshot(userDocRef, (docSnapshot) => {
+                    if (docSnapshot.exists()) {
+                        const data = docSnapshot.data();
+                        
+                        // Update statistics
+                        const totalReferrals = data.totalReferral || 0;
+                        const activeReferrals = data.activeReferral || 0;
+                        const totalBonus = data.referralBonusTotal || 0;
+                        
+                        animateCounter(statTotalReferrals, totalReferrals, false);
+                        animateCounter(statActiveReferrals, activeReferrals, false);
+                        animateCounter(statTotalBonus, totalBonus, true);
+                    }
+                });
+                
+            } catch (error) {
+                console.error('Error loading statistics:', error);
+            }
+        }
+
+        // Load Activity Feed
+        function loadActivityFeed(uid) {
+            try {
+                const referralQuery = query(
+                    collection(db, 'users'),
+                    where('referredBy', '==', referralCode),
+                    orderBy('createdAt', 'desc')
+                );
+                
+                onSnapshot(referralQuery, (snapshot) => {
+                    if (snapshot.empty) {
+                        activityList.innerHTML = `
+                            <div class="empty-activity">
+                                <i class="fas fa-user-friends"></i>
+                                <p>Belum ada aktivitas referral</p>
+                                <p style="margin-top: 8px; font-size: 0.9rem;">Bagikan link referral Anda untuk mulai mendapatkan bonus</p>
+                            </div>
+                        `;
+                        return;
+                    }
+                    
+                    let activityHTML = '<ul class="activity-list">';
+                    let index = 0;
+                    
+                    snapshot.forEach((doc) => {
+                        const data = doc.data();
+                        const username = data.username || data.email.split('@')[0];
+                        const joinDate = data.createdAt;
+                        const isActive = (data.totalDeposit || 0) > 0;
+                        const bonusEarned = 2500;
+                        
+                        const initial = username.charAt(0).toUpperCase();
+                        const dateStr = joinDate ? formatDate(joinDate) : '-';
+                        
+                        activityHTML += `
+                            <li class="activity-item">
+                                <div class="activity-avatar">${initial}</div>
+                                <div class="activity-details">
+                                    <div class="activity-user">${username}</div>
+                                    <div class="activity-info">
+                                        <span>${dateStr}</span>
+                                        <span>•</span>
+                                        <span style="color: ${isActive ? '#10b981' : '#f59e0b'}">
+                                            ${isActive ? 'Aktif' : 'Baru'}
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="activity-bonus">+${formatCurrency(bonusEarned)}</div>
+                            </li>
+                        `;
+                        
+                        index++;
+                    });
+                    
+                    activityHTML += '</ul>';
+                    activityList.innerHTML = activityHTML;
+                    
+                }, (error) => {
+                    console.error('Error loading activity feed:', error);
+                    activityList.innerHTML = `
+                        <div class="empty-activity">
+                            <i class="fas fa-exclamation-circle"></i>
+                            <p>Gagal memuat aktivitas referral</p>
+                        </div>
+                    `;
+                });
+                
+            } catch (error) {
+                console.error('Error setting up activity feed listener:', error);
+            }
+        }
+
+        window.shareReferral = function () {
+    if (navigator.share) {
+        navigator.share({
+            title: 'Gabung Solvara Nusantara',
+            text: `Dapatkan bonus Rp 17.777 dengan bergabung melalui link saya! Kode referral: ${referralCode}`,
+            url: referralLink.value,
+        })
+        .then(() => showToast('Berhasil membagikan referral!', 3000))
+        .catch(() => {
+            copyLink();
+        });
+    } else {
+        copyLink();
+    }
+}
+
+        // Copy Link Function
+        function copyLink() {
+            navigator.clipboard.writeText(referralLink.value)
+                .then(() => {
+                    showToast('Link referral berhasil disalin!', 2000);
+                    copyLinkBtn.innerHTML = '<i class="fas fa-check"></i> Tersalin';
+                    copyLinkBtn.classList.add('btn-success');
+                    
+                    setTimeout(() => {
+                        copyLinkBtn.innerHTML = '<i class="fas fa-copy"></i> Salin Link';
+                        copyLinkBtn.classList.remove('btn-success');
+                    }, 2000);
+                })
+                .catch(() => {
+                    // Fallback for older browsers
+                    referralLink.select();
+                    document.execCommand('copy');
+                    showToast('Link berhasil disalin!', 2000);
+                });
+        }
+
+        // Event Listeners
+        copyCodeBtn.addEventListener('click', async () => {
+            try {
+                await navigator.clipboard.writeText(referralCode);
+                showToast('Kode referral berhasil disalin!', 2000);
+                copyCodeBtn.innerHTML = '<i class="fas fa-check"></i> Tersalin';
+                copyCodeBtn.style.background = 'var(--success-green)';
+                
+                setTimeout(() => {
+                    copyCodeBtn.innerHTML = '<i class="fas fa-copy"></i> Salin Kode';
+                    copyCodeBtn.style.background = '';
+                }, 2000);
+            } catch (error) {
+                console.error('Error copying code:', error);
+                showToast('Gagal menyalin kode', 2000);
+            }
+        });
+
+        copyLinkBtn.addEventListener('click', copyLink);
+
+        // Auth State Listener
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                currentUser = user;
+                loadUserData(user.uid);
+            } else {
+                // User not logged in, redirect to login
+                window.location.href = 'login.html';
+            }
+        });
+
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', () => {
+            createBackgroundLines();
+            
+            
+            
+           // Improve button tap feedback
+            document.querySelectorAll('.btn').forEach(btn => {
+                btn.addEventListener('touchstart', function() {
+                    this.style.transform = 'scale(0.98)';
+                });
+                
+                btn.addEventListener('touchend', function() {
+                    this.style.transform = '';
+                });
+            });
+        });
+
+    </script>
+</body>
+</html>

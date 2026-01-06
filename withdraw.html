@@ -1,0 +1,1666 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <meta name="description" content="Solvara Nusantara - Withdraw Dana dengan Sistem Terverifikasi">
+    <meta name="theme-color" content="#0f1a2e">
+    <title>Withdraw | Solvara Nusantara</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* RESET & BASE STYLES - Mengikuti index.html */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --navy-blue: #0f1a2e;
+            --charcoal-gray: #1e293b;
+            --pure-white: #ffffff;
+            --jet-black: #020617;
+            --steel-blue: #4a5f8a;
+            --light-steel: #64748b;
+            --accent-blue: #3b82f6;
+            --success-green: #10b981;
+            --error-red: #ef4444;
+            --warning-yellow: #f59e0b;
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --transition: all 0.3s ease;
+            --shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.15);
+            --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.2);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--charcoal-gray);
+            color: var(--pure-white);
+            min-height: 100vh;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* ANIMATED BACKGROUND - Sama seperti index.html */
+        .bg-lines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            overflow: hidden;
+            opacity: 0.15;
+        }
+
+        .line {
+            position: absolute;
+            background: linear-gradient(90deg, transparent, var(--steel-blue), transparent);
+            animation: floatLine 20s infinite linear;
+        }
+
+        @keyframes floatLine {
+            0% {
+                transform: translateX(-100%) translateY(0) rotate(45deg);
+            }
+            100% {
+                transform: translateX(100vw) translateY(-100vh) rotate(45deg);
+            }
+        }
+
+        /* PAGE ENTRANCE ANIMATION */
+        .page-content {
+            animation: pageEntrance 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        @keyframes pageEntrance {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* HEADER - Mengikuti index.html tapi simplified */
+        .withdraw-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(2, 6, 23, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(74, 95, 138, 0.2);
+            padding: 16px;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .back-btn {
+            background: rgba(74, 95, 138, 0.1);
+            border: 1px solid rgba(74, 95, 138, 0.3);
+            border-radius: var(--radius-md);
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--pure-white);
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+
+        .back-btn:hover {
+            background: rgba(74, 95, 138, 0.2);
+            transform: translateY(-1px);
+        }
+
+        .header-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: var(--pure-white);
+        }
+
+        .header-logo {
+            font-size: 20px;
+            color: var(--accent-blue);
+        }
+
+        .header-title {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .header-subtitle {
+            font-size: 12px;
+            color: var(--light-steel);
+            margin-left: 8px;
+        }
+
+        /* MAIN CONTENT */
+        .main-content {
+            padding: 80px 16px 80px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        /* SALDO HERO SECTION - UI Baru */
+        .saldo-hero {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(16, 185, 129, 0.1));
+            border-radius: var(--radius-lg);
+            padding: 30px 24px;
+            margin-bottom: 24px;
+            text-align: center;
+            border: 1px solid rgba(74, 95, 138, 0.3);
+            animation: heroFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes heroFloat {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-3px);
+            }
+        }
+
+        .saldo-label {
+            font-size: 14px;
+            color: var(--light-steel);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .saldo-amount {
+            font-size: 42px;
+            font-weight: 700;
+            color: var(--pure-white);
+            margin-bottom: 16px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .saldo-icon {
+            font-size: 24px;
+            color: var(--accent-blue);
+        }
+
+        /* PENDING STATE - UI Baru */
+        .pending-state {
+            background: rgba(245, 158, 11, 0.05);
+            border: 1px solid rgba(245, 158, 11, 0.2);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            margin-bottom: 24px;
+            text-align: center;
+            animation: pulseWarning 2s infinite;
+        }
+
+        @keyframes pulseWarning {
+            0%, 100% {
+                box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.1);
+            }
+            50% {
+                box-shadow: 0 0 0 10px rgba(245, 158, 11, 0);
+            }
+        }
+
+        .pending-icon {
+            font-size: 48px;
+            color: var(--warning-yellow);
+            margin-bottom: 16px;
+        }
+
+        .pending-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--warning-yellow);
+            margin-bottom: 8px;
+        }
+
+        .pending-text {
+            font-size: 14px;
+            color: var(--light-steel);
+            line-height: 1.5;
+        }
+
+        /* INPUT SECTION - UI Baru */
+        .input-section {
+            background: var(--jet-black);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            margin-bottom: 24px;
+            border: 1px solid rgba(74, 95, 138, 0.2);
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--pure-white);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title i {
+            color: var(--accent-blue);
+        }
+
+        /* BANK SELECTOR - UI Baru */
+        .bank-selector {
+            margin-bottom: 20px;
+        }
+
+        .bank-display {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px;
+            background: rgba(74, 95, 138, 0.05);
+            border-radius: var(--radius-md);
+            border: 1px solid rgba(74, 95, 138, 0.2);
+            cursor: pointer;
+            transition: var(--transition);
+            margin-bottom: 12px;
+        }
+
+        .bank-display:hover {
+            background: rgba(74, 95, 138, 0.1);
+            border-color: var(--accent-blue);
+            transform: translateY(-1px);
+        }
+
+        .bank-icon {
+            font-size: 24px;
+            color: var(--accent-blue);
+            width: 40px;
+            height: 40px;
+            background: rgba(59, 130, 246, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .bank-info {
+            flex: 1;
+        }
+
+        .bank-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--pure-white);
+            margin-bottom: 4px;
+        }
+
+        .bank-details {
+            font-size: 12px;
+            color: var(--light-steel);
+        }
+
+        .bank-chevron {
+            color: var(--light-steel);
+            font-size: 14px;
+        }
+
+        .add-bank-btn {
+            width: 100%;
+            padding: 14px;
+            background: transparent;
+            border: 2px dashed rgba(74, 95, 138, 0.4);
+            border-radius: var(--radius-md);
+            color: var(--accent-blue);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .add-bank-btn:hover {
+            background: rgba(59, 130, 246, 0.05);
+            border-color: var(--accent-blue);
+            transform: translateY(-1px);
+        }
+
+        /* AMOUNT INPUT - UI Baru */
+        .amount-input-container {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .amount-label {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .amount-label-text {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--pure-white);
+        }
+
+        .amount-hint {
+            font-size: 12px;
+            color: var(--light-steel);
+        }
+
+        .amount-input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .amount-prefix {
+            position: absolute;
+            left: 16px;
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--accent-blue);
+            z-index: 1;
+        }
+
+        .amount-input {
+            width: 100%;
+            padding: 16px 16px 16px 50px;
+            background: rgba(74, 95, 138, 0.05);
+            border: 2px solid rgba(74, 95, 138, 0.3);
+            border-radius: var(--radius-md);
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--pure-white);
+            transition: var(--transition);
+            font-family: 'Inter', sans-serif;
+        }
+
+        .amount-input:focus {
+            outline: none;
+            border-color: var(--accent-blue);
+            background: rgba(59, 130, 246, 0.05);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .amount-input::placeholder {
+            color: var(--light-steel);
+        }
+
+        .amount-suggestions {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+            flex-wrap: wrap;
+        }
+
+        .amount-suggestion {
+            padding: 8px 16px;
+            background: rgba(74, 95, 138, 0.1);
+            border: 1px solid rgba(74, 95, 138, 0.2);
+            border-radius: 20px;
+            font-size: 14px;
+            color: var(--light-steel);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .amount-suggestion:hover {
+            background: rgba(59, 130, 246, 0.1);
+            color: var(--accent-blue);
+            border-color: var(--accent-blue);
+        }
+
+        /* SUBMIT SECTION - UI Baru */
+        .submit-section {
+            margin-top: 32px;
+            padding-top: 24px;
+            border-top: 1px solid rgba(74, 95, 138, 0.2);
+        }
+
+        .submit-info {
+            background: rgba(16, 185, 129, 0.05);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            border-radius: var(--radius-md);
+            padding: 16px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .submit-info.show {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .submit-info-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--success-green);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .submit-info-text {
+            font-size: 13px;
+            color: var(--light-steel);
+            line-height: 1.5;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 18px;
+            background: var(--accent-blue);
+            border: none;
+            border-radius: var(--radius-md);
+            color: var(--pure-white);
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .submit-btn:disabled {
+            background: var(--steel-blue);
+            cursor: not-allowed;
+            opacity: 0.6;
+            transform: none !important;
+        }
+
+        .submit-btn:not(:disabled):hover {
+            background: #2563eb;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        }
+
+        .submit-btn:not(:disabled):active {
+            transform: scale(0.98);
+        }
+
+        .btn-loading {
+            position: relative;
+            color: transparent;
+        }
+
+        .btn-loading:after {
+            content: "";
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--pure-white);
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* INFO PANEL - UI Baru */
+        .info-panel {
+            background: var(--jet-black);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            margin-bottom: 24px;
+            border: 1px solid rgba(74, 95, 138, 0.2);
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-top: 16px;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            background: rgba(74, 95, 138, 0.05);
+            border-radius: var(--radius-md);
+        }
+
+        .info-icon {
+            width: 32px;
+            height: 32px;
+            background: rgba(59, 130, 246, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent-blue);
+            flex-shrink: 0;
+        }
+
+        .info-content {
+            flex: 1;
+        }
+
+        .info-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--pure-white);
+            margin-bottom: 2px;
+        }
+
+        .info-text {
+            font-size: 12px;
+            color: var(--light-steel);
+        }
+
+        /* MODAL - UI Baru */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(4px);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .modal {
+            background: var(--jet-black);
+            border-radius: var(--radius-lg);
+            width: 100%;
+            max-width: 400px;
+            max-height: 90vh;
+            overflow-y: auto;
+            transform: translateY(20px) scale(0.95);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(74, 95, 138, 0.3);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .modal-overlay.active .modal {
+            transform: translateY(0) scale(1);
+        }
+
+        .modal-header {
+            padding: 20px 24px;
+            border-bottom: 1px solid rgba(74, 95, 138, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .modal-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--pure-white);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .modal-close {
+            background: rgba(74, 95, 138, 0.1);
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            color: var(--light-steel);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .modal-close:hover {
+            background: rgba(74, 95, 138, 0.2);
+            color: var(--pure-white);
+            transform: rotate(90deg);
+        }
+
+        .modal-body {
+            padding: 24px;
+        }
+
+        .modal-input-group {
+            margin-bottom: 20px;
+        }
+
+        .modal-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--pure-white);
+            margin-bottom: 8px;
+        }
+
+        .modal-input {
+            width: 100%;
+            padding: 14px 16px;
+            background: rgba(74, 95, 138, 0.05);
+            border: 1px solid rgba(74, 95, 138, 0.3);
+            border-radius: var(--radius-md);
+            font-size: 14px;
+            color: var(--pure-white);
+            transition: var(--transition);
+        }
+
+        .modal-input:focus {
+            outline: none;
+            border-color: var(--accent-blue);
+            background: rgba(59, 130, 246, 0.05);
+        }
+
+        .modal-select {
+            width: 100%;
+            padding: 14px 16px;
+            background: rgba(74, 95, 138, 0.05);
+            border: 1px solid rgba(74, 95, 138, 0.3);
+            border-radius: var(--radius-md);
+            font-size: 14px;
+            color: var(--pure-white);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .modal-select:focus {
+            outline: none;
+            border-color: var(--accent-blue);
+            background: rgba(59, 130, 246, 0.05);
+        }
+
+        .modal-footer {
+            padding: 20px 24px;
+            border-top: 1px solid rgba(74, 95, 138, 0.3);
+            display: flex;
+            gap: 12px;
+        }
+
+        .modal-btn {
+            flex: 1;
+            padding: 14px;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            font-size: 14px;
+        }
+
+        .modal-btn-primary {
+            background: var(--accent-blue);
+            color: var(--pure-white);
+        }
+
+        .modal-btn-primary:hover:not(:disabled) {
+            background: #2563eb;
+            transform: translateY(-1px);
+        }
+
+        .modal-btn-secondary {
+            background: rgba(74, 95, 138, 0.1);
+            color: var(--pure-white);
+            border: 1px solid rgba(74, 95, 138, 0.3);
+        }
+
+        .modal-btn-secondary:hover:not(:disabled) {
+            background: rgba(74, 95, 138, 0.2);
+            transform: translateY(-1px);
+        }
+
+        .modal-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        /* FOOTER - WAJIB ADA */
+        .footer {
+            background: var(--jet-black);
+            padding: 40px 20px 20px;
+            border-top: 1px solid rgba(74, 95, 138, 0.3);
+            text-align: center;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--pure-white);
+            margin-bottom: 20px;
+            text-decoration: none;
+        }
+
+        .footer-logo-icon {
+            color: var(--accent-blue);
+            font-size: 20px;
+        }
+
+        .footer-text {
+            font-size: 14px;
+            color: var(--light-steel);
+        }
+
+        /* TOAST NOTIFICATION - UI Baru */
+        .toast {
+            position: fixed;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%) translateY(30px);
+            background: var(--jet-black);
+            color: var(--pure-white);
+            padding: 16px 24px;
+            border-radius: var(--radius-md);
+            font-size: 14px;
+            font-weight: 500;
+            z-index: 2000;
+            opacity: 0;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(74, 95, 138, 0.3);
+            box-shadow: var(--shadow-lg);
+            max-width: 90%;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .toast.success {
+            background: rgba(16, 185, 129, 0.1);
+            border-color: rgba(16, 185, 129, 0.3);
+            color: var(--success-green);
+        }
+
+        .toast.error {
+            background: rgba(239, 68, 68, 0.1);
+            border-color: rgba(239, 68, 68, 0.3);
+            color: var(--error-red);
+        }
+
+        .toast.warning {
+            background: rgba(245, 158, 11, 0.1);
+            border-color: rgba(245, 158, 11, 0.3);
+            color: var(--warning-yellow);
+        }
+
+        /* VALIDATION ERROR - UI Baru */
+        .validation-error {
+            background: rgba(239, 68, 68, 0.05);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            border-radius: var(--radius-md);
+            padding: 16px;
+            margin-bottom: 16px;
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .validation-error.show {
+            display: block;
+        }
+
+        .error-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--error-red);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .error-text {
+            font-size: 13px;
+            color: var(--light-steel);
+            line-height: 1.5;
+        }
+
+        /* RESPONSIVE */
+        @media (min-width: 768px) {
+            .main-content {
+                max-width: 600px;
+                padding: 100px 24px 100px;
+            }
+            
+            .saldo-hero {
+                padding: 40px 32px;
+            }
+            
+            .saldo-amount {
+                font-size: 48px;
+            }
+            
+            .info-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        /* UTILITY CLASSES */
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background Lines -->
+    <div class="bg-lines" id="bgLines"></div>
+    
+    <!-- Header -->
+    <header class="withdraw-header">
+        <div class="header-left">
+            <a href="dashboard.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i>
+            </a>
+            <a href="#" class="header-brand">
+                <i class="fas fa-feather-alt header-logo"></i>
+                <div>
+                    <div class="header-title">Withdraw</div>
+                    <div class="header-subtitle">Solvara Nusantara</div>
+                </div>
+            </a>
+        </div>
+    </header>
+    
+    <!-- Main Content -->
+    <main class="main-content page-content">
+        <!-- Pending Withdraw State (Initially Hidden) -->
+        <div class="pending-state hidden" id="pendingState">
+            <div class="pending-icon">
+                <i class="fas fa-clock"></i>
+            </div>
+            <h3 class="pending-title">Withdraw dalam Proses</h3>
+            <p class="pending-text">Anda memiliki withdraw yang sedang menunggu konfirmasi admin. Silakan tunggu hingga proses selesai sebelum melakukan withdraw baru.</p>
+        </div>
+        
+        <!-- Saldo Hero -->
+        <section class="saldo-hero">
+            <div class="saldo-label">
+                <i class="fas fa-wallet saldo-icon"></i>
+                <span>Saldo Tersedia</span>
+            </div>
+            <div class="saldo-amount" id="saldoAmount">Rp 0</div>
+        </section>
+        
+        <!-- Validation Error (Will be shown on submit if validation fails) -->
+        <div class="validation-error hidden" id="validationError">
+            <div class="error-title">
+                <i class="fas fa-exclamation-circle"></i>
+                Tidak dapat melakukan withdraw
+            </div>
+            <div class="error-text" id="errorText"></div>
+        </div>
+        
+        <!-- Withdraw Input Section -->
+        <section class="input-section">
+            <h3 class="section-title">
+                <i class="fas fa-money-bill-wave"></i>
+                Pengajuan Withdraw
+            </h3>
+            
+            <!-- Bank Selection -->
+            <div class="bank-selector">
+                <div class="bank-display" id="bankDisplay">
+                    <div class="bank-icon">
+                        <i class="fas fa-university"></i>
+                    </div>
+                    <div class="bank-info">
+                        <div class="bank-name" id="selectedBankName">Pilih Rekening</div>
+                        <div class="bank-details" id="selectedBankDetails">Klik untuk memilih rekening tujuan</div>
+                    </div>
+                    <div class="bank-chevron">
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                </div>
+                <button class="add-bank-btn" id="addBankBtn">
+                    <i class="fas fa-plus-circle"></i>
+                    Tambah Rekening Baru
+                </button>
+            </div>
+            
+            <!-- Amount Input -->
+            <div class="amount-input-container">
+                <div class="amount-label">
+                    <span class="amount-label-text">Nominal Withdraw</span>
+                    <span class="amount-hint">Minimal: Rp 50.000</span>
+                </div>
+                <div class="amount-input-wrapper">
+                    <span class="amount-prefix">Rp</span>
+                    <input 
+                        type="number" 
+                        class="amount-input" 
+                        id="withdrawAmount" 
+                        placeholder="50000"
+                        min="50000"
+                        step="1000"
+                        disabled
+                    >
+                </div>
+                <div class="amount-suggestions">
+                    <div class="amount-suggestion" data-amount="50000">Rp 50.000</div>
+                    <div class="amount-suggestion" data-amount="100000">Rp 100.000</div>
+                    <div class="amount-suggestion" data-amount="250000">Rp 250.000</div>
+                    <div class="amount-suggestion" data-amount="500000">Rp 500.000</div>
+                </div>
+            </div>
+            
+            <!-- Submit Section -->
+            <div class="submit-section">
+                <button class="submit-btn" id="submitBtn">
+                    <i class="fas fa-paper-plane"></i>
+                    AJUKAN WITHDRAW
+                </button>
+            </div>
+        </section>
+        
+        <!-- Info Panel -->
+        <section class="info-panel">
+            <h3 class="section-title">
+                <i class="fas fa-file-contract"></i>
+                Ketentuan Withdraw
+            </h3>
+            <div class="info-grid">
+                <div class="info-item">
+                    <div class="info-icon">
+                        <i class="fas fa-money-check-alt"></i>
+                    </div>
+                    <div class="info-content">
+                        <div class="info-title">Minimal Rp 50.000</div>
+                        <div class="info-text">Nominal terkecil yang dapat ditarik</div>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-icon">
+                        <i class="fas fa-user-check"></i>
+                    </div>
+                    <div class="info-content">
+                        <div class="info-title">Rekening Sendiri</div>
+                        <div class="info-text">Hanya untuk rekening atas nama sendiri</div>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-icon">
+                        <i class="fas fa-history"></i>
+                    </div>
+                    <div class="info-content">
+                        <div class="info-title">1x24 Jam</div>
+                        <div class="info-text">Proses verifikasi oleh sistem</div>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div class="info-content">
+                        <div class="info-title">Aman & Terverifikasi</div>
+                        <div class="info-text">Dilindungi sistem keamanan</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <a href="#" class="footer-logo">
+            <i class="fas fa-feather-alt footer-logo-icon"></i>
+            <span>Solvara Nusantara</span>
+        </a>
+        <p class="footer-text">&copy; 2023 Solvara Nusantara. Semua hak dilindungi.</p>
+    </footer>
+    
+    <!-- Bank Modal -->
+    <div class="modal-overlay" id="bankModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">
+                    <i class="fas fa-plus-circle"></i>
+                    Tambah Rekening
+                </h3>
+                <button class="modal-close" id="closeBankModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="modal-body">
+                <div class="modal-input-group">
+                    <label class="modal-label">Nama Pemilik Rekening</label>
+                    <input type="text" class="modal-input" id="accountName" placeholder="Nama lengkap sesuai rekening">
+                </div>
+                
+                <div class="modal-input-group">
+                    <label class="modal-label">Nomor Rekening / E-Wallet</label>
+                    <input type="text" class="modal-input" id="accountNumber" placeholder="Contoh: 1234567890">
+                </div>
+                
+                <div class="modal-input-group">
+                    <label class="modal-label">Bank / E-Wallet</label>
+                    <select class="modal-select" id="bankName">
+                        <option value="" disabled selected>Pilih bank atau e-wallet</option>
+                        <option value="BCA">BCA</option>
+                        <option value="BNI">BNI</option>
+                        <option value="BRI">BRI</option>
+                        <option value="Mandiri">Mandiri</option>
+                        <option value="CIMB">CIMB Niaga</option>
+                        <option value="Dana">Dana</option>
+                        <option value="OVO">OVO</option>
+                        <option value="Gopay">GoPay</option>
+                        <option value="ShopeePay">ShopeePay</option>
+                        <option value="other">Lainnya</option>
+                    </select>
+                    
+                    <input type="text" class="modal-input hidden" id="otherBankName" placeholder="Nama Bank Lainnya" style="margin-top: 12px;">
+                </div>
+            </div>
+            
+            <div class="modal-footer">
+                <button class="modal-btn modal-btn-secondary" id="cancelBankBtn">
+                    BATAL
+                </button>
+                <button class="modal-btn modal-btn-primary" id="saveBankBtn">
+                    SIMPAN REKENING
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Toast Notification -->
+    <div class="toast" id="toast"></div>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        // Import Firebase modules
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-app.js";
+        import { 
+            getAuth, 
+            onAuthStateChanged
+        } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-auth.js";
+        import { 
+            getFirestore, 
+            doc, 
+            getDoc, 
+            collection, 
+            addDoc, 
+            query, 
+            where, 
+            getDocs,
+            onSnapshot,
+            serverTimestamp
+        } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-firestore.js";
+
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyAXzEqxkuqbV9XJE9_CUGcDD9zO3fSdqB4",
+            authDomain: "sulvaranusantara.firebaseapp.com",
+            projectId: "sulvaranusantara",
+            storageBucket: "sulvaranusantara.firebasestorage.app",
+            messagingSenderId: "591964491640",
+            appId: "1:591964491640:web:34221ae11c2d810b9a028d"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        // DOM Elements
+        const saldoAmountEl = document.getElementById('saldoAmount');
+        const bankDisplayEl = document.getElementById('bankDisplay');
+        const selectedBankNameEl = document.getElementById('selectedBankName');
+        const selectedBankDetailsEl = document.getElementById('selectedBankDetails');
+        const addBankBtn = document.getElementById('addBankBtn');
+        const withdrawAmountInput = document.getElementById('withdrawAmount');
+        const submitBtn = document.getElementById('submitBtn');
+        const pendingStateEl = document.getElementById('pendingState');
+        const validationErrorEl = document.getElementById('validationError');
+        const errorTextEl = document.getElementById('errorText');
+        const toastEl = document.getElementById('toast');
+        
+        // Modal Elements
+        const bankModal = document.getElementById('bankModal');
+        const closeBankModal = document.getElementById('closeBankModal');
+        const cancelBankBtn = document.getElementById('cancelBankBtn');
+        const saveBankBtn = document.getElementById('saveBankBtn');
+        const accountNameInput = document.getElementById('accountName');
+        const accountNumberInput = document.getElementById('accountNumber');
+        const bankNameSelect = document.getElementById('bankName');
+        const otherBankNameInput = document.getElementById('otherBankName');
+
+        // Global Variables
+        let currentUser = null;
+        let currentBalance = 0;
+        let banks = [];
+        let selectedBank = null;
+        let hasDeposit = false;
+        let hasPendingWithdraw = false;
+
+        // Generate Background Lines (from index.html)
+        function createBackgroundLines() {
+            const bgLines = document.getElementById('bgLines');
+            const lineCount = 15;
+            
+            for (let i = 0; i < lineCount; i++) {
+                const line = document.createElement('div');
+                line.className = 'line';
+                
+                // Random properties
+                const width = Math.random() * 2 + 1;
+                const height = Math.random() * 150 + 50;
+                const left = Math.random() * 100;
+                const top = Math.random() * 100;
+                const delay = Math.random() * 20;
+                const duration = Math.random() * 10 + 15;
+                
+                line.style.width = `${width}px`;
+                line.style.height = `${height}px`;
+                line.style.left = `${left}%`;
+                line.style.top = `${top}%`;
+                line.style.animationDelay = `${delay}s`;
+                line.style.animationDuration = `${duration}s`;
+                
+                bgLines.appendChild(line);
+            }
+        }
+
+        // Toast Notification Function
+        function showToast(message, type = 'default', duration = 3000) {
+            toastEl.textContent = message;
+            toastEl.className = 'toast';
+            
+            if (type !== 'default') {
+                toastEl.classList.add(type);
+            }
+            
+            toastEl.classList.add('show');
+            
+            setTimeout(() => {
+                toastEl.classList.remove('show', 'error', 'success', 'warning');
+            }, duration);
+        }
+
+        // Show Validation Error
+        function showValidationError(message) {
+            errorTextEl.textContent = message;
+            validationErrorEl.classList.add('show');
+        }
+
+        // Hide Validation Error
+        function hideValidationError() {
+            validationErrorEl.classList.remove('show');
+        }
+
+        // Format Currency
+        function formatCurrency(amount) {
+            return new Intl.NumberFormat('id-ID', {
+                style: 'currency',
+                currency: 'IDR',
+                minimumFractionDigits: 0
+            }).format(amount);
+        }
+
+        // Update Saldo Display with Animation
+        function updateSaldoDisplay(balance) {
+            currentBalance = balance;
+            const formattedAmount = formatCurrency(balance);
+            
+            // Animate counter
+            const currentText = saldoAmountEl.textContent.replace(/[^\d]/g, '');
+            const targetText = formattedAmount.replace(/[^\d]/g, '');
+            
+            if (currentText === targetText) {
+                saldoAmountEl.textContent = formattedAmount;
+                return;
+            }
+            
+            let currentValue = parseInt(currentText) || 0;
+            const targetValue = parseInt(targetText) || 0;
+            const duration = 1000;
+            const startTime = Date.now();
+            
+            const animateCounter = () => {
+                const elapsed = Date.now() - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                
+                // Easing function
+                const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+                
+                const current = Math.floor(currentValue + (targetValue - currentValue) * easeOutQuart);
+                saldoAmountEl.textContent = formatCurrency(current);
+                
+                if (progress < 1) {
+                    requestAnimationFrame(animateCounter);
+                } else {
+                    saldoAmountEl.textContent = formattedAmount;
+                }
+            };
+            
+            animateCounter();
+        }
+
+        // Load User Data
+        async function loadUserData(uid) {
+            try {
+                const userDoc = await getDoc(doc(db, 'users', uid));
+                
+                if (userDoc.exists()) {
+                    const userData = userDoc.data();
+                    currentBalance = userData.saldo || 0;
+                    
+                    // Update UI with user data
+                    updateSaldoDisplay(currentBalance);
+                    
+                    // Load banks
+                    loadBanks(uid);
+                    
+                    // Check deposit history
+                    await checkDepositHistory(uid);
+                    
+                    // Check for pending withdraw
+                    await checkPendingWithdraw(uid);
+                    
+                } else {
+                    console.error('User document not found');
+                    showToast('Data pengguna tidak ditemukan', 'error');
+                }
+            } catch (error) {
+                console.error('Error loading user data:', error);
+                showToast('Gagal memuat data pengguna', 'error');
+            }
+        }
+
+        // Check Pending Withdraw
+        async function checkPendingWithdraw(uid) {
+            try {
+                const withdrawQuery = query(
+                    collection(db, 'withdraws'),
+                    where('uid', '==', uid),
+                    where('status', '==', 'pending')
+                );
+                
+                const snapshot = await getDocs(withdrawQuery);
+                hasPendingWithdraw = !snapshot.empty;
+                
+                if (hasPendingWithdraw) {
+                    pendingStateEl.classList.remove('hidden');
+                    submitBtn.disabled = true;
+                    submitBtn.innerHTML = '<i class="fas fa-clock"></i> WITHDRAW PENDING';
+                    withdrawAmountInput.disabled = true;
+                }
+                
+            } catch (error) {
+                console.error('Error checking pending withdraw:', error);
+                hasPendingWithdraw = false;
+            }
+        }
+
+        // Check Deposit History
+        async function checkDepositHistory(uid) {
+            try {
+                const depositsQuery = query(
+                    collection(db, 'deposits'),
+                    where('uid', '==', uid),
+                    where('status', '==', 'success')
+                );
+                
+                const snapshot = await getDocs(depositsQuery);
+                hasDeposit = !snapshot.empty;
+                
+            } catch (error) {
+                console.error('Error checking deposit history:', error);
+                hasDeposit = false;
+            }
+        }
+
+        // Load Banks
+        async function loadBanks(uid) {
+            try {
+                const banksQuery = query(
+                    collection(db, 'users', uid, 'banks'),
+                    where('uid', '==', uid)
+                );
+                
+                onSnapshot(banksQuery, (snapshot) => {
+                    banks = [];
+                    
+                    if (snapshot.empty) {
+                        // No banks
+                        selectedBankNameEl.textContent = 'Pilih Rekening';
+                        selectedBankDetailsEl.textContent = 'Belum ada rekening. Klik untuk menambahkan.';
+                        withdrawAmountInput.disabled = true;
+                        return;
+                    }
+                    
+                    snapshot.forEach((doc) => {
+                        const bankData = doc.data();
+                        bankData.id = doc.id;
+                        banks.push(bankData);
+                    });
+                    
+                    // Auto-select first bank if available
+                    if (banks.length > 0 && !selectedBank) {
+                        selectBank(banks[0]);
+                    }
+                    
+                }, (error) => {
+                    console.error('Error loading banks:', error);
+                    showToast('Gagal memuat data rekening', 'error');
+                });
+                
+            } catch (error) {
+                console.error('Error setting up banks listener:', error);
+            }
+        }
+
+        // Select Bank
+        function selectBank(bank) {
+            selectedBank = bank;
+            selectedBankNameEl.textContent = bank.bankName;
+            selectedBankDetailsEl.textContent = `${bank.accountNumber} • ${bank.accountName}`;
+            
+            // Enable amount input
+            withdrawAmountInput.disabled = false;
+        }
+
+        // Validate Withdraw Request
+        async function validateWithdrawRequest(amount) {
+            hideValidationError();
+            
+            // 1. Cek pending withdraw
+            if (hasPendingWithdraw) {
+                showValidationError('Anda memiliki withdraw yang sedang menunggu konfirmasi admin. Silakan tunggu hingga proses selesai.');
+                return false;
+            }
+            
+            // 2. Cek rekening terpilih
+            if (!selectedBank) {
+                showValidationError('Silakan pilih rekening tujuan untuk withdraw.');
+                return false;
+            }
+            
+            // 3. Cek nominal minimal
+            if (amount < 50000) {
+                showValidationError(`Minimal nominal withdraw adalah Rp 50.000.`);
+                return false;
+            }
+            
+            // 4. Cek saldo mencukupi
+            if (amount > currentBalance) {
+                showValidationError(`Saldo Anda ${formatCurrency(currentBalance)} tidak mencukupi untuk withdraw ${formatCurrency(amount)}.`);
+                return false;
+            }
+            
+            // 5. Cek pernah deposit
+            if (!hasDeposit) {
+                showValidationError('Anda harus melakukan deposit minimal sekali sebelum dapat melakukan withdraw.');
+                return false;
+            }
+            
+            return true;
+        }
+
+        // Submit Withdraw Request - LOGIKA UTAMA (TIDAK KURANGI SALDO)
+        async function submitWithdrawRequest() {
+            const amount = parseInt(withdrawAmountInput.value);
+            
+            if (!amount || amount < 50000) {
+                showValidationError('Masukkan nominal withdraw minimal Rp 50.000.');
+                return;
+            }
+            
+            // Hide any previous errors
+            hideValidationError();
+            
+            // Validate all conditions
+            const isValid = await validateWithdrawRequest(amount);
+            
+            if (!isValid) {
+                // Error sudah ditampilkan oleh validateWithdrawRequest
+                return;
+            }
+            
+            // Show loading state
+            submitBtn.classList.add('btn-loading');
+            submitBtn.disabled = true;
+            
+            try {
+                // LOGIKA BARU: TIDAK kurangi saldo saat submit, hanya buat request
+                const withdrawData = {
+                    uid: currentUser.uid,
+                    amount: amount,
+                    bankId: selectedBank.id,
+                    bankName: selectedBank.bankName,
+                    accountName: selectedBank.accountName,
+                    accountNumber: selectedBank.accountNumber,
+                    status: 'pending',
+                    createdAt: serverTimestamp(),
+                    userBalanceAtRequest: currentBalance
+                };
+                
+                const withdrawsRef = collection(db, 'withdraws');
+                await addDoc(withdrawsRef, withdrawData);
+                
+                // Update state
+                hasPendingWithdraw = true;
+                
+                // Show success message (TIDAK KURANGI SALDO DI SINI)
+                showToast('Withdraw berhasil diajukan! Tunggu konfirmasi admin.', 'success');
+                
+                // Show pending state
+                pendingStateEl.classList.remove('hidden');
+                submitBtn.innerHTML = '<i class="fas fa-clock"></i> WITHDRAW PENDING';
+                
+                // Reset form
+                withdrawAmountInput.value = '';
+                withdrawAmountInput.disabled = true;
+                
+            } catch (error) {
+                console.error('Error submitting withdraw:', error);
+                
+                if (error.message.includes('Saldo tidak mencukupi')) {
+                    showValidationError('Saldo tidak mencukupi untuk melakukan withdraw.');
+                } else {
+                    showToast('Gagal mengajukan withdraw: ' + error.message, 'error');
+                }
+                
+                // Re-enable submit button
+                submitBtn.disabled = false;
+            } finally {
+                // Reset button state
+                submitBtn.classList.remove('btn-loading');
+            }
+        }
+
+        // Save Bank Data
+        async function saveBankData() {
+            const accountName = accountNameInput.value.trim();
+            const accountNumber = accountNumberInput.value.trim();
+            let bankName = bankNameSelect.value;
+            
+            if (bankName === 'other') {
+                bankName = otherBankNameInput.value.trim();
+            }
+            
+            // Validate inputs
+            if (!accountName || !accountNumber || !bankName) {
+                showToast('Harap isi semua field', 'error');
+                return;
+            }
+            
+            // Show loading state
+            saveBankBtn.classList.add('btn-loading');
+            saveBankBtn.disabled = true;
+            
+            try {
+                const bankData = {
+                    uid: currentUser.uid,
+                    accountName: accountName,
+                    accountNumber: accountNumber,
+                    bankName: bankName,
+                    createdAt: serverTimestamp()
+                };
+                
+                await addDoc(collection(db, 'users', currentUser.uid, 'banks'), bankData);
+                
+                // Close modal and show success
+                closeBankModalFunc();
+                showToast('Rekening berhasil ditambahkan', 'success');
+                
+                // Reset form
+                accountNameInput.value = '';
+                accountNumberInput.value = '';
+                bankNameSelect.value = '';
+                otherBankNameInput.classList.add('hidden');
+                otherBankNameInput.value = '';
+                
+            } catch (error) {
+                console.error('Error saving bank data:', error);
+                showToast('Gagal menyimpan rekening', 'error');
+            } finally {
+                saveBankBtn.classList.remove('btn-loading');
+                saveBankBtn.disabled = false;
+            }
+        }
+
+        // Close Bank Modal
+        function closeBankModalFunc() {
+            bankModal.classList.remove('active');
+            accountNameInput.value = '';
+            accountNumberInput.value = '';
+            bankNameSelect.value = '';
+            otherBankNameInput.classList.add('hidden');
+            otherBankNameInput.value = '';
+        }
+
+        // Real-time balance listener
+        function setupBalanceListener(uid) {
+            const userRef = doc(db, 'users', uid);
+            
+            onSnapshot(userRef, (doc) => {
+                if (doc.exists()) {
+                    const data = doc.data();
+                    updateSaldoDisplay(data.saldo || 0);
+                }
+            }, (error) => {
+                console.error('Error listening to balance:', error);
+            });
+        }
+
+        // Event Listeners
+        document.addEventListener('DOMContentLoaded', () => {
+            createBackgroundLines();
+        });
+
+        bankDisplayEl.addEventListener('click', () => {
+            if (banks.length > 0) {
+                // In production, you might want to show a bank selection modal
+                // For now, just select the first bank
+                if (banks.length > 0) {
+                    selectBank(banks[0]);
+                }
+            } else {
+                bankModal.classList.add('active');
+            }
+        });
+
+        addBankBtn.addEventListener('click', () => {
+            bankModal.classList.add('active');
+        });
+
+        // Amount suggestion buttons
+        document.querySelectorAll('.amount-suggestion').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const amount = btn.getAttribute('data-amount');
+                withdrawAmountInput.value = amount;
+            });
+        });
+
+        submitBtn.addEventListener('click', submitWithdrawRequest);
+
+        closeBankModal.addEventListener('click', closeBankModalFunc);
+        cancelBankBtn.addEventListener('click', closeBankModalFunc);
+
+        saveBankBtn.addEventListener('click', saveBankData);
+
+        bankNameSelect.addEventListener('change', () => {
+            if (bankNameSelect.value === 'other') {
+                otherBankNameInput.classList.remove('hidden');
+            } else {
+                otherBankNameInput.classList.add('hidden');
+            }
+        });
+
+        // Close modal on overlay click
+        bankModal.addEventListener('click', (e) => {
+            if (e.target === bankModal) {
+                closeBankModalFunc();
+            }
+        });
+
+        // Auth State Listener
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                currentUser = user;
+                loadUserData(user.uid);
+                setupBalanceListener(user.uid);
+            } else {
+                // User not logged in, redirect to login
+                window.location.href = 'login.html';
+            }
+        });
+
+    </script>
+</body>
+</html>

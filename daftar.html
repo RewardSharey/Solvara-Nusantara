@@ -1,0 +1,1195 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daftar - Solvara Nusantara</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* RESET & BASE STYLES */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', 'Poppins', sans-serif;
+        }
+
+        :root {
+            --navy-blue: #0f1a2e;
+            --charcoal-gray: #1e293b;
+            --pure-white: #ffffff;
+            --jet-black: #020617;
+            --steel-blue: #4a5f8a;
+            --accent-blue: #3b82f6;
+            --success: #10b981;
+            --error: #ef4444;
+            --warning: #f59e0b;
+            --border-light: #334155;
+            --text-gray: #94a3b8;
+            --text-dark: #f1f5f9;
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.25);
+            --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.3);
+            --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.35);
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 24px;
+            --transition: all 0.3s ease;
+            --transition-fast: all 0.2s ease;
+        }
+
+        body {
+            min-height: 100vh;
+            background-color: var(--navy-blue);
+            color: var(--text-dark);
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* ANIMATED BACKGROUND LINES */
+        .background-lines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
+            opacity: 0.1;
+        }
+
+        .line {
+            position: absolute;
+            background: linear-gradient(90deg, transparent, var(--accent-blue), transparent);
+            animation: floatLine 15s linear infinite;
+        }
+
+        .line:nth-child(1) {
+            top: 10%;
+            width: 80%;
+            height: 1px;
+            animation-delay: 0s;
+        }
+
+        .line:nth-child(2) {
+            top: 30%;
+            width: 60%;
+            height: 1px;
+            animation-delay: 3s;
+        }
+
+        .line:nth-child(3) {
+            top: 50%;
+            width: 90%;
+            height: 1px;
+            animation-delay: 6s;
+        }
+
+        .line:nth-child(4) {
+            top: 70%;
+            width: 70%;
+            height: 1px;
+            animation-delay: 9s;
+        }
+
+        .line:nth-child(5) {
+            top: 90%;
+            width: 85%;
+            height: 1px;
+            animation-delay: 12s;
+        }
+
+        @keyframes floatLine {
+            0% {
+                transform: translateX(-100%);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.5;
+            }
+            90% {
+                opacity: 0.5;
+            }
+            100% {
+                transform: translateX(100vw);
+                opacity: 0;
+            }
+        }
+
+        /* MAIN CONTAINER */
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* HEADER */
+        .header {
+            padding: 24px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(15, 26, 46, 0.9);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-light);
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            font-size: 32px;
+            color: var(--accent-blue);
+            animation: pulse 3s ease-in-out infinite;
+        }
+
+        .logo-text {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--pure-white);
+            letter-spacing: 0.5px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 24px;
+        }
+
+        .nav-link {
+            color: var(--text-gray);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: var(--transition-fast);
+            padding: 8px 12px;
+            border-radius: var(--radius-sm);
+        }
+
+        .nav-link:hover {
+            color: var(--pure-white);
+            background: rgba(59, 130, 246, 0.1);
+        }
+
+        .nav-link.active {
+            color: var(--accent-blue);
+            background: rgba(59, 130, 246, 0.15);
+        }
+
+        /* MAIN CONTENT */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 24px;
+        }
+
+        /* CARD FORM */
+        .form-card {
+            background: var(--charcoal-gray);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            padding: 48px;
+            width: 100%;
+            max-width: 480px;
+            border: 1px solid var(--border-light);
+            animation: slideUp 0.6s ease-out 0.3s both;
+            transition: var(--transition);
+        }
+
+        .form-card:hover {
+            box-shadow: var(--shadow-md);
+        }
+
+        .form-header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .form-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--pure-white);
+            margin-bottom: 8px;
+        }
+
+        .form-subtitle {
+            font-size: 14px;
+            color: var(--text-gray);
+            font-weight: 400;
+        }
+
+        /* FORM STYLES */
+        .form-group {
+            margin-bottom: 24px;
+            position: relative;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .input-group {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 16px;
+            color: var(--steel-blue);
+            z-index: 1;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 16px 16px 16px 48px;
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-md);
+            font-size: 14px;
+            color: var(--text-dark);
+            background: rgba(30, 41, 59, 0.8);
+            transition: var(--transition-fast);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .form-input::placeholder {
+            color: var(--text-gray);
+            opacity: 0.7;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 16px;
+            background: none;
+            border: none;
+            color: var(--text-gray);
+            cursor: pointer;
+            transition: var(--transition-fast);
+        }
+
+        .password-toggle:hover {
+            color: var(--accent-blue);
+        }
+
+        .captcha-container {
+            background: rgba(30, 41, 59, 0.8);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            margin-bottom: 24px;
+            text-align: center;
+            border: 1px solid var(--border-light);
+        }
+
+        .captcha-question {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 12px;
+        }
+
+        .captcha-input {
+            width: 120px;
+            padding: 12px;
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-sm);
+            font-size: 16px;
+            font-weight: 600;
+            text-align: center;
+            color: var(--text-dark);
+            background: rgba(30, 41, 59, 0.8);
+            transition: var(--transition-fast);
+        }
+
+        .captcha-input:focus {
+            outline: none;
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        /* BUTTON */
+        .btn {
+            width: 100%;
+            padding: 18px;
+            border: none;
+            border-radius: var(--radius-md);
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background: var(--accent-blue);
+            color: var(--pure-white);
+            margin-bottom: 24px;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            background: #2563eb;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-primary:active:not(:disabled) {
+            transform: scale(0.97);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .btn-loading {
+            pointer-events: none;
+        }
+
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--pure-white);
+            animation: spin 1s linear infinite;
+        }
+
+        /* LINK */
+        .link-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .link-text {
+            color: var(--text-gray);
+            font-size: 14px;
+        }
+
+        .link {
+            color: var(--accent-blue);
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition-fast);
+        }
+
+        .link:hover {
+            color: #60a5fa;
+            text-decoration: underline;
+        }
+
+        /* TOAST */
+        .toast-container {
+            position: fixed;
+            top: 24px;
+            right: 24px;
+            z-index: 1000;
+            max-width: 400px;
+        }
+
+        .toast {
+            background: var(--charcoal-gray);
+            border-radius: var(--radius-md);
+            padding: 16px 20px;
+            margin-bottom: 12px;
+            box-shadow: var(--shadow-lg);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            animation: slideInRight 0.3s ease-out;
+            transition: var(--transition);
+            border: 1px solid var(--border-light);
+        }
+
+        .toast.success {
+            border-left: 4px solid var(--success);
+        }
+
+        .toast.error {
+            border-left: 4px solid var(--error);
+        }
+
+        .toast-icon {
+            font-size: 20px;
+        }
+
+        .toast.success .toast-icon {
+            color: var(--success);
+        }
+
+        .toast.error .toast-icon {
+            color: var(--error);
+        }
+
+        .toast-content {
+            flex: 1;
+        }
+
+        .toast-title {
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 4px;
+            color: var(--pure-white);
+        }
+
+        .toast-message {
+            font-size: 13px;
+            color: var(--text-gray);
+        }
+
+        .toast-close {
+            background: none;
+            border: none;
+            color: var(--text-gray);
+            cursor: pointer;
+            font-size: 14px;
+            padding: 4px;
+            transition: var(--transition-fast);
+        }
+
+        .toast-close:hover {
+            color: var(--pure-white);
+        }
+
+        /* FOOTER */
+        .footer {
+            background: var(--jet-black);
+            padding: 48px 32px 24px;
+            border-top: 1px solid var(--border-light);
+            margin-top: auto;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 32px;
+        }
+
+        .footer-brand {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .footer-logo-icon {
+            font-size: 24px;
+            color: var(--accent-blue);
+        }
+
+        .footer-logo-text {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--pure-white);
+        }
+
+        .footer-description {
+            font-size: 14px;
+            color: var(--text-gray);
+            line-height: 1.6;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .footer-links-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--pure-white);
+            margin-bottom: 8px;
+        }
+
+        .footer-link {
+            color: var(--text-gray);
+            text-decoration: none;
+            font-size: 14px;
+            transition: var(--transition-fast);
+        }
+
+        .footer-link:hover {
+            color: var(--accent-blue);
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-top: 24px;
+            border-top: 1px solid var(--border-light);
+            text-align: center;
+        }
+
+        .copyright {
+            font-size: 14px;
+            color: var(--text-gray);
+        }
+
+        /* ANIMATIONS */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideDown {
+            from { 
+                opacity: 0; 
+                transform: translateY(-20px); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0); 
+            }
+        }
+
+        @keyframes slideUp {
+            from { 
+                opacity: 0; 
+                transform: translateY(20px); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0); 
+            }
+        }
+
+        @keyframes slideInRight {
+            from { 
+                opacity: 0; 
+                transform: translateX(30px); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateX(0); 
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .header {
+                padding: 16px 24px;
+                flex-direction: column;
+                gap: 16px;
+            }
+            
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 12px;
+            }
+            
+            .form-card {
+                padding: 32px 24px;
+                margin: 0 16px;
+            }
+            
+            .footer {
+                padding: 32px 24px 16px;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
+            
+            .toast-container {
+                left: 16px;
+                right: 16px;
+                max-width: none;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .form-card {
+                padding: 24px 16px;
+            }
+            
+            .logo-text {
+                font-size: 20px;
+            }
+            
+            .logo-icon {
+                font-size: 28px;
+            }
+            
+            .form-title {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background Lines -->
+    <div class="background-lines">
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="logo-container">
+            <i class="fas fa-feather logo-icon"></i>
+            <div class="logo-text">Solvara Nusantara</div>
+        </div>
+        <nav class="nav-links">
+            <a href="index.html" class="nav-link">Beranda</a>
+            <a href="login.html" class="nav-link">Masuk</a>
+            <a href="daftar.html" class="nav-link active">Daftar</a>
+            <a href="kebijakan.html" class="nav-link">Kebijakan</a>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="form-card">
+            <div class="form-header">
+                <h1 class="form-title">Buat Akun Baru</h1>
+                <p class="form-subtitle">Bergabunglah dengan Solvara Nusantara untuk pengalaman fintech terbaik</p>
+            </div>
+
+            <form id="registerForm">
+                <!-- Email Field -->
+                <div class="form-group">
+                    <label class="form-label" for="email">Email</label>
+                    <div class="input-group">
+                        <i class="fas fa-envelope input-icon"></i>
+                        <input 
+                            type="email" 
+                            id="email" 
+                            class="form-input" 
+                            placeholder="email@example.com" 
+                            required
+                        >
+                    </div>
+                </div>
+
+                <!-- Password Field -->
+                <div class="form-group">
+                    <label class="form-label" for="password">Password</label>
+                    <div class="input-group">
+                        <i class="fas fa-lock input-icon"></i>
+                        <input 
+                            type="password" 
+                            id="password" 
+                            class="form-input" 
+                            placeholder="Minimal 6 karakter" 
+                            minlength="6"
+                            required
+                        >
+                        <button type="button" class="password-toggle" id="togglePassword">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Confirm Password Field -->
+                <div class="form-group">
+                    <label class="form-label" for="confirmPassword">Konfirmasi Password</label>
+                    <div class="input-group">
+                        <i class="fas fa-lock input-icon"></i>
+                        <input 
+                            type="password" 
+                            id="confirmPassword" 
+                            class="form-input" 
+                            placeholder="Ulangi password" 
+                            minlength="6"
+                            required
+                        >
+                        <button type="button" class="password-toggle" id="toggleConfirmPassword">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Referral Code Field -->
+                <div class="form-group">
+                    <label class="form-label" for="referralCode">Kode Referral (Opsional)</label>
+                    <div class="input-group">
+                        <i class="fas fa-users input-icon"></i>
+                        <input 
+                            type="text" 
+                            id="referralCode" 
+                            class="form-input" 
+                            placeholder="Masukkan kode referral"
+                        >
+                    </div>
+                </div>
+
+                <!-- CAPTCHA -->
+                <div class="captcha-container">
+                    <div class="captcha-question" id="captchaQuestion"></div>
+                    <input 
+                        type="number" 
+                        id="captchaAnswer" 
+                        class="captcha-input" 
+                        placeholder="?"
+                        required
+                    >
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="btn btn-primary" id="submitBtn">
+                    <span id="btnText">BUAT AKUN</span>
+                    <div class="spinner" id="btnSpinner" style="display: none;"></div>
+                </button>
+            </form>
+
+            <!-- Login Link -->
+            <div class="link-container">
+                <span class="link-text">Sudah punya akun? </span>
+                <a href="login.html" class="link">Masuk ke akun Anda</a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <div class="footer-logo">
+                    <i class="fas fa-feather footer-logo-icon"></i>
+                    <div class="footer-logo-text">Solvara Nusantara</div>
+                </div>
+                <p class="footer-description">
+                    Platform fintech terdepan yang menghadirkan solusi keuangan inovatif 
+                    untuk masa depan yang lebih baik.
+                </p>
+            </div>
+
+            <div class="footer-links">
+                <h3 class="footer-links-title">Navigasi</h3>
+                <a href="index.html" class="footer-link">Beranda</a>
+                <a href="login.html" class="footer-link">Masuk</a>
+                <a href="daftar.html" class="footer-link">Daftar</a>
+                <a href="kebijakan.html" class="footer-link">Kebijakan Privasi</a>
+            </div>
+
+            <div class="footer-links">
+                <h3 class="footer-links-title">Layanan</h3>
+                <a href="#" class="footer-link">Investasi</a>
+                <a href="#" class="footer-link">Pinjaman</a>
+                <a href="#" class="footer-link">Dompet Digital</a>
+                <a href="#" class="footer-link">Asuransi</a>
+            </div>
+
+            <div class="footer-links">
+                <h3 class="footer-links-title">Kontak</h3>
+                <a href="#" class="footer-link">support@solvara.id</a>
+                <a href="#" class="footer-link">+62 57 8382 8372</a>
+                <a href="#" class="footer-link">Jakarta, Indonesia</a>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p class="copyright">
+                &copy; 2024 Solvara Nusantara. Semua hak dilindungi undang-undang.
+            </p>
+        </div>
+    </footer>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        // Import Firebase SDK
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-app.js";
+        import { 
+            getAuth, 
+            createUserWithEmailAndPassword 
+        } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-auth.js";
+        import { 
+            getFirestore, 
+            doc, 
+            setDoc, 
+            updateDoc, 
+            increment,
+            serverTimestamp,
+            getDocs,
+            collection,
+            query,
+            where
+        } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-firestore.js";
+
+        // Firebase Configuration (BARU - Solvara Nusantara)
+        const firebaseConfig = {
+            apiKey: "AIzaSyAXzEqxkuqbV9XJE9_CUGcDD9zO3fSdqB4",
+            authDomain: "sulvaranusantara.firebaseapp.com",
+            projectId: "sulvaranusantara",
+            storageBucket: "sulvaranusantara.firebasestorage.app",
+            messagingSenderId: "591964491640",
+            appId: "1:591964491640:web:34221ae11c2d810b9a028d"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        // DOM Elements
+        const registerForm = document.getElementById('registerForm');
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+        const confirmPasswordInput = document.getElementById('confirmPassword');
+        const referralCodeInput = document.getElementById('referralCode');
+        const captchaQuestion = document.getElementById('captchaQuestion');
+        const captchaAnswerInput = document.getElementById('captchaAnswer');
+        const submitBtn = document.getElementById('submitBtn');
+        const btnText = document.getElementById('btnText');
+        const btnSpinner = document.getElementById('btnSpinner');
+        const togglePasswordBtn = document.getElementById('togglePassword');
+        const toggleConfirmPasswordBtn = document.getElementById('toggleConfirmPassword');
+        const toastContainer = document.getElementById('toastContainer');
+
+        // Variables
+        let captchaSolution = 0;
+
+        // Generate CAPTCHA
+        function generateCaptcha() {
+            const num1 = Math.floor(Math.random() * 9) + 1;
+            const num2 = Math.floor(Math.random() * 9) + 1;
+            captchaSolution = num1 + num2;
+            captchaQuestion.textContent = `${num1} + ${num2} = ?`;
+            captchaAnswerInput.value = '';
+        }
+
+        // Show Toast Message
+        function showToast(type, title, message) {
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+
+            const icon = type === 'success' ? 'fa-check-circle' : 'fa-times-circle';
+            
+            toast.innerHTML = `
+                <i class="fas ${icon} toast-icon"></i>
+                <div class="toast-content">
+                    <div class="toast-title">${title}</div>
+                    <div class="toast-message">${message}</div>
+                </div>
+                <button class="toast-close">
+                    <i class="fas fa-times"></i>
+                </button>
+            `;
+
+            toastContainer.appendChild(toast);
+
+            // Auto remove after 5 seconds
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateX(30px)';
+                setTimeout(() => {
+                    if (toast.parentNode) {
+                        toast.parentNode.removeChild(toast);
+                    }
+                }, 300);
+            }, 2500);
+
+            // Close button
+            toast.querySelector('.toast-close').addEventListener('click', () => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateX(30px)';
+                setTimeout(() => {
+                    if (toast.parentNode) {
+                        toast.parentNode.removeChild(toast);
+                    }
+                }, 300);
+            });
+        }
+
+        // Toggle Password Visibility
+        function togglePasswordVisibility(input, button) {
+            const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
+            input.setAttribute('type', type);
+            button.innerHTML = type === 'password' ? '<i class="fas fa-eye"></i>' : '<i class="fas fa-eye-slash"></i>';
+        }
+
+        // Generate Random Referral Code
+        function generateReferralCode() {
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            let code = 'SV';
+            for (let i = 0; i < 4; i++) {
+                code += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            return code;
+        }
+
+        // Get Random Profile Picture
+        function getRandomProfilePic() {
+            const randomNum = Math.floor(Math.random() * 20) + 1;
+            return `${randomNum}.jpg`;
+        }
+
+        // Check URL for referral parameter
+        function checkUrlForReferral() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const refCode = urlParams.get('ref');
+            
+            if (refCode) {
+                referralCodeInput.value = refCode;
+                referralCodeInput.readOnly = true;
+                referralCodeInput.style.backgroundColor = 'rgba(59, 130, 246, 0.1)';
+                referralCodeInput.style.cursor = 'not-allowed';
+                showToast('success', 'Kode Referral Ditemukan', 'Kode referral telah diisi otomatis dari URL.');
+            }
+        }
+
+        // Form Validation
+        function validateForm(email, password, confirmPassword, captchaAnswer) {
+            // Email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                showToast('error', 'Email Tidak Valid', 'Masukkan alamat email yang valid.');
+                return false;
+            }
+
+            // Password validation
+            if (password.length < 6) {
+                showToast('error', 'Password Terlalu Pendek', 'Password minimal 6 karakter.');
+                return false;
+            }
+
+            // Confirm password validation
+            if (password !== confirmPassword) {
+                showToast('error', 'Password Tidak Cocok', 'Password dan konfirmasi password harus sama.');
+                return false;
+            }
+
+            // CAPTCHA validation
+            if (parseInt(captchaAnswer) !== captchaSolution) {
+                showToast('error', 'CAPTCHA Salah', 'Silakan periksa kembali jawaban Anda.');
+                generateCaptcha();
+                return false;
+            }
+
+            return true;
+        }
+
+        // Register User
+        async function registerUser(email, password, referralCode) {
+            try {
+                // Create user with Firebase Auth
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                const user = userCredential.user;
+
+                // Generate user data
+                const username = email.split('@')[0];
+                const userReferralCode = generateReferralCode();
+                const profilePic = getRandomProfilePic();
+
+                // Prepare user data for Firestore
+                const userData = {
+                    email: email,
+                    username: username,
+                    saldo: 17777,
+                    kodeReffUser: userReferralCode,
+                    referredBy: referralCode || null,
+                    totalReferral: 0,
+                    totalDeposit: 0,
+                    totalWithdraw: 0,
+                    fotoProfil: profilePic,
+                    email_verified: false,
+                    createdAt: serverTimestamp(),
+                    role: 'user',
+                    status: 'active'
+                };
+
+                // Save user data to Firestore
+                await setDoc(doc(db, 'users', user.uid), userData);
+
+                // If user registered with referral code, update referrer's data
+                if (referralCode) {
+                    try {
+                        // Find user with this referral code
+                        const usersRef = collection(db, 'users');
+                        const q = query(usersRef, where('kodeReffUser', '==', referralCode));
+                        const querySnapshot = await getDocs(q);
+                        
+                        if (!querySnapshot.empty) {
+                            const referrerDoc = querySnapshot.docs[0];
+                            const referrerId = referrerDoc.id;
+
+                            // ❌ blok self-referral
+                            if (referrerId === user.uid) return;
+
+                            // ✅ update semua data referral
+                            await updateDoc(doc(db, 'users', referrerId), {
+                                totalReferral: increment(1),
+                                activeReferral: increment(1),
+                                referralBonusTotal: increment(2500),
+                                saldo: increment(2500)
+                            });
+
+                            // ✅ simpan histori bonus
+                            await setDoc(
+                                doc(db, 'Bonus Refferal', `${Date.now()}_${referrerId}`),
+                                {
+                                    uid: referrerId,
+                                    type: 'referral_register',
+                                    amount: 2500,
+                                    fromUser: user.uid,
+                                    createdAt: serverTimestamp()
+                                }
+                            );
+                        }
+                    } catch (referralError) {
+                        console.warn('Referral bonus error:', referralError);
+                        // Continue even if referral bonus fails
+                    }
+                }
+
+                // Add transaction for new user bonus
+                const newUserBonus = {
+                    uid: user.uid,
+                    type: 'new_user_bonus',
+                    amount: 17777,
+                    createdAt: serverTimestamp()
+                };
+                
+                await setDoc(doc(db, 'transactions', `${Date.now()}_${user.uid}`), newUserBonus);
+
+                return { success: true, user: user };
+
+            } catch (error) {
+                console.error('Registration error:', error);
+                
+                let errorMessage = 'Terjadi kesalahan saat mendaftar.';
+                if (error.code === 'auth/email-already-in-use') {
+                    errorMessage = 'Email sudah terdaftar. Silakan gunakan email lain.';
+                } else if (error.code === 'auth/invalid-email') {
+                    errorMessage = 'Format email tidak valid.';
+                } else if (error.code === 'auth/weak-password') {
+                    errorMessage = 'Password terlalu lemah. Gunakan password yang lebih kuat.';
+                } else if (error.code === 'auth/network-request-failed') {
+                    errorMessage = 'Koneksi jaringan bermasalah. Periksa koneksi internet Anda.';
+                }
+
+                return { success: false, error: errorMessage };
+            }
+        }
+
+        // Initialize
+        function init() {
+            generateCaptcha();
+            checkUrlForReferral();
+
+            // Password toggle event listeners
+            togglePasswordBtn.addEventListener('click', () => {
+                togglePasswordVisibility(passwordInput, togglePasswordBtn);
+            });
+
+            toggleConfirmPasswordBtn.addEventListener('click', () => {
+                togglePasswordVisibility(confirmPasswordInput, toggleConfirmPasswordBtn);
+            });
+
+            // Form submission
+            registerForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                // Get form values
+                const email = emailInput.value.trim();
+                const password = passwordInput.value;
+                const confirmPassword = confirmPasswordInput.value;
+                const referralCode = referralCodeInput.value.trim();
+                const captchaAnswer = captchaAnswerInput.value;
+
+                // Validate form
+                if (!validateForm(email, password, confirmPassword, captchaAnswer)) {
+                    return;
+                }
+
+                // Show loading state
+                submitBtn.disabled = true;
+                btnText.textContent = 'MEMPROSES...';
+                btnSpinner.style.display = 'block';
+                submitBtn.classList.add('btn-loading');
+
+                // Register user
+                const result = await registerUser(email, password, referralCode);
+
+                // Hide loading state
+                submitBtn.disabled = false;
+                btnText.textContent = 'BUAT AKUN';
+                btnSpinner.style.display = 'none';
+                submitBtn.classList.remove('btn-loading');
+
+                if (result.success) {
+                    showToast('success', 'Pendaftaran Berhasil!', 'Akun Anda berhasil dibuat. Silakan login.');
+                    
+                    // Clear form
+                    registerForm.reset();
+                    generateCaptcha();
+                    checkUrlForReferral();
+                    
+                    // Redirect to login page after 3 seconds
+                    setTimeout(() => {
+                        window.location.href = 'login.html';
+                    }, 3000);
+                } else {
+                    showToast('error', 'Pendaftaran Gagal', result.error);
+                    generateCaptcha();
+                }
+            });
+
+            // Input focus animations
+            const inputs = document.querySelectorAll('.form-input, .captcha-input');
+            inputs.forEach(input => {
+                input.addEventListener('focus', () => {
+                    input.parentElement.style.transform = 'translateY(-2px)';
+                });
+
+                input.addEventListener('blur', () => {
+                    input.parentElement.style.transform = 'translateY(0)';
+                });
+            });
+        }
+
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>

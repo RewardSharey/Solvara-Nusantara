@@ -1,0 +1,2004 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <meta name="description" content="Deposit Saldo - Solvara Nusantara">
+    <meta name="theme-color" content="#0f1a2e">
+    <title>Deposit - Solvara Nusantara</title>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- html2canvas untuk screenshot QRIS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    
+    <style>
+        /* RESET & BASE STYLES */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        :root {
+            --navy-blue: #0f1a2e;
+            --charcoal-gray: #1e293b;
+            --pure-white: #ffffff;
+            --jet-black: #020617;
+            --steel-blue: #4a5f8a;
+            --light-steel: #64748b;
+            --accent-blue: #3b82f6;
+            --success-green: #10b981;
+            --warning-yellow: #f59e0b;
+            --error-red: #ef4444;
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.15);
+            --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.2);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--charcoal-gray);
+            color: var(--pure-white);
+            min-height: 100vh;
+            line-height: 1.5;
+            overflow-x: hidden;
+            padding-bottom: 20px;
+        }
+
+        /* ANIMATED BACKGROUND - OPTIMIZED */
+        .bg-lines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            opacity: 0.08;
+            pointer-events: none;
+        }
+
+        .line {
+            position: absolute;
+            background: linear-gradient(90deg, transparent, var(--steel-blue), transparent);
+            animation: floatLine 25s infinite linear;
+            opacity: 0.4;
+        }
+
+        @keyframes floatLine {
+            0% {
+                transform: translateX(-100%) translateY(0) rotate(45deg);
+            }
+            100% {
+                transform: translateX(100vw) translateY(-100vh) rotate(45deg);
+            }
+        }
+
+        /* HEADER - CLEAN & COMPACT */
+        .header {
+            position: sticky;
+            top: 0;
+            background: rgba(2, 6, 23, 0.98);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(74, 95, 138, 0.15);
+            padding: 16px;
+            z-index: 100;
+        }
+
+        .header-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .back-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-md);
+            background: rgba(74, 95, 138, 0.1);
+            border: 1px solid rgba(74, 95, 138, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--pure-white);
+            text-decoration: none;
+            transition: var(--transition);
+            flex-shrink: 0;
+        }
+
+        .back-btn:hover {
+            background: rgba(74, 95, 138, 0.2);
+            border-color: var(--accent-blue);
+            transform: translateX(-2px);
+        }
+
+        .header-center {
+            flex: 1;
+            text-align: center;
+            padding: 0 12px;
+        }
+
+        .header-title {
+            font-size: 17px;
+            font-weight: 600;
+            color: var(--pure-white);
+            margin-bottom: 2px;
+        }
+
+        .header-subtitle {
+            font-size: 11px;
+            color: var(--light-steel);
+            letter-spacing: 0.3px;
+        }
+
+        .logo-placeholder {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0.7;
+        }
+
+        /* STEP INDICATOR - COMPACT */
+        .step-indicator {
+            padding: 24px 16px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .step-track {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            margin: 0 auto;
+            max-width: 280px;
+        }
+
+        .step-track::before {
+            content: '';
+            position: absolute;
+            top: 19px;
+            left: 20px;
+            right: 20px;
+            height: 2px;
+            background: rgba(74, 95, 138, 0.2);
+            z-index: 1;
+        }
+
+        .step {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .step-circle {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: rgba(74, 95, 138, 0.15);
+            border: 2px solid rgba(74, 95, 138, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 15px;
+            color: var(--light-steel);
+            transition: var(--transition);
+        }
+
+        .step.active .step-circle {
+            background: var(--accent-blue);
+            border-color: var(--accent-blue);
+            color: var(--pure-white);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+            animation: pulseStep 2s infinite;
+        }
+
+        @keyframes pulseStep {
+            0%, 100% {
+                box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+            }
+            50% {
+                box-shadow: 0 4px 20px rgba(59, 130, 246, 0.4);
+            }
+        }
+
+        .step.completed .step-circle {
+            background: var(--success-green);
+            border-color: var(--success-green);
+            color: var(--pure-white);
+        }
+
+        .step-label {
+            font-size: 10px;
+            font-weight: 500;
+            color: var(--light-steel);
+            text-align: center;
+            transition: var(--transition);
+            white-space: nowrap;
+        }
+
+        .step.active .step-label {
+            color: var(--accent-blue);
+            font-weight: 600;
+        }
+
+        /* MAIN CONTENT */
+        .main-content {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 0 16px;
+            animation: contentFadeIn 0.4s ease-out forwards;
+            opacity: 0;
+        }
+
+        @keyframes contentFadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* STEP CONTENT */
+        .step-content {
+            background: rgba(2, 6, 23, 0.7);
+            border-radius: var(--radius-lg);
+            padding: 24px 20px;
+            border: 1px solid rgba(74, 95, 138, 0.15);
+            margin-bottom: 20px;
+            display: none;
+            animation: slideUp 0.4s ease-out forwards;
+            opacity: 0;
+            transform: translateY(10px);
+        }
+
+        @keyframes slideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .step-content.active {
+            display: block;
+        }
+
+        .step-header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .step-icon {
+            font-size: 42px;
+            color: var(--accent-blue);
+            margin-bottom: 12px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: iconFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes iconFloat {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-3px);
+            }
+        }
+
+        .step-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: var(--pure-white);
+        }
+
+        .step-subtitle {
+            font-size: 13px;
+            color: var(--light-steel);
+            line-height: 1.4;
+        }
+
+        /* STEP 1 - AMOUNT SELECTION */
+        .amount-presets {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 24px;
+        }
+
+        @media (min-width: 375px) {
+            .amount-presets {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .amount-preset {
+            background: rgba(74, 95, 138, 0.1);
+            border: 1.5px solid rgba(74, 95, 138, 0.25);
+            border-radius: var(--radius-md);
+            padding: 14px 8px;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--pure-white);
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: center;
+            min-height: 52px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .amount-preset:hover {
+            border-color: var(--accent-blue);
+        }
+
+        .amount-preset.active {
+            background: rgba(59, 130, 246, 0.15);
+            border-color: var(--accent-blue);
+            color: var(--accent-blue);
+            box-shadow: 0 2px 8px rgba(59, 130, 246, 0.2);
+        }
+
+        .custom-amount-container {
+            margin-top: 20px;
+        }
+
+        .custom-amount-label {
+            display: block;
+            font-size: 13px;
+            font-weight: 500;
+            margin-bottom: 10px;
+            color: var(--light-steel);
+            text-align: center;
+        }
+
+        .custom-amount-input {
+            background: rgba(2, 6, 23, 0.8);
+            border: 1.5px solid rgba(74, 95, 138, 0.25);
+            border-radius: var(--radius-md);
+            padding: 16px;
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--pure-white);
+            width: 100%;
+            text-align: center;
+            transition: var(--transition);
+            font-family: 'Inter', sans-serif;
+        }
+
+        .custom-amount-input:focus {
+            outline: none;
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .amount-hint {
+            font-size: 11px;
+            color: var(--light-steel);
+            margin-top: 8px;
+            text-align: center;
+        }
+
+        .amount-hint.error {
+            color: var(--error-red);
+        }
+
+        /* STEP 2 - QRIS SECTION */
+        .qris-panel {
+            background: rgba(2, 6, 23, 0.8);
+            border-radius: var(--radius-lg);
+            padding: 24px 20px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(74, 95, 138, 0.15);
+        }
+
+        .qris-amount-large {
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--success-green);
+            margin-bottom: 24px;
+            text-align: center;
+            font-family: 'Inter', sans-serif;
+            animation: amountPulse 3s ease-in-out infinite;
+        }
+
+        @keyframes amountPulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.9;
+            }
+        }
+
+        .qris-image-container {
+            width: 220px;
+            height: 220px;
+            margin: 0 auto 24px;
+            background: var(--pure-white);
+            border-radius: var(--radius-md);
+            padding: 16px;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+        }
+
+        .qris-image {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 4px;
+        }
+
+        .qris-instructions {
+            background: rgba(74, 95, 138, 0.08);
+            border-radius: var(--radius-md);
+            padding: 16px;
+            margin-bottom: 16px;
+            border-left: 2px solid var(--accent-blue);
+        }
+
+        .instruction-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 10px;
+            font-size: 13px;
+            color: var(--light-steel);
+            line-height: 1.4;
+        }
+
+        .instruction-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .instruction-icon {
+            color: var(--accent-blue);
+            font-size: 14px;
+            margin-top: 1px;
+            flex-shrink: 0;
+        }
+
+        .qris-warnings {
+            background: rgba(245, 158, 11, 0.08);
+            border-radius: var(--radius-md);
+            padding: 14px;
+            border-left: 2px solid var(--warning-yellow);
+            text-align: left;
+        }
+
+        .warning-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            font-size: 12px;
+            color: var(--warning-yellow);
+            margin-bottom: 6px;
+            line-height: 1.3;
+        }
+
+        .warning-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .warning-icon {
+            margin-top: 1px;
+            flex-shrink: 0;
+        }
+
+        /* SCREENSHOT BUTTON STYLES */
+        .screenshot-section {
+            margin: 24px 0;
+            text-align: center;
+        }
+
+        .screenshot-buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin-top: 16px;
+            flex-wrap: wrap;
+        }
+
+        .screenshot-info {
+            font-size: 12px;
+            color: var(--light-steel);
+            margin-top: 12px;
+            line-height: 1.4;
+        }
+
+        .countdown-timer {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--accent-blue);
+            margin: 16px 0;
+            padding: 10px 16px;
+            background: rgba(59, 130, 246, 0.1);
+            border-radius: var(--radius-md);
+            display: inline-block;
+            animation: pulseTimer 1s infinite;
+        }
+
+        @keyframes pulseTimer {
+            0%, 100% {
+                box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4);
+            }
+            70% {
+                box-shadow: 0 0 0 6px rgba(59, 130, 246, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(59, 130, 246, 0);
+            }
+        }
+
+        /* STEP 3 - STATUS PENDING */
+        .status-panel {
+            background: rgba(2, 6, 23, 0.8);
+            border-radius: var(--radius-lg);
+            padding: 30px 20px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(74, 95, 138, 0.15);
+            text-align: center;
+        }
+
+        .status-icon {
+            font-size: 52px;
+            color: var(--warning-yellow);
+            margin-bottom: 20px;
+            animation: spin 2s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .status-title {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--warning-yellow);
+        }
+
+        .status-message {
+            font-size: 14px;
+            color: var(--light-steel);
+            margin-bottom: 24px;
+            line-height: 1.4;
+        }
+
+        .estimated-time {
+            background: rgba(74, 95, 138, 0.1);
+            border-radius: var(--radius-md);
+            padding: 12px 16px;
+            font-size: 13px;
+            color: var(--light-steel);
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+
+        /* BUTTON STYLES - OPTIMIZED */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 14px 20px;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            outline: none;
+            text-align: center;
+            gap: 10px;
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+            font-family: 'Inter', sans-serif;
+            min-height: 48px;
+        }
+
+        .btn:active {
+            transform: scale(0.98);
+        }
+
+        .btn-primary {
+            background: var(--accent-blue);
+            color: var(--pure-white);
+            box-shadow: 0 2px 8px rgba(59, 130, 246, 0.2);
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            background: #2563eb;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        }
+
+        .btn-primary:disabled {
+            background: var(--steel-blue);
+            cursor: not-allowed;
+            opacity: 0.6;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .btn-secondary {
+            background: rgba(74, 95, 138, 0.15);
+            color: var(--pure-white);
+            border: 1.5px solid rgba(74, 95, 138, 0.3);
+        }
+
+        .btn-secondary:hover:not(:disabled) {
+            background: rgba(74, 95, 138, 0.25);
+            border-color: var(--accent-blue);
+        }
+
+        .btn-success {
+            background: rgba(16, 185, 129, 0.15);
+            color: var(--success-green);
+            border: 1.5px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .btn-success:hover:not(:disabled) {
+            background: rgba(16, 185, 129, 0.25);
+            border-color: var(--success-green);
+        }
+
+        .btn-danger {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--error-red);
+            border: 1.5px solid rgba(239, 68, 68, 0.3);
+        }
+
+        .btn-danger:hover:not(:disabled) {
+            background: rgba(239, 68, 68, 0.2);
+        }
+
+        .btn-full {
+            width: 100%;
+        }
+
+        .btn-sm {
+            padding: 10px 16px;
+            font-size: 13px;
+            min-height: 42px;
+        }
+
+        .step-actions {
+            margin-top: 24px;
+        }
+
+        /* HISTORY SECTION - OPTIMIZED */
+        .history-section {
+            margin-top: 32px;
+            padding: 0 16px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .history-title {
+            font-size: 17px;
+            font-weight: 700;
+            margin-bottom: 18px;
+            color: var(--pure-white);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .history-title-icon {
+            color: var(--accent-blue);
+            font-size: 18px;
+        }
+
+        .history-timeline {
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .history-timeline::before {
+            content: '';
+            position: absolute;
+            left: 9px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: rgba(74, 95, 138, 0.15);
+            z-index: 1;
+        }
+
+        .history-item {
+            position: relative;
+            margin-bottom: 16px;
+            background: rgba(2, 6, 23, 0.7);
+            border-radius: var(--radius-md);
+            padding: 18px 16px;
+            border: 1px solid rgba(74, 95, 138, 0.15);
+            opacity: 0;
+            transform: translateX(-10px);
+            animation: slideInRight 0.4s ease-out forwards;
+        }
+
+        @keyframes slideInRight {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .history-item::before {
+            content: '';
+            position: absolute;
+            left: -20px;
+            top: 24px;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--steel-blue);
+            z-index: 2;
+            border: 2px solid var(--charcoal-gray);
+        }
+
+        .history-item.pending::before {
+            background: var(--warning-yellow);
+            animation: pulseDot 2s infinite;
+        }
+
+        .history-item.success::before {
+            background: var(--success-green);
+        }
+
+        .history-item.reject::before {
+            background: var(--error-red);
+        }
+
+        @keyframes pulseDot {
+            0%, 100% {
+                box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.4);
+            }
+            70% {
+                box-shadow: 0 0 0 6px rgba(245, 158, 11, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(245, 158, 11, 0);
+            }
+        }
+
+        .history-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .history-amount {
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--pure-white);
+        }
+
+        .history-date {
+            font-size: 11px;
+            color: var(--light-steel);
+        }
+
+        .history-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 14px;
+            padding-top: 14px;
+            border-top: 1px solid rgba(74, 95, 138, 0.1);
+        }
+
+        .history-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 20px;
+        }
+
+        .status-pending {
+            background: rgba(245, 158, 11, 0.1);
+            color: var(--warning-yellow);
+        }
+
+        .status-success {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success-green);
+        }
+
+        .status-reject {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--error-red);
+        }
+
+        /* EMPTY STATES */
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--light-steel);
+        }
+
+        .empty-icon {
+            font-size: 42px;
+            margin-bottom: 14px;
+            color: rgba(100, 116, 139, 0.2);
+            opacity: 0.5;
+        }
+
+        .empty-title {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: var(--light-steel);
+        }
+
+        .empty-description {
+            font-size: 13px;
+            max-width: 280px;
+            margin: 0 auto;
+            line-height: 1.4;
+        }
+
+        /* TOAST NOTIFICATION */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            background: rgba(2, 6, 23, 0.95);
+            color: var(--pure-white);
+            padding: 14px 20px;
+            border-radius: var(--radius-md);
+            font-size: 13px;
+            font-weight: 500;
+            z-index: 1000;
+            opacity: 0;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: var(--shadow-lg);
+            border: 1px solid rgba(74, 95, 138, 0.2);
+            max-width: calc(100% - 32px);
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .toast.success {
+            background: rgba(16, 185, 129, 0.95);
+            border-color: rgba(16, 185, 129, 0.3);
+        }
+
+        .toast.error {
+            background: rgba(239, 68, 68, 0.95);
+            border-color: rgba(239, 68, 68, 0.3);
+        }
+
+        .toast.warning {
+            background: rgba(245, 158, 11, 0.95);
+            border-color: rgba(245, 158, 11, 0.3);
+            color: var(--jet-black);
+        }
+
+        /* FOOTER - MINIMAL */
+        .footer {
+            margin-top: 40px;
+            padding: 24px 16px;
+            border-top: 1px solid rgba(74, 95, 138, 0.1);
+            text-align: center;
+        }
+
+        .footer-logo {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--pure-white);
+            margin-bottom: 12px;
+            opacity: 0.8;
+        }
+
+        .footer-logo-icon {
+            color: var(--accent-blue);
+            font-size: 18px;
+        }
+
+        .footer-copyright {
+            font-size: 12px;
+            color: var(--light-steel);
+            opacity: 0.6;
+        }
+
+        /* RESPONSIVE */
+        @media (min-width: 375px) {
+            .header {
+                padding: 18px 16px;
+            }
+            
+            .header-title {
+                font-size: 18px;
+            }
+            
+            .step-indicator {
+                padding: 28px 16px 24px;
+            }
+            
+            .qris-image-container {
+                width: 240px;
+                height: 240px;
+            }
+            
+            .screenshot-buttons {
+                flex-wrap: nowrap;
+            }
+        }
+
+        @media (min-width: 414px) {
+            .main-content {
+                padding: 0 20px;
+            }
+            
+            .step-content {
+                padding: 28px 24px;
+            }
+            
+            .history-section {
+                padding: 0 20px;
+            }
+        }
+
+        @media (min-width: 768px) {
+            body {
+                padding-bottom: 30px;
+            }
+            
+            .header {
+                padding: 20px 24px;
+            }
+            
+            .header-container {
+                max-width: 600px;
+            }
+            
+            .main-content {
+                max-width: 600px;
+                padding: 0 24px;
+            }
+            
+            .step-indicator {
+                padding: 32px 24px 28px;
+                max-width: 600px;
+            }
+            
+            .step-track {
+                max-width: 320px;
+            }
+            
+            .step-circle {
+                width: 42px;
+                height: 42px;
+                font-size: 16px;
+            }
+            
+            .step-label {
+                font-size: 11px;
+            }
+            
+            .step-content {
+                padding: 32px 28px;
+            }
+            
+            .amount-presets {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 12px;
+            }
+            
+            .amount-preset {
+                padding: 16px 12px;
+                font-size: 15px;
+                min-height: 56px;
+            }
+            
+            .qris-image-container {
+                width: 260px;
+                height: 260px;
+            }
+            
+            .history-section {
+                max-width: 600px;
+                padding: 0 24px;
+            }
+            
+            .footer {
+                margin-top: 50px;
+                padding: 28px 24px;
+            }
+        }
+
+        /* UTILITY */
+        .text-center {
+            text-align: center;
+        }
+
+        .mt-4 {
+            margin-top: 16px;
+        }
+
+        .mb-4 {
+            margin-bottom: 16px;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.3s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background Lines -->
+    <div class="bg-lines" id="bgLines"></div>
+    
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <a href="dashboard.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i>
+            </a>
+            <div class="header-center">
+                <div class="header-title">Deposit Saldo</div>
+                <div class="header-subtitle">Solvara Nusantara</div>
+            </div>
+            <div class="logo-placeholder">
+                <i class="fas fa-feather-alt" style="color: var(--accent-blue); font-size: 18px;"></i>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Step Indicator -->
+    <div class="step-indicator">
+        <div class="step-track">
+            <div class="step active" id="step1">
+                <div class="step-circle">1</div>
+                <div class="step-label">Nominal</div>
+            </div>
+            <div class="step" id="step2">
+                <div class="step-circle">2</div>
+                <div class="step-label">Bayar</div>
+            </div>
+            <div class="step" id="step3">
+                <div class="step-circle">3</div>
+                <div class="step-label">Tunggu</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Step 1: Tentukan Nominal -->
+        <div class="step-content active" id="stepContent1">
+            <div class="step-header">
+                <div class="step-icon">
+                    <i class="fas fa-coins"></i>
+                </div>
+                <h2 class="step-title">Tentukan Nominal</h2>
+                <p class="step-subtitle">Pilih nominal preset atau masukkan custom</p>
+            </div>
+            
+            <div class="amount-presets">
+                <div class="amount-preset" data-amount="15000">Rp 15.000</div>
+                <div class="amount-preset" data-amount="50000">Rp 50.000</div>
+                <div class="amount-preset" data-amount="100000">Rp 100.000</div>
+                <div class="amount-preset" data-amount="150000">Rp 250.000</div>
+                <div class="amount-preset" data-amount="500000">Rp 500.000</div>
+                <div class="amount-preset" data-amount="1000000">Rp 1.000.000</div>
+            </div>
+            
+            <div class="custom-amount-container">
+                <label class="custom-amount-label">Nominal Custom</label>
+                <input 
+                    type="number" 
+                    id="amount" 
+                    class="custom-amount-input" 
+                    placeholder="15000"
+                    min="15000"
+                    step="1000"
+                    value="15000"
+                >
+                <div class="amount-hint" id="amountHint">Minimal deposit: Rp 15.000</div>
+            </div>
+            
+            <div class="step-actions">
+                <button id="continueButton" class="btn btn-primary btn-full">
+                    <i class="fas fa-arrow-right"></i>
+                    <span id="buttonText">LANJUTKAN</span>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Step 2: Konfirmasi QRIS -->
+        <div class="step-content" id="stepContent2">
+            <div class="step-header">
+                <div class="step-icon">
+                    <i class="fas fa-qrcode"></i>
+                </div>
+                <h2 class="step-title">Bayar dengan QRIS</h2>
+                <p class="step-subtitle">Screenshot QR code untuk mempermudah pembayaran</p>
+            </div>
+            
+            <div class="qris-panel">
+                <div class="qris-amount-large" id="qrisAmount">Rp 15.000</div>
+                
+                <div class="qris-image-container" id="qrisContainer">
+                    <img src="PD1.jpg" alt="QR Code QRIS" class="qris-image" id="qrisImage">
+                </div>
+                
+                <div class="screenshot-section">
+                    <div class="screenshot-buttons">
+                        <button id="screenshotButton" class="btn btn-success btn-sm">
+                            <i class="fas fa-camera"></i>
+                            Screenshot QRIS
+                        </button>
+                        <button id="downloadButton" class="btn btn-secondary btn-sm">
+                            <i class="fas fa-download"></i>
+                            Download QRIS
+                        </button>
+                    </div>
+                    
+                    <div id="countdownTimer" class="hidden">
+                        <div class="countdown-timer">
+                            <i class="fas fa-clock"></i>
+                            <span id="countdownText">3</span> detik lagi menuju pending...
+                        </div>
+                    </div>
+                    
+                    <div class="screenshot-info">
+                        Screenshot QR code untuk mempermudah pembayaran
+                    </div>
+                </div>
+                
+                <div class="qris-instructions">
+                    <div class="instruction-item">
+                        <i class="fas fa-mobile-alt instruction-icon"></i>
+                        <span>Buka aplikasi mobile banking atau e-wallet</span>
+                    </div>
+                    <div class="instruction-item">
+                        <i class="fas fa-qrcode instruction-icon"></i>
+                        <span>Scan QR code di atas untuk pembayaran</span>
+                    </div>
+                    <div class="instruction-item">
+                        <i class="fas fa-money-bill-wave instruction-icon"></i>
+                        <span>Transfer sesuai nominal yang tertera</span>
+                    </div>
+                </div>
+                
+                <div class="qris-warnings">
+                    <div class="warning-item">
+                        <i class="fas fa-exclamation-triangle warning-icon"></i>
+                        <span>Transfer tidak sesuai nominal akan ditolak otomatis</span>
+                    </div>
+                    <div class="warning-item">
+                        <i class="fas fa-exclamation-triangle warning-icon"></i>
+                        <span>Saldo otomatis masuk setelah pembayaran</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step-actions">
+                <button id="cancelButton" class="btn btn-danger">
+                    <i class="fas fa-times"></i>
+                    BATALKAN
+                </button>
+                <button id="submitPendingButton" class="btn btn-primary hidden">
+                    <i class="fas fa-paper-plane"></i>
+                    KIRIM KE PENDING
+                </button>
+            </div>
+        </div>
+        
+        <!-- Step 3: Menunggu Verifikasi -->
+        <div class="step-content" id="stepContent3">
+            <div class="step-header">
+                <div class="step-icon">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <h2 class="step-title">Menunggu Verifikasi</h2>
+                <p class="step-subtitle">Deposit Anda sedang diproses oleh sistem</p>
+            </div>
+            
+            <div class="status-panel">
+                <div class="status-icon">
+                    <i class="fas fa-sync-alt"></i>
+                </div>
+                <h3 class="status-title">Proses Verifikasi</h3>
+                <p class="status-message">
+                    Deposit <span id="pendingAmount" style="font-weight: 700; color: var(--success-green);">Rp 15.000</span> 
+                    sedang menunggu verifikasi sistem.
+                </p>
+                <div class="estimated-time">
+                    <i class="fas fa-hourglass-half"></i>
+                    Estimasi: 1-5 menit
+                </div>
+                <button id="cancelPendingButton" class="btn btn-danger">
+                    <i class="fas fa-times"></i>
+                    BATALKAN DEPOSIT
+                </button>
+            </div>
+        </div>
+    </main>
+    
+    <!-- History Section -->
+    <section class="history-section">
+        <h2 class="history-title">
+            <i class="fas fa-history history-title-icon"></i>
+            Riwayat Deposit
+        </h2>
+        
+        <div id="historyContent">
+            <div class="empty-state">
+                <div class="empty-icon">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <h3 class="empty-title">Belum ada riwayat</h3>
+                <p class="empty-description">Riwayat deposit akan muncul di sini</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-logo">
+            <i class="fas fa-feather-alt footer-logo-icon"></i>
+            <span>Solvara Nusantara</span>
+        </div>
+        <div class="footer-copyright">
+            &copy; 2023 Solvara Nusantara
+        </div>
+    </footer>
+    
+    <!-- Toast Notification -->
+    <div class="toast" id="toast"></div>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        // Import Firebase modules
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-app.js";
+        import { 
+            getAuth, 
+            onAuthStateChanged
+        } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-auth.js";
+        import { 
+            getFirestore, 
+            collection, 
+            addDoc, 
+            query, 
+            where, 
+            orderBy, 
+            limit, 
+            getDocs,
+            onSnapshot,
+            updateDoc,
+            doc,
+            serverTimestamp
+        } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-firestore.js";
+
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyAXzEqxkuqbV9XJE9_CUGcDD9zO3fSdqB4",
+            authDomain: "sulvaranusantara.firebaseapp.com",
+            projectId: "sulvaranusantara",
+            storageBucket: "sulvaranusantara.firebasestorage.app",
+            messagingSenderId: "591964491640",
+            appId: "1:591964491640:web:34221ae11c2d810b9a028d"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        // DOM Elements
+        const amountInput = document.getElementById('amount');
+        const amountPresets = document.querySelectorAll('.amount-preset');
+        const continueButton = document.getElementById('continueButton');
+        const buttonText = document.getElementById('buttonText');
+        const amountHint = document.getElementById('amountHint');
+        
+        // Step elements
+        const steps = document.querySelectorAll('.step');
+        const stepContents = document.querySelectorAll('.step-content');
+        
+        // QRIS elements
+        const qrisAmount = document.getElementById('qrisAmount');
+        const qrisImage = document.getElementById('qrisImage');
+        const qrisContainer = document.getElementById('qrisContainer');
+        const cancelButton = document.getElementById('cancelButton');
+        
+        // Screenshot elements
+        const screenshotButton = document.getElementById('screenshotButton');
+        const downloadButton = document.getElementById('downloadButton');
+        const submitPendingButton = document.getElementById('submitPendingButton');
+        const countdownTimer = document.getElementById('countdownTimer');
+        const countdownText = document.getElementById('countdownText');
+        
+        // Pending elements
+        const pendingAmount = document.getElementById('pendingAmount');
+        const cancelPendingButton = document.getElementById('cancelPendingButton');
+        
+        // History elements
+        const historyContentEl = document.getElementById('historyContent');
+        const toastEl = document.getElementById('toast');
+
+        // State Variables
+        let currentUser = null;
+        let selectedAmount = 15000;
+        let hasPendingDeposit = false;
+        let pendingDepositId = null;
+        let currentStep = 1;
+        let screenshotTaken = false;
+        let countdownInterval = null;
+
+        // Generate optimized background lines
+        function createBackgroundLines() {
+            const bgLines = document.getElementById('bgLines');
+            const lineCount = 8;
+            
+            for (let i = 0; i < lineCount; i++) {
+                const line = document.createElement('div');
+                line.className = 'line';
+                
+                const width = Math.random() * 1.5 + 0.5;
+                const height = Math.random() * 100 + 40;
+                const left = Math.random() * 100;
+                const top = Math.random() * 100;
+                const delay = Math.random() * 15;
+                const duration = Math.random() * 15 + 20;
+                
+                line.style.width = `${width}px`;
+                line.style.height = `${height}px`;
+                line.style.left = `${left}%`;
+                line.style.top = `${top}%`;
+                line.style.animationDelay = `${delay}s`;
+                line.style.animationDuration = `${duration}s`;
+                
+                bgLines.appendChild(line);
+            }
+        }
+
+        // Toast Notification Function
+        function showToast(message, type = 'info', duration = 3000) {
+            toastEl.textContent = message;
+            toastEl.className = 'toast';
+            toastEl.classList.add(type);
+            toastEl.classList.add('show');
+            
+            setTimeout(() => {
+                toastEl.classList.remove('show');
+            }, duration);
+        }
+
+        // Format Currency
+        function formatCurrency(amount) {
+            return new Intl.NumberFormat('id-ID', {
+                style: 'currency',
+                currency: 'IDR',
+                minimumFractionDigits: 0
+            }).format(amount);
+        }
+
+        // Format Date
+        function formatDate(date) {
+            const d = date.toDate();
+            return d.toLocaleDateString('id-ID', {
+                day: '2-digit',
+                month: 'short',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+
+        // Update Step UI
+        function updateStepUI(stepNumber) {
+            steps.forEach((step, index) => {
+                step.classList.remove('active', 'completed');
+                
+                if (index + 1 < stepNumber) {
+                    step.classList.add('completed');
+                } else if (index + 1 === stepNumber) {
+                    step.classList.add('active');
+                }
+            });
+            
+            stepContents.forEach((content, index) => {
+                content.style.opacity = '0';
+                content.style.transform = 'translateY(10px)';
+                content.classList.remove('active');
+                
+                setTimeout(() => {
+                    if (index + 1 === stepNumber) {
+                        content.classList.add('active');
+                        content.style.opacity = '1';
+                        content.style.transform = 'translateY(0)';
+                    }
+                }, 150);
+            });
+            
+            currentStep = stepNumber;
+            
+            setTimeout(() => {
+                window.scrollTo({
+                    top: document.querySelector('.step-indicator').offsetTop,
+                    behavior: 'smooth'
+                });
+            }, 200);
+        }
+
+        // Validate amount
+        function validateAmount(amount) {
+            if (amount < 15000) {
+                amountHint.textContent = 'Minimal deposit Rp 15.000';
+                amountHint.classList.add('error');
+                return false;
+            }
+            
+            amountHint.textContent = 'Minimal deposit: Rp 15.000';
+            amountHint.classList.remove('error');
+            return true;
+        }
+
+        // Update amount selection UI
+        function updateAmountSelection() {
+            amountPresets.forEach(preset => {
+                const amount = parseInt(preset.dataset.amount);
+                if (amount === selectedAmount) {
+                    preset.classList.add('active');
+                } else {
+                    preset.classList.remove('active');
+                }
+            });
+        }
+
+        // Screenshot QRIS
+        function takeQRISScreenshot() {
+            html2canvas(qrisContainer, {
+                backgroundColor: '#ffffff',
+                scale: 2,
+                useCORS: true
+            }).then(canvas => {
+                // Convert canvas to image
+                const screenshot = canvas.toDataURL('image/png');
+                
+                // Create download link
+                const link = document.createElement('a');
+                link.download = `QRIS-Deposit-${formatCurrency(selectedAmount).replace(/[^\d]/g, '')}.png`;
+                link.href = screenshot;
+                link.click();
+                
+                screenshotTaken = true;
+                showToast('QRIS berhasil di-screenshot!', 'success');
+                
+                // Show submit button and start countdown
+                submitPendingButton.classList.remove('hidden');
+                startCountdown();
+            }).catch(error => {
+                console.error('Error taking screenshot:', error);
+                showToast('Gagal screenshot QRIS', 'error');
+            });
+        }
+
+        // Download QRIS Image
+        function downloadQRISImage() {
+            const link = document.createElement('a');
+            link.download = `QRIS-Deposit-${formatCurrency(selectedAmount).replace(/[^\d]/g, '')}.jpg`;
+            link.href = qrisImage.src;
+            link.click();
+            
+            screenshotTaken = true;
+            showToast('QRIS berhasil didownload!', 'success');
+            
+            // Show submit button and start countdown
+            submitPendingButton.classList.remove('hidden');
+            startCountdown();
+        }
+
+        // Start countdown timer
+        function startCountdown() {
+            if (countdownInterval) clearInterval(countdownInterval);
+            
+            let seconds = 3;
+            countdownTimer.classList.remove('hidden');
+            countdownText.textContent = seconds;
+            
+            countdownInterval = setInterval(() => {
+                seconds--;
+                countdownText.textContent = seconds;
+                
+                if (seconds <= 0) {
+                    clearInterval(countdownInterval);
+                    countdownTimer.classList.add('hidden');
+                    submitToPending();
+                }
+            }, 1000);
+        }
+
+        // Submit to pending after screenshot/download
+        function submitToPending() {
+            if (hasPendingDeposit) {
+                showToast('Ada deposit pending. Tunggu konfirmasi.', 'error');
+                return;
+            }
+
+            // Show loading state
+            submitPendingButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> MENGIRIM...';
+            submitPendingButton.disabled = true;
+
+            // Simulate API call delay
+            setTimeout(() => {
+                createDepositRecord();
+            }, 500);
+        }
+
+        // Create deposit record in Firestore
+        async function createDepositRecord() {
+            try {
+                const depositData = {
+                    uid: currentUser.uid,
+                    amount: selectedAmount,
+                    method: 'qris',
+                    status: 'pending',
+                    screenshotTaken: screenshotTaken,
+                    createdAt: serverTimestamp(),
+                    updatedAt: serverTimestamp()
+                };
+                
+                const depositsRef = collection(db, 'deposits');
+                const docRef = await addDoc(depositsRef, depositData);
+                
+                console.log('Deposit created with ID:', docRef.id);
+                
+                // Update state
+                hasPendingDeposit = true;
+                pendingDepositId = docRef.id;
+                
+                // Update UI to step 3
+                updateStepUI(3);
+                pendingAmount.textContent = formatCurrency(selectedAmount);
+                
+                showToast('Deposit berhasil dikirim ke pending!', 'success');
+                
+            } catch (error) {
+                console.error('Error creating deposit:', error);
+                showToast('Gagal membuat deposit', 'error');
+                
+                // Reset button
+                submitPendingButton.innerHTML = '<i class="fas fa-paper-plane"></i> KIRIM KE PENDING';
+                submitPendingButton.disabled = false;
+            }
+        }
+
+        // Check for Pending Deposits
+        async function checkPendingDeposits(uid) {
+            try {
+                const q = query(
+                    collection(db, 'deposits'),
+                    where('uid', '==', uid),
+                    where('status', '==', 'pending'),
+                    orderBy('createdAt', 'desc'),
+                    limit(1)
+                );
+                
+                const querySnapshot = await getDocs(q);
+                
+                if (!querySnapshot.empty) {
+                    const deposit = querySnapshot.docs[0];
+                    hasPendingDeposit = true;
+                    pendingDepositId = deposit.id;
+                    
+                    const amount = deposit.data().amount || 15000;
+                    
+                    disableForm();
+                    updateStepUI(3);
+                    
+                    qrisAmount.textContent = formatCurrency(amount);
+                    pendingAmount.textContent = formatCurrency(amount);
+                    
+                    showToast('Ada deposit pending. Tunggu konfirmasi atau batalkan.', 'warning', 5000);
+                    
+                    return true;
+                }
+                
+                return false;
+            } catch (error) {
+                console.error('Error checking pending deposits:', error);
+                return false;
+            }
+        }
+
+        // Disable Form when Pending Deposit Exists
+        function disableForm() {
+            amountInput.disabled = true;
+            amountPresets.forEach(preset => {
+                preset.style.pointerEvents = 'none';
+                preset.style.opacity = '0.5';
+            });
+            
+            continueButton.disabled = true;
+            buttonText.innerHTML = '<i class="fas fa-clock"></i> MENUNGGU';
+        }
+
+        // Enable Form
+        function enableForm() {
+            amountInput.disabled = false;
+            amountPresets.forEach(preset => {
+                preset.style.pointerEvents = 'auto';
+                preset.style.opacity = '1';
+            });
+            
+            continueButton.disabled = false;
+            buttonText.textContent = 'LANJUTKAN';
+        }
+
+        // Load Deposit History
+        function loadDepositHistory(uid) {
+            try {
+                const historyQuery = query(
+                    collection(db, 'deposits'),
+                    where('uid', '==', uid),
+                    orderBy('createdAt', 'desc'),
+                    limit(5)
+                );
+                
+                onSnapshot(historyQuery, (snapshot) => {
+                    if (snapshot.empty) {
+                        historyContentEl.innerHTML = `
+                            <div class="empty-state">
+                                <div class="empty-icon">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                                <h3 class="empty-title">Belum ada riwayat</h3>
+                                <p class="empty-description">Riwayat deposit akan muncul di sini</p>
+                            </div>
+                        `;
+                        return;
+                    }
+                    
+                    let historyHTML = '<div class="history-timeline">';
+                    let animationDelay = 0;
+                    
+                    snapshot.forEach((docItem) => {
+                        const data = docItem.data();
+                        const amount = data.amount || 0;
+                        const status = data.status || 'pending';
+                        const date = data.createdAt ? formatDate(data.createdAt) : '-';
+                        const depositId = docItem.id;
+                        
+                        let statusClass = '';
+                        let statusText = '';
+                        
+                        switch(status) {
+                            case 'pending':
+                                statusClass = 'status-pending';
+                                statusText = 'Menunggu';
+                                break;
+                            case 'success':
+                                statusClass = 'status-success';
+                                statusText = 'Berhasil';
+                                break;
+                            case 'reject':
+                                statusClass = 'status-reject';
+                                statusText = 'Ditolak';
+                                break;
+                        }
+                        
+                        let cancelButtonHTML = '';
+                        if (status === 'pending') {
+                            cancelButtonHTML = `
+                                <button class="btn btn-danger btn-sm" data-id="${depositId}" style="padding: 8px 12px; font-size: 12px; width: auto;">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            `;
+                        }
+                        
+                        historyHTML += `
+                            <div class="history-item ${status}" style="animation-delay: ${animationDelay}s">
+                                <div class="history-header">
+                                    <div class="history-amount">${formatCurrency(amount)}</div>
+                                    <div class="history-date">${date}</div>
+                                </div>
+                                <div class="history-footer">
+                                    <span class="history-status ${statusClass}">
+                                        <i class="fas fa-circle" style="font-size: 6px;"></i>
+                                        ${statusText}
+                                    </span>
+                                    ${cancelButtonHTML}
+                                </div>
+                            </div>
+                        `;
+                        
+                        animationDelay += 0.1;
+                    });
+                    
+                    historyHTML += '</div>';
+                    historyContentEl.innerHTML = historyHTML;
+                    
+                    document.querySelectorAll('.btn-danger[data-id]').forEach(button => {
+                        button.addEventListener('click', (e) => {
+                            const depositId = e.currentTarget.dataset.id;
+                            cancelDeposit(depositId);
+                        });
+                    });
+                    
+                }, (error) => {
+                    console.error('Error loading deposit history:', error);
+                    historyContentEl.innerHTML = `
+                        <div class="empty-state">
+                            <div class="empty-icon">
+                                <i class="fas fa-exclamation-circle"></i>
+                            </div>
+                            <h3 class="empty-title">Gagal memuat</h3>
+                            <p class="empty-description">Silakan refresh halaman</p>
+                        </div>
+                    `;
+                });
+                
+            } catch (error) {
+                console.error('Error setting up history listener:', error);
+            }
+        }
+
+        // Create Deposit (Original flow - dari step 1 langsung pending)
+        async function createDeposit() {
+            if (!validateAmount(selectedAmount)) {
+                showToast('Minimal deposit Rp 15.000', 'error');
+                return;
+            }
+            
+            if (hasPendingDeposit) {
+                showToast('Ada deposit pending. Tunggu konfirmasi.', 'error');
+                return;
+            }
+            
+            try {
+                const originalText = buttonText.innerHTML;
+                buttonText.innerHTML = '<i class="fas fa-spinner fa-spin"></i> PROSES...';
+                continueButton.disabled = true;
+                
+                const depositData = {
+                    uid: currentUser.uid,
+                    amount: selectedAmount,
+                    method: 'qris',
+                    status: 'pending',
+                    createdAt: serverTimestamp(),
+                    updatedAt: serverTimestamp()
+                };
+                
+                const depositsRef = collection(db, 'deposits');
+                const docRef = await addDoc(depositsRef, depositData);
+                
+                console.log('Deposit created with ID:', docRef.id);
+                
+                hasPendingDeposit = true;
+                pendingDepositId = docRef.id;
+                
+                updateStepUI(2);
+                qrisAmount.textContent = formatCurrency(selectedAmount);
+                
+                buttonText.innerHTML = '<i class="fas fa-clock"></i> MENUNGGU';
+                continueButton.disabled = true;
+                
+                showToast('Deposit berhasil dibuat!', 'success');
+                
+                setTimeout(() => {
+                    if (hasPendingDeposit) {
+                        updateStepUI(3);
+                        pendingAmount.textContent = formatCurrency(selectedAmount);
+                    }
+                }, 2000);
+                
+            } catch (error) {
+                console.error('Error creating deposit:', error);
+                showToast('Gagal membuat deposit', 'error');
+                
+                buttonText.innerHTML = originalText;
+                continueButton.disabled = false;
+            }
+        }
+
+        // Cancel Deposit
+        async function cancelDeposit(depositId) {
+            if (!confirm('Batalkan deposit ini?')) {
+                return;
+            }
+            
+            try {
+                const depositRef = doc(db, 'deposits', depositId);
+                await updateDoc(depositRef, {
+                    status: 'reject',
+                    updatedAt: serverTimestamp(),
+                    rejectionReason: 'Dibatalkan user'
+                });
+                
+                hasPendingDeposit = false;
+                pendingDepositId = null;
+                
+                enableForm();
+                updateStepUI(1);
+                
+                buttonText.textContent = 'LANJUTKAN';
+                continueButton.disabled = false;
+                
+                // Reset screenshot state
+                screenshotTaken = false;
+                submitPendingButton.classList.add('hidden');
+                countdownTimer.classList.add('hidden');
+                if (countdownInterval) {
+                    clearInterval(countdownInterval);
+                    countdownInterval = null;
+                }
+                
+                showToast('Deposit dibatalkan', 'success');
+                
+            } catch (error) {
+                console.error('Error cancelling deposit:', error);
+                showToast('Gagal membatalkan', 'error');
+            }
+        }
+
+        // Setup Event Listeners
+        function setupEventListeners() {
+            // Amount input
+            amountInput.addEventListener('input', (e) => {
+                const value = parseInt(e.target.value) || 0;
+                selectedAmount = value;
+                validateAmount(value);
+                updateAmountSelection();
+            });
+            
+            // Amount presets
+            amountPresets.forEach(preset => {
+                preset.addEventListener('click', () => {
+                    const amount = parseInt(preset.dataset.amount);
+                    if (amount) {
+                        selectedAmount = amount;
+                        amountInput.value = amount;
+                        validateAmount(amount);
+                        updateAmountSelection();
+                        
+                        preset.style.transform = 'scale(0.98)';
+                        setTimeout(() => {
+                            preset.style.transform = '';
+                        }, 150);
+                    }
+                });
+            });
+            
+            // Continue button (step 1)
+            continueButton.addEventListener('click', () => {
+                if (!validateAmount(selectedAmount)) {
+                    showToast('Minimal deposit Rp 15.000', 'error');
+                    return;
+                }
+                
+                updateStepUI(2);
+                qrisAmount.textContent = formatCurrency(selectedAmount);
+            });
+            
+            // Screenshot button
+            screenshotButton.addEventListener('click', takeQRISScreenshot);
+            
+            // Download button
+            downloadButton.addEventListener('click', downloadQRISImage);
+            
+            // Submit to pending button
+            submitPendingButton.addEventListener('click', submitToPending);
+            
+            // Cancel button (in step 2)
+            cancelButton.addEventListener('click', () => {
+                if (pendingDepositId) {
+                    cancelDeposit(pendingDepositId);
+                } else {
+                    updateStepUI(1);
+                    // Reset screenshot state
+                    screenshotTaken = false;
+                    submitPendingButton.classList.add('hidden');
+                    countdownTimer.classList.add('hidden');
+                    if (countdownInterval) {
+                        clearInterval(countdownInterval);
+                        countdownInterval = null;
+                    }
+                }
+            });
+            
+            // Cancel pending button (in step 3)
+            cancelPendingButton.addEventListener('click', () => {
+                if (pendingDepositId) {
+                    cancelDeposit(pendingDepositId);
+                }
+            });
+        }
+
+        // Initialize the page
+        function initPage() {
+            createBackgroundLines();
+            
+            onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    currentUser = user;
+                    
+                    checkPendingDeposits(user.uid).then((hasPending) => {
+                        if (!hasPending) {
+                            setupEventListeners();
+                        } else {
+                            cancelButton.addEventListener('click', () => {
+                                if (pendingDepositId) {
+                                    cancelDeposit(pendingDepositId);
+                                }
+                            });
+                            
+                            cancelPendingButton.addEventListener('click', () => {
+                                if (pendingDepositId) {
+                                    cancelDeposit(pendingDepositId);
+                                }
+                            });
+                        }
+                    });
+                    
+                    loadDepositHistory(user.uid);
+                    updateAmountSelection();
+                    
+                } else {
+                    window.location.href = 'login.html';
+                }
+            });
+        }
+
+        // Initialize the page when DOM is loaded
+        document.addEventListener('DOMContentLoaded', initPage);
+
+    </script>
+</body>
+</html>

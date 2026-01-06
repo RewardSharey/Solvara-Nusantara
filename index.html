@@ -1,0 +1,1501 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <meta name="description" content="Solvara Nusantara - Platform produk digital dengan sistem profit harian terukur dan transparan.">
+    <meta name="theme-color" content="#0f1a2e">
+    <title>Solvara Nusantara | Platform Produk Digital dengan Profit Harian</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* RESET & BASE STYLES */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --navy-blue: #0f1a2e;
+            --charcoal-gray: #1e293b;
+            --pure-white: #ffffff;
+            --jet-black: #020617;
+            --steel-blue: #4a5f8a;
+            --light-steel: #64748b;
+            --accent-blue: #3b82f6;
+            --success-green: #10b981;
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --transition: all 0.3s ease;
+            --shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.15);
+            --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.2);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--charcoal-gray);
+            color: var(--pure-white);
+            min-height: 100vh;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* ANIMATED BACKGROUND - GARIS TIPIS */
+        .bg-lines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            overflow: hidden;
+            opacity: 0.15;
+        }
+
+        .line {
+            position: absolute;
+            background: linear-gradient(90deg, transparent, var(--steel-blue), transparent);
+            animation: floatLine 20s infinite linear;
+        }
+
+        @keyframes floatLine {
+            0% {
+                transform: translateX(-100%) translateY(0) rotate(45deg);
+            }
+            100% {
+                transform: translateX(100vw) translateY(-100vh) rotate(45deg);
+            }
+        }
+
+        /* SPLASH INTRO */
+        #splash {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--jet-black);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            animation: fadeOut 0.8s ease 2s forwards;
+        }
+
+        @keyframes fadeOut {
+            to {
+                opacity: 0;
+                visibility: hidden;
+            }
+        }
+
+        .splash-logo {
+            font-size: 64px;
+            margin-bottom: 20px;
+            animation: pulse 2s infinite;
+            color: var(--accent-blue);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .splash-logo i {
+            font-size: 64px;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.05);
+                opacity: 0.9;
+            }
+        }
+
+        .splash-text {
+            font-size: 18px;
+            font-weight: 500;
+            color: var(--steel-blue);
+            letter-spacing: 1px;
+        }
+
+        /* HEADER */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(2, 6, 23, 0);
+            backdrop-filter: blur(0);
+            border-bottom: 1px solid transparent;
+            padding: 16px;
+            z-index: 1000;
+            transition: var(--transition);
+        }
+
+        .header.scrolled {
+            background: rgba(2, 6, 23, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(74, 95, 138, 0.2);
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: var(--pure-white);
+            font-weight: 700;
+            font-size: 20px;
+        }
+
+        .logo-icon {
+            font-size: 24px;
+            color: var(--accent-blue);
+        }
+
+        /* HAMBURGER MENU MODERN */
+        .hamburger {
+            width: 30px;
+            height: 20px;
+            position: relative;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            z-index: 1001;
+        }
+
+        .hamburger-line {
+            display: block;
+            height: 2px;
+            width: 100%;
+            background: var(--pure-white);
+            border-radius: 1px;
+            position: absolute;
+            left: 0;
+            transition: var(--transition);
+        }
+
+        .hamburger-line:nth-child(1) {
+            top: 0;
+        }
+
+        .hamburger-line:nth-child(2) {
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .hamburger-line:nth-child(3) {
+            bottom: 0;
+        }
+
+        .hamburger.active .hamburger-line:nth-child(1) {
+            transform: translateY(9px) rotate(45deg);
+        }
+
+        .hamburger.active .hamburger-line:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active .hamburger-line:nth-child(3) {
+            transform: translateY(-9px) rotate(-45deg);
+        }
+
+        /* MOBILE MENU */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 280px;
+            height: 100%;
+            background: var(--jet-black);
+            padding: 80px 30px 30px;
+            z-index: 999;
+            transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border-left: 1px solid rgba(74, 95, 138, 0.3);
+        }
+
+        .mobile-menu.active {
+            right: 0;
+        }
+
+        .mobile-nav {
+            list-style: none;
+        }
+
+        .mobile-nav li {
+            margin-bottom: 16px;
+        }
+
+        .mobile-nav a {
+            display: block;
+            padding: 12px 16px;
+            color: var(--pure-white);
+            text-decoration: none;
+            font-weight: 500;
+            border-radius: var(--radius-md);
+            transition: var(--transition);
+            border-left: 3px solid transparent;
+        }
+
+        .mobile-nav a:hover,
+        .mobile-nav a.active {
+            background: rgba(74, 95, 138, 0.1);
+            border-left-color: var(--accent-blue);
+            padding-left: 20px;
+        }
+
+        .mobile-cta {
+            margin-top: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        /* BUTTONS - DESAIN BARU */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 14px 24px;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            outline: none;
+            min-height: 44px;
+            text-align: center;
+            gap: 8px;
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn:active {
+            transform: scale(0.98);
+        }
+
+        .btn-primary {
+            background: var(--accent-blue);
+            color: var(--pure-white);
+            box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+        }
+
+        .btn-primary:hover {
+            background: #2563eb;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--pure-white);
+            border: 1px solid var(--steel-blue);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(74, 95, 138, 0.1);
+            border-color: var(--accent-blue);
+            transform: translateY(-1px);
+        }
+
+        .btn-ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.4);
+            transform: scale(0);
+            animation: ripple 0.6s linear;
+        }
+
+        @keyframes ripple {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+
+        /* MAIN CONTENT */
+        .main-content {
+            padding-top: 80px;
+        }
+
+        .section {
+            padding: 60px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* HERO SECTION - DESAIN BARU */
+        .hero {
+            padding-top: 40px;
+            padding-bottom: 80px;
+            text-align: center;
+        }
+
+        .hero-logo {
+            font-size: 48px;
+            margin-bottom: 20px;
+            display: inline-block;
+            color: var(--accent-blue);
+        }
+
+        .hero-title {
+            font-size: 32px;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            color: var(--pure-white);
+        }
+
+        .hero-subtitle {
+            font-size: 16px;
+            color: var(--light-steel);
+            max-width: 600px;
+            margin: 0 auto 30px;
+        }
+
+        .badge-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+            margin-bottom: 40px;
+        }
+
+        .badge {
+            background: rgba(74, 95, 138, 0.15);
+            border: 1px solid rgba(74, 95, 138, 0.3);
+            border-radius: 20px;
+            padding: 10px 20px;
+            font-size: 14px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .badge i {
+            color: var(--success-green);
+        }
+
+        .hero-cta {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            align-items: center;
+        }
+
+        /* TRUST SECTION - HORIZONTAL SCROLL */
+        .trust-section {
+            padding: 40px 20px;
+            background: rgba(2, 6, 23, 0.5);
+            border-radius: var(--radius-lg);
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            text-align: center;
+            color: var(--pure-white);
+        }
+
+        .trust-cards {
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+            padding-bottom: 20px;
+            scrollbar-width: none;
+        }
+
+        .trust-cards::-webkit-scrollbar {
+            display: none;
+        }
+
+        .trust-card {
+            flex: 0 0 auto;
+            width: 280px;
+            background: var(--jet-black);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            border: 1px solid rgba(74, 95, 138, 0.2);
+            transition: var(--transition);
+            animation: cardFloat 6s ease-in-out infinite;
+        }
+
+        @keyframes cardFloat {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-5px);
+            }
+        }
+
+        .trust-card:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .trust-card:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        .trust-card:nth-child(4) {
+            animation-delay: 0.6s;
+        }
+
+        .trust-icon {
+            font-size: 32px;
+            margin-bottom: 16px;
+            color: var(--accent-blue);
+        }
+
+        .trust-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--pure-white);
+        }
+
+        .trust-description {
+            font-size: 14px;
+            color: var(--light-steel);
+        }
+
+        /* PRODUK PREVIEW - CARD VERTIKAL */
+        .products-preview {
+            margin-bottom: 60px;
+        }
+
+        .product-card {
+            background: var(--jet-black);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            margin-bottom: 24px;
+            border: 1px solid rgba(74, 95, 138, 0.2);
+            transition: var(--transition);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: cardAppear 0.6s ease forwards;
+        }
+
+        @keyframes cardAppear {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .product-card:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .product-card:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .product-card:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        .product-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .product-name {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--pure-white);
+        }
+
+        .product-profit {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--success-green);
+        }
+
+        .product-visual {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        .planet {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--steel-blue), var(--accent-blue));
+            position: relative;
+            animation: rotatePlanet 20s linear infinite;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 32px;
+        }
+
+        @keyframes rotatePlanet {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .progress-container {
+            margin: 20px 0;
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: var(--light-steel);
+        }
+
+        .progress-bar {
+            height: 6px;
+            background: rgba(74, 95, 138, 0.2);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-blue), var(--success-green));
+            border-radius: 3px;
+            width: 0;
+            animation: progressFill 1.5s ease-out forwards;
+        }
+
+        @keyframes progressFill {
+            to {
+                width: 75%;
+            }
+        }
+
+        .product-minimal {
+            font-size: 14px;
+            color: var(--light-steel);
+            margin-top: 16px;
+            text-align: center;
+        }
+
+        /* CARA KERJA - STEP VERTIKAL */
+        .how-it-works {
+            background: rgba(2, 6, 23, 0.5);
+            border-radius: var(--radius-lg);
+            padding: 40px 24px;
+            margin-bottom: 60px;
+            position: relative;
+        }
+
+        .steps-container {
+            position: relative;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .steps-container::before {
+            content: '';
+            position: absolute;
+            left: 24px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: rgba(74, 95, 138, 0.3);
+            z-index: 1;
+        }
+
+        .step {
+            display: flex;
+            margin-bottom: 32px;
+            position: relative;
+            z-index: 2;
+            opacity: 0;
+            transform: translateX(-20px);
+            animation: stepAppear 0.5s ease forwards;
+        }
+
+        @keyframes stepAppear {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .step:nth-child(1) { animation-delay: 0.1s; }
+        .step:nth-child(2) { animation-delay: 0.2s; }
+        .step:nth-child(3) { animation-delay: 0.3s; }
+        .step:nth-child(4) { animation-delay: 0.4s; }
+        .step:nth-child(5) { animation-delay: 0.5s; }
+        .step:nth-child(6) { animation-delay: 0.6s; }
+
+        .step-number {
+            width: 48px;
+            height: 48px;
+            background: var(--accent-blue);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 18px;
+            color: var(--pure-white);
+            flex-shrink: 0;
+            margin-right: 20px;
+            position: relative;
+            z-index: 2;
+            box-shadow: 0 4px 8px rgba(59, 130, 246, 0.3);
+        }
+
+        .step-content {
+            padding-top: 10px;
+        }
+
+        .step-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: var(--pure-white);
+        }
+
+        .step-description {
+            font-size: 14px;
+            color: var(--light-steel);
+        }
+
+        /* BONUS & REFERRAL */
+        .bonus-section {
+            margin-bottom: 60px;
+        }
+
+        .bonus-cards {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        .bonus-card {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(16, 185, 129, 0.1));
+            border-radius: var(--radius-lg);
+            padding: 30px 24px;
+            text-align: center;
+            border: 1px solid rgba(74, 95, 138, 0.3);
+        }
+
+        .bonus-amount {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--success-green);
+            margin-bottom: 10px;
+        }
+
+        .bonus-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--pure-white);
+        }
+
+        .bonus-description {
+            font-size: 14px;
+            color: var(--light-steel);
+        }
+
+        /* IMPROVED UI ELEMENTS */
+        .icon-wing {
+            color: var(--accent-blue);
+            text-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+        }
+
+        .icon-wing-large {
+            font-size: 64px;
+            animation: wingFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes wingFloat {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-10px) rotate(5deg);
+            }
+        }
+
+        .stat-card {
+            background: rgba(2, 6, 23, 0.7);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            margin-bottom: 24px;
+            border: 1px solid rgba(74, 95, 138, 0.3);
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--accent-blue);
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: var(--light-steel);
+        }
+
+        /* FOOTER */
+        .footer {
+            background: var(--jet-black);
+            padding: 60px 20px 30px;
+            border-top: 1px solid rgba(74, 95, 138, 0.3);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--pure-white);
+            margin-bottom: 24px;
+            justify-content: center;
+        }
+
+        .footer-logo-icon {
+            color: var(--accent-blue);
+            font-size: 24px;
+        }
+
+        .footer-links {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h3 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: var(--pure-white);
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column li {
+            margin-bottom: 10px;
+        }
+
+        .footer-column a {
+            color: var(--light-steel);
+            text-decoration: none;
+            font-size: 14px;
+            transition: var(--transition);
+        }
+
+        .footer-column a:hover {
+            color: var(--accent-blue);
+        }
+
+        .footer-legal {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(74, 95, 138, 0.2);
+            color: var(--light-steel);
+            font-size: 14px;
+        }
+
+        .footer-legal a {
+            color: var(--light-steel);
+            text-decoration: none;
+            margin: 0 10px;
+            transition: var(--transition);
+        }
+
+        .footer-legal a:hover {
+            color: var(--accent-blue);
+            text-decoration: underline;
+        }
+
+        /* RESPONSIVE */
+        @media (min-width: 768px) {
+            .hero-title {
+                font-size: 42px;
+            }
+            
+            .hero-subtitle {
+                font-size: 18px;
+            }
+            
+            .hero-cta {
+                flex-direction: row;
+                justify-content: center;
+                gap: 20px;
+            }
+            
+            .badge-container {
+                margin-bottom: 50px;
+            }
+            
+            .trust-cards {
+                justify-content: center;
+                flex-wrap: wrap;
+                overflow-x: visible;
+            }
+            
+            .trust-card {
+                flex: 0 0 calc(50% - 20px);
+                max-width: 320px;
+            }
+            
+            .bonus-cards {
+                grid-template-columns: 1fr 1fr;
+                max-width: 600px;
+                margin: 0 auto;
+            }
+            
+            .steps-container::before {
+                left: 50%;
+                transform: translateX(-1px);
+            }
+            
+            .step {
+                width: 50%;
+            }
+            
+            .step:nth-child(odd) {
+                padding-right: 40px;
+                justify-content: flex-end;
+                text-align: right;
+            }
+            
+            .step:nth-child(even) {
+                margin-left: 50%;
+                padding-left: 40px;
+            }
+            
+            .step:nth-child(even) .step-number {
+                margin-right: 0;
+                margin-left: 20px;
+                order: 1;
+            }
+            
+            .step:nth-child(even) .step-content {
+                order: 0;
+                text-align: left;
+            }
+            
+            .footer-links {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .section {
+                padding: 80px 40px;
+            }
+            
+            .hero-title {
+                font-size: 48px;
+            }
+            
+            .trust-card {
+                flex: 0 0 calc(25% - 20px);
+            }
+            
+            .product-card {
+                display: flex;
+                align-items: center;
+                gap: 30px;
+            }
+            
+            .product-visual {
+                margin: 0;
+                flex: 0 0 auto;
+            }
+            
+            .product-info {
+                flex: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background Lines -->
+    <div class="bg-lines" id="bgLines"></div>
+    
+    <!-- Splash Intro -->
+    <div id="splash">
+        <div class="splash-logo">
+            <i class="fas fa-feather-alt icon-wing icon-wing-large"></i>
+        </div>
+        <div class="splash-text">Solvara Nusantara</div>
+    </div>
+    
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="header-container">
+            <a href="#" class="logo">
+                <i class="fas fa-feather-alt logo-icon icon-wing"></i>
+                <span>Solvara Nusantara</span>
+            </a>
+            
+            <button class="hamburger" id="hamburger">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+            
+            <!-- Mobile Menu -->
+            <div class="mobile-menu" id="mobileMenu">
+                <ul class="mobile-nav">
+                    <li><a href="#" class="active">Beranda</a></li>
+                    <li><a href="#produk">Produk</a></li>
+                    <li><a href="#cara-kerja">Cara Kerja</a></li>
+                    <li><a href="#referral">Referral</a></li>
+                </ul>
+                <div class="mobile-cta">
+                    <a href="login.html" class="btn btn-secondary">Masuk</a>
+                    <a href="daftar.html" class="btn btn-primary">Daftar</a>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Hero Section -->
+        <section class="section hero">
+            <div class="hero-logo">
+                <i class="fas fa-feather-alt icon-wing"></i>
+            </div>
+            <h1 class="hero-title">Platform Produk Digital dengan Sistem Profit Harian</h1>
+            <p class="hero-subtitle">Solusi terukur untuk pertumbuhan bertahap berbasis sistem otomatis.</p>
+            
+            <div class="badge-container">
+                <div class="badge">
+                    <i class="fas fa-wallet"></i>
+                    Minimal Deposit Rp 15.000
+                </div>
+                <div class="badge">
+                    <i class="fas fa-money-bill-wave"></i>
+                    Minimal Withdraw Rp 50.000
+                </div>
+            </div>
+            
+            <div class="hero-cta">
+                <a href="daftar.html" class="btn btn-primary" id="primaryBtn">Mulai Sekarang</a>
+                <a href="#cara-kerja" class="btn btn-secondary">Pelajari Sistem</a>
+            </div>
+        </section>
+        
+        <!-- Quick Stats -->
+        <section class="section">
+            <div class="trust-section">
+                <h2 class="section-title">Platform dalam Angka</h2>
+                <div class="trust-cards">
+                    <div class="stat-card">
+                        <div class="stat-number">12.5K+</div>
+                        <div class="stat-label">Pengguna Aktif</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">99.8%</div>
+                        <div class="stat-label">Kepuasan Pengguna</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">Rp 8.9M+</div>
+                        <div class="stat-label">Profit Dibagikan</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">24/7</div>
+                        <div class="stat-label">Sistem Aktif</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Trust Section -->
+        <section class="section">
+            <div class="trust-section">
+                <h2 class="section-title">Nilai Utama Platform</h2>
+                <div class="trust-cards">
+                    <div class="trust-card">
+                        <div class="trust-icon">
+                            <i class="fas fa-chart-bar"></i>
+                        </div>
+                        <h3 class="trust-title">Sistem Transparan</h3>
+                        <p class="trust-description">Seluruh proses dan perhitungan profit dapat dipantau secara real-time melalui dashboard.</p>
+                    </div>
+                    
+                    <div class="trust-card">
+                        <div class="trust-icon">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <h3 class="trust-title">Profit Harian Otomatis</h3>
+                        <p class="trust-description">Sistem bekerja 24/7 mengelola produk digital untuk menghasilkan profit harian yang stabil.</p>
+                    </div>
+                    
+                    <div class="trust-card">
+                        <div class="trust-icon">
+                            <i class="fas fa-hand-holding-usd"></i>
+                        </div>
+                        <h3 class="trust-title">Withdraw Fleksibel</h3>
+                        <p class="trust-description">Tarik dana kapan saja dengan minimum Rp 50.000. Proses cepat tanpa biaya tambahan.</p>
+                    </div>
+                    
+                    <div class="trust-card">
+                        <div class="trust-icon">
+                            <i class="fas fa-gift"></i>
+                        </div>
+                        <h3 class="trust-title">Bonus Jelas & Terbuka</h3>
+                        <p class="trust-description">Program bonus dan referral dengan ketentuan yang transparan dan mudah dipahami.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Produk Preview -->
+        <section class="section products-preview" id="produk">
+            <h2 class="section-title">Preview Produk Digital</h2>
+            
+            <div class="product-card">
+                <div class="product-header">
+                    <h3 class="product-name">Paket Pemula</h3>
+                    <div class="product-profit">1,8% / hari</div>
+                </div>
+                
+                <div class="product-visual">
+                    <div class="planet">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                </div>
+                
+                <div class="product-info">
+                    <div class="progress-container">
+                        <div class="progress-label">
+                            <span>Kapasitas Produk</span>
+                            <span>75%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill"></div>
+                        </div>
+                    </div>
+                    
+                    <p class="product-minimal">Mulai dari Rp 15.000</p>
+                </div>
+            </div>
+            
+            <div class="product-card">
+                <div class="product-header">
+                    <h3 class="product-name">Paket Menengah</h3>
+                    <div class="product-profit">2,2% / hari</div>
+                </div>
+                
+                <div class="product-visual">
+                    <div class="planet" style="width: 100px; height: 100px;">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                </div>
+                
+                <div class="product-info">
+                    <div class="progress-container">
+                        <div class="progress-label">
+                            <span>Kapasitas Produk</span>
+                            <span>62%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="animation-delay: 0.3s; background: linear-gradient(90deg, #8b5cf6, var(--accent-blue));"></div>
+                        </div>
+                    </div>
+                    
+                    <p class="product-minimal">Mulai dari Rp 100.000</p>
+                </div>
+            </div>
+            
+            <div class="product-card">
+                <div class="product-header">
+                    <h3 class="product-name">Paket Premium</h3>
+                    <div class="product-profit">2,8% / hari</div>
+                </div>
+                
+                <div class="product-visual">
+                    <div class="planet" style="width: 120px; height: 120px;">
+                        <i class="fas fa-crown"></i>
+                    </div>
+                </div>
+                
+                <div class="product-info">
+                    <div class="progress-container">
+                        <div class="progress-label">
+                            <span>Kapasitas Produk</span>
+                            <span>48%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="animation-delay: 0.6s; background: linear-gradient(90deg, var(--success-green), #8b5cf6); width: 48%;"></div>
+                        </div>
+                    </div>
+                    
+                    <p class="product-minimal">Mulai dari Rp 500.000</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Cara Kerja -->
+        <section class="section" id="cara-kerja">
+            <div class="how-it-works">
+                <h2 class="section-title">Cara Kerja Platform</h2>
+                
+                <div class="steps-container">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h3 class="step-title">Daftar Akun</h3>
+                            <p class="step-description">Buat akun Solvara Nusantara secara gratis dalam 2 menit.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h3 class="step-title">Deposit Minimal</h3>
+                            <p class="step-description">Deposit mulai dari Rp 15.000 melalui metode pembayaran yang tersedia.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h3 class="step-title">Pilih Produk</h3>
+                            <p class="step-description">Pilih produk digital sesuai dengan tujuan dan budget Anda.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <h3 class="step-title">Sistem Berjalan Otomatis</h3>
+                            <p class="step-description">Platform akan mengelola produk digital Anda secara otomatis 24/7.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">5</div>
+                        <div class="step-content">
+                            <h3 class="step-title">Profit Masuk Setiap Hari</h3>
+                            <p class="step-description">Pantau profit harian yang masuk ke akun Anda secara real-time.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">6</div>
+                        <div class="step-content">
+                            <h3 class="step-title">Withdraw Minimal</h3>
+                            <p class="step-description">Tarik dana kapan saja dengan minimum Rp 50.000.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Bonus & Referral -->
+        <section class="section bonus-section" id="referral">
+            <h2 class="section-title">Bonus & Referral</h2>
+            
+            <div class="bonus-cards">
+                <div class="bonus-card">
+                    <div class="bonus-amount">Rp 17.777</div>
+                    <h3 class="bonus-title">Bonus Pendaftaran</h3>
+                    <p class="bonus-description">Dapatkan bonus langsung setelah menyelesaikan pendaftaran dan verifikasi akun.</p>
+                </div>
+                
+                <div class="bonus-card">
+                    <div class="bonus-amount">Rp 2.500</div>
+                    <h3 class="bonus-title">Per Referral</h3>
+                    <p class="bonus-description">Dapatkan komisi untuk setiap teman yang bergabung melalui link referral Anda.</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Final CTA -->
+        <section class="section">
+            <div class="trust-section" style="text-align: center;">
+                <h2 class="section-title">Siap Mulai?</h2>
+                <p style="color: var(--light-steel); margin-bottom: 30px; max-width: 600px; margin-left: auto; margin-right: auto;">
+                    Bergabunglah dengan ribuan pengguna yang telah merasakan manfaat sistem profit harian yang transparan.
+                </p>
+                <div style="display: flex; flex-direction: column; gap: 16px; align-items: center;">
+                    <a href="daftar.html" class="btn btn-primary" style="min-width: 200px;">
+                        <i class="fas fa-user-plus"></i>
+                        Daftar Sekarang
+                    </a>
+                    <a href="login.html" class="btn btn-secondary" style="min-width: 200px;">
+                        <i class="fas fa-sign-in-alt"></i>
+                        Masuk Akun
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-logo">
+                <i class="fas fa-feather-alt footer-logo-icon icon-wing"></i>
+                <span>Solvara Nusantara</span>
+            </div>
+            
+            <div class="footer-links">
+                <div class="footer-column">
+                    <h3>Platform</h3>
+                    <ul>
+                        <li><a href="#">Beranda</a></li>
+                        <li><a href="#produk">Produk</a></li>
+                        <li><a href="#cara-kerja">Cara Kerja</a></li>
+                        <li><a href="#referral">Referral</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Akun</h3>
+                    <ul>
+                        <li><a href="login.html">Masuk</a></li>
+                        <li><a href="daftar.html">Daftar</a></li>
+                        <li><a href="login.html">Dashboard</a></li>
+                        <li><a href="login.html">Produk Saya</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Legal</h3>
+                    <ul>
+                        <li><a href="legal.html#terms">Aturan & Ketentuan</a></li>
+                        <li><a href="legal.html#privacy">Kebijakan Privasi</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Kontak</h3>
+                    <ul>
+                        <li><a href="mailto:info@solvaranusantara.com">Email</a></li>
+                        <li><a href="https://wa.me/625783828372">WhatsApp</a></li>
+                        <li><a href="https://t.me/solvara_nusantara">Telegram</a></li>
+                        <li><a href="https://instagram.com/solvara.nusantara">Instagram</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-legal">
+                <p>&copy; 2023 Solvara Nusantara. Semua hak dilindungi.</p>
+                <p>
+                    <a href="legal.html#terms">Aturan & Ketentuan</a> | 
+                    <a href="legal.html#privacy">Kebijakan Privasi</a>
+                </p>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // Generate animated background lines
+        function createBackgroundLines() {
+            const bgLines = document.getElementById('bgLines');
+            const lineCount = 15;
+            
+            for (let i = 0; i < lineCount; i++) {
+                const line = document.createElement('div');
+                line.className = 'line';
+                
+                // Random properties
+                const width = Math.random() * 2 + 1;
+                const height = Math.random() * 150 + 50;
+                const left = Math.random() * 100;
+                const top = Math.random() * 100;
+                const delay = Math.random() * 20;
+                const duration = Math.random() * 10 + 15;
+                
+                line.style.width = `${width}px`;
+                line.style.height = `${height}px`;
+                line.style.left = `${left}%`;
+                line.style.top = `${top}%`;
+                line.style.animationDelay = `${delay}s`;
+                line.style.animationDuration = `${duration}s`;
+                
+                bgLines.appendChild(line);
+            }
+        }
+        
+        // Mobile menu toggle
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+            document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+        });
+        
+        // Close menu when clicking on a link
+        document.querySelectorAll('.mobile-nav a, .mobile-cta a').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                mobileMenu.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+        });
+        
+        // Header scroll effect
+        const header = document.getElementById('header');
+        
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+        
+        // Button ripple effect
+        document.querySelectorAll('.btn').forEach(button => {
+            button.addEventListener('click', function(e) {
+                const rect = this.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const ripple = document.createElement('span');
+                ripple.className = 'btn-ripple';
+                ripple.style.left = `${x}px`;
+                ripple.style.top = `${y}px`;
+                
+                this.appendChild(ripple);
+                
+                setTimeout(() => {
+                    ripple.remove();
+                }, 600);
+            });
+        });
+        
+        // Animate elements on scroll
+        function animateOnScroll() {
+            const elements = document.querySelectorAll('.product-card, .step, .trust-card, .stat-card');
+            
+            elements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const elementVisible = 150;
+                
+                if (elementTop < window.innerHeight - elementVisible) {
+                    element.style.animationPlayState = 'running';
+                }
+            });
+        }
+        
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                e.preventDefault();
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    const headerHeight = document.querySelector('.header').offsetHeight;
+                    const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight - 20;
+                    
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Stats counter animation
+        function animateStats() {
+            const statNumbers = document.querySelectorAll('.stat-number');
+            
+            statNumbers.forEach(stat => {
+                const finalValue = parseFloat(stat.textContent.replace(/[^\d.]/g, ''));
+                const suffix = stat.textContent.replace(/[\d.]/g, '');
+                let startValue = 0;
+                const duration = 2000;
+                let startTimestamp = null;
+                
+                const step = (timestamp) => {
+                    if (!startTimestamp) startTimestamp = timestamp;
+                    const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                    
+                    // Easing function
+                    const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+                    
+                    const currentValue = Math.floor(easeOutQuart * finalValue);
+                    stat.textContent = currentValue.toLocaleString() + suffix;
+                    
+                    if (progress < 1) {
+                        window.requestAnimationFrame(step);
+                    }
+                };
+                
+                window.requestAnimationFrame(step);
+            });
+        }
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            createBackgroundLines();
+            animateOnScroll();
+            
+            // Auto hide splash screen
+            setTimeout(() => {
+                document.getElementById('splash').style.display = 'none';
+                animateStats();
+            }, 2800);
+            
+            // Animate trust cards on load
+            setTimeout(() => {
+                document.querySelectorAll('.trust-card, .stat-card').forEach((card, index) => {
+                    card.style.animationPlayState = 'running';
+                });
+            }, 500);
+        });
+        
+        // Scroll animation listener
+        window.addEventListener('scroll', animateOnScroll);
+    </script>
+</body>
+</html>
